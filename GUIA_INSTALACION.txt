@@ -1,0 +1,88 @@
+============================================================
+GUIA DE INSTALACION — Puerto Seco Rojas CRM v2.0
+============================================================
+
+PASO 1 — SUPABASE (base de datos)
+-----------------------------------
+1. Entrar a supabase.com con tu cuenta (puertosecorojas@gmail.com)
+2. Abrir tu proyecto "Puerto Seco Rojas"
+3. Ir a SQL Editor (menu izquierdo)
+4. Pegar TODO el contenido del archivo supabase_schema.sql
+5. Click en "Run" (boton verde)
+6. Ir a Settings → API
+7. Copiar la "Project URL" (empieza con https://...supabase.co)
+   GUARDALA — la vas a necesitar en el paso 3
+
+PASO 2 — GITHUB (subir los archivos)
+--------------------------------------
+1. Entrar a github.com con usuario puertosecorojas-lgtm
+2. Abrir el repositorio puerto-seco-rojas
+3. Borrar todos los archivos viejos si los hay
+4. Subir estos archivos manteniendo la estructura de carpetas:
+
+   puerto-seco-rojas/
+   ├── index.html
+   ├── package.json
+   ├── supabase_schema.sql  (solo referencia, no hace falta subirlo)
+   └── api/
+       ├── config.js
+       ├── ai.js
+       ├── send.js
+       ├── apollo.js
+       └── hunter.js
+
+   Para subir:
+   - Click en "Add file" → "Upload files"
+   - Primero subir index.html y package.json a la raiz
+   - Crear carpeta api: "Add file" → "Create new file" → escribir api/config.js → pegar contenido → commit
+   - Repetir para api/ai.js, api/send.js, api/apollo.js, api/hunter.js
+
+PASO 3 — VERCEL (variables de entorno)
+----------------------------------------
+1. Entrar a vercel.com con tu cuenta
+2. Abrir el proyecto puerto-seco-rojas
+3. Click en Settings → Environment Variables
+4. Agregar cada una de estas variables:
+
+   SUPABASE_URL        = (la URL que copiaste en el paso 1)
+   SUPABASE_ANON_KEY   = sb_publishable_wucUJ8MyAAShs-SF8LDR8w_TnNc5f6q
+   GROQ_API_KEY        = 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
+   GMAIL_USER          = puertosecorojas@gmail.com
+   GMAIL_PASS          = xxahusotpluatpbc
+   APOLLO_API_KEY      = (tu clave de apollo.io — la que tenias guardada)
+   HUNTER_API_KEY      = (tu clave de hunter.io — la que tenias guardada)
+
+5. Despues de agregar todas: Deployments → tres puntitos → Redeploy
+
+PASO 4 — PROBAR
+-----------------
+1. Abrir https://puerto-seco-rojas.vercel.app
+2. Verificar que dice "Conectado a Supabase" (verde) en el sidebar
+3. Ir a Configuracion y completar tu perfil (nombre, cargo, firma)
+4. En la seccion Leads deberias ver 10 leads de muestra cargados
+5. Seleccionar un lead → Redactar Email → elegir enfoques → Generar
+6. Probar enviando a tu propio email primero (puertosecorojas@gmail.com)
+
+VERIFICAR QUE TODO FUNCIONA:
+- Supabase verde: OK
+- Generar email: OK (usa Groq)
+- Enviar email: OK (usa Gmail via Nodemailer)
+- Agregar lead desde Apollo: OK (si cargaste la key)
+- Verificar email con Hunter: OK (si cargaste la key)
+
+============================================================
+PROBLEMAS COMUNES
+============================================================
+
+"Error al generar" → verificar GROQ_API_KEY en Vercel
+"Error Gmail" → verificar GMAIL_PASS (sin espacios: xxahusotpluatpbc)
+"Sin Supabase" → verificar SUPABASE_URL (necesita https:// al inicio)
+"No carga leads" → ejecutar el schema SQL en Supabase SQL Editor
+Apollo sin resultados → verificar APOLLO_API_KEY
+Hunter error → verificar HUNTER_API_KEY
+
+============================================================
+CONTACTO PARA SOPORTE
+============================================================
+Si algo no funciona, abri una nueva sesion en Claude y pega
+este texto junto con el error que ves.

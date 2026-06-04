@@ -1,0 +1,165 @@
+╔══════════════════════════════════════════════════════════════╗
+║     PUERTO SECO ROJAS — CRM v2.0                            ║
+║     GUIA DE INSTALACION COMPLETA                             ║
+║     Tiempo estimado: 20 minutos                              ║
+╚══════════════════════════════════════════════════════════════╝
+
+ANTES DE EMPEZAR — Qué cuentas necesitás:
+  ✅ GitHub (ya tenés: puertosecorojas-lgtm)
+  ✅ Vercel (ya tenés: conectado a GitHub)
+  ✅ Supabase (ya tenés: puertosecorojas@gmail.com)
+  ✅ Gmail (ya tenés: puertosecorojas@gmail.com)
+
+──────────────────────────────────────────────────────────────
+PASO 1 — SUPABASE (crear las tablas de la base de datos)
+──────────────────────────────────────────────────────────────
+
+1. Abrí el navegador y andá a: https://supabase.com
+2. Iniciá sesión con puertosecorojas@gmail.com
+3. Hacé clic en tu proyecto "Puerto Seco Rojas"
+4. En el menú de la IZQUIERDA buscá "SQL Editor" y hacé clic
+5. Hacé clic en "New query" (botón arriba)
+6. Abrí el archivo SUPABASE_SCHEMA.SQL (que está en la carpeta)
+7. Seleccioná TODO el texto (Ctrl+A) y copialo (Ctrl+C)
+8. Pegalo en el editor de Supabase (Ctrl+V)
+9. Hacé clic en el botón verde "Run" (o presioná Ctrl+Enter)
+10. Tiene que aparecer "Success" abajo
+
+   IMPORTANTE — Copiar la URL de tu proyecto Supabase:
+   - En el menú de la izquierda hacé clic en "Settings" (ícono tuerca)
+   - Hacé clic en "API"
+   - Copiá el valor "Project URL" (empieza con https://...supabase.co)
+   - GUARDALO en un papel o bloc de notas — lo vas a necesitar en el Paso 3
+
+──────────────────────────────────────────────────────────────
+PASO 2 — GITHUB (subir los archivos del CRM)
+──────────────────────────────────────────────────────────────
+
+1. Abrí: https://github.com/puertosecorojas-lgtm/puerto-seco-rojas
+2. Si el repositorio tiene archivos viejos, los borrás (opcional)
+
+   SUBIR ARCHIVOS PRINCIPALES (index.html y package.json):
+3. Hacé clic en "Add file" → "Upload files"
+4. Arrastrá estos 2 archivos desde tu carpeta:
+      - index.html
+      - package.json
+5. Abajo hacé clic en "Commit changes"
+
+   CREAR LA CARPETA "api" CON LOS 5 ARCHIVOS:
+6. Hacé clic en "Add file" → "Create new file"
+7. En el campo del nombre escribí exactamente: api/config.js
+8. Abrí el archivo api/config.js de tu carpeta, copiá todo (Ctrl+A, Ctrl+C)
+9. Pegalo en el editor de GitHub (Ctrl+V)
+10. Hacé clic en "Commit changes" → "Commit changes"
+11. Repetí los pasos 6-10 para cada uno de estos archivos:
+      - api/ai.js
+      - api/send.js
+      - api/apollo.js
+      - api/hunter.js
+
+   Al terminar, en tu repositorio deberías ver:
+   ├── index.html
+   ├── package.json
+   └── api/
+       ├── config.js
+       ├── ai.js
+       ├── send.js
+       ├── apollo.js
+       └── hunter.js
+
+──────────────────────────────────────────────────────────────
+PASO 3 — VERCEL (configurar las claves secretas)
+──────────────────────────────────────────────────────────────
+
+1. Abrí: https://vercel.com
+2. Iniciá sesión y abrí tu proyecto "puerto-seco-rojas"
+3. Hacé clic en "Settings" (arriba)
+4. En el menú izquierdo hacé clic en "Environment Variables"
+5. Agregá CADA UNA de estas variables (una por una):
+   Para cada una: escribís el nombre, pegás el valor, clic en "Save"
+
+   ┌─────────────────────┬────────────────────────────────────────────────────────────┐
+   │ NOMBRE              │ VALOR                                                      │
+   ├─────────────────────┼────────────────────────────────────────────────────────────┤
+   │ SUPABASE_URL        │ (la URL que copiaste en el Paso 1, ej: https://xxx.supabase.co) │
+   │ SUPABASE_ANON_KEY   │ sb_publishable_wucUJ8MyAAShs-SF8LDR8w_TnNc5f6q           │
+   │ GROQ_API_KEY        │ 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 │
+   │ GMAIL_USER          │ puertosecorojas@gmail.com                                 │
+   │ GMAIL_PASS          │ xxahusotpluatpbc                                          │
+   │ APOLLO_API_KEY      │ (tu clave de Apollo.io — la tenés guardada)               │
+   │ HUNTER_API_KEY      │ (tu clave de Hunter.io — la tenés guardada)               │
+   └─────────────────────┴────────────────────────────────────────────────────────────┘
+
+   ⚠ SUPABASE_URL es la única que no está en esta lista —
+     es la URL que copiaste de tu proyecto Supabase en el Paso 1.
+
+6. Después de agregar TODAS, hacé esto para que tome los cambios:
+   - Hacé clic en "Deployments" (menú de la izquierda)
+   - Hacé clic en los tres puntitos (...) del deployment más reciente
+   - Hacé clic en "Redeploy" → confirmá
+
+──────────────────────────────────────────────────────────────
+PASO 4 — ABRIR Y PROBAR
+──────────────────────────────────────────────────────────────
+
+1. Abrí en cualquier navegador: https://puerto-seco-rojas.vercel.app
+2. Verificá que dice "Conectado a Supabase" (verde, arriba a la izquierda)
+3. Andá a Configuración → Perfil y completá tus datos
+4. Andá a Configuración → Estado del sistema → clic en "Verificar todo"
+   - Supabase: ✅
+   - Groq: ✅
+   - Apollo y Hunter: ✅ (si los configuraste)
+5. Probá generando un email para cualquier lead de la lista
+6. Antes de enviar a clientes reales, usá "Email de prueba" para verificar que Gmail funciona
+
+   La web funciona desde CUALQUIER dispositivo (notebook, celular, tablet)
+   Solo necesitás internet y la URL.
+
+──────────────────────────────────────────────────────────────
+SI ALGO NO FUNCIONA — errores comunes
+──────────────────────────────────────────────────────────────
+
+"Sin Supabase" (rojo)
+→ Hacé clic en "Sin Supabase" y te lleva a Configuración → Keys
+→ Ingresá la URL de Supabase ahí (Settings → API en Supabase)
+
+"Error al generar email"
+→ La Groq key puede haber vencido. Andá a console.groq.com,
+  iniciá sesión, creá una nueva key y actualizala en:
+  Vercel → Settings → Environment Variables → GROQ_API_KEY → Edit → Redeploy
+  O más fácil: Configuración → Keys dentro del CRM → ingresá la nueva key → Guardar
+
+"Error Gmail: contraseña incorrecta"
+→ La contraseña de app de Gmail puede haber expirado
+→ Andá a: myaccount.google.com/apppasswords
+→ Creá una nueva (nombre: "Puerto Seco CRM")
+→ Actualizá GMAIL_PASS en Vercel → Redeploy
+
+"No carga nada / pantalla en blanco"
+→ Limpiar caché: Ctrl+Shift+R en el navegador
+→ Probar en modo incógnito (Ctrl+Shift+N)
+
+──────────────────────────────────────────────────────────────
+DATOS QUE TENÉS QUE TENER A MANO MAÑANA
+──────────────────────────────────────────────────────────────
+
+  □ URL de Supabase (de tu proyecto, ej: https://xxxxx.supabase.co)
+  □ Tu clave de Apollo.io
+  □ Tu clave de Hunter.io
+  □ Acceso a github.com (usuario: puertosecorojas-lgtm)
+  □ Acceso a vercel.com
+  □ Acceso a supabase.com (con puertosecorojas@gmail.com)
+
+══════════════════════════════════════════════════════════════
+ARCHIVOS QUE TENÉS QUE SUBIR A GITHUB (en orden)
+══════════════════════════════════════════════════════════════
+
+  1. index.html         → raíz del repo
+  2. package.json       → raíz del repo
+  3. api/config.js      → dentro de carpeta "api"
+  4. api/ai.js          → dentro de carpeta "api"
+  5. api/send.js        → dentro de carpeta "api"
+  6. api/apollo.js      → dentro de carpeta "api"
+  7. api/hunter.js      → dentro de carpeta "api"
+
+══════════════════════════════════════════════════════════════

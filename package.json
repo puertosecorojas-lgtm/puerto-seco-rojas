@@ -1,0 +1,9 @@
+{
+  "name": "puerto-seco-rojas-crm",
+  "version": "2.0.0",
+  "type": "module",
+  "description": "CRM para captacion de clientes - Puerto Seco Rojas",
+  "dependencies": {
+    "nodemailer": "^6.9.13"
+  }
+}
