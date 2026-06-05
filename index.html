@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Puerto Seco Rojas — CRM Comercial</title>
+<title>Puerto Seco Rojas â€” CRM Comercial</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -469,7 +469,7 @@ async function loadCfg() {
     const data = await sbGet('configuracion', 'id=eq.1&limit=1');
     CFG = data[0] || {};
     document.getElementById('user-name-sidebar').textContent = CFG.nombre || 'Sin configurar';
-    document.getElementById('user-email-sidebar').textContent = CFG.email || '—';
+    document.getElementById('user-email-sidebar').textContent = CFG.email || 'â€”';
   } catch(e) { CFG = {}; }
 }
 
@@ -521,9 +521,9 @@ function pageDashboard() {
     </tr></thead><tbody>
     ${allLeads.filter(l=>!l.contactado).slice(0,8).map(l=>`
       <tr>
-        <td><strong>${l.nombre||l.empresa||'—'}</strong></td>
+        <td><strong>${l.nombre||l.empresa||'â€”'}</strong></td>
         <td>${tipoBadge(l.tipo)}</td>
-        <td>${l.ciudad||'—'}</td>
+        <td>${l.ciudad||'â€”'}</td>
         <td><span style="font-size:12px;color:${l.email_status==='verificado'?'#6ee7b7':l.email?'#fcd34d':'#f87171'}">${l.email||'sin email'}</span></td>
         <td>${estadoBadge(l.estado)}</td>
         <td><button class="btn btn-primary btn-sm" onclick="redactarPara(${l.id})">Redactar</button></td>
@@ -605,14 +605,14 @@ function filterLeads() {
   tbody.innerHTML = filtered.map(l => `
     <tr>
       <td>
-        <div><strong>${l.nombre||l.empresa||'—'}</strong></div>
+        <div><strong>${l.nombre||l.empresa||'â€”'}</strong></div>
         ${l.empresa && l.nombre !== l.empresa ? `<div class="text-muted text-sm">${l.empresa}</div>` : ''}
       </td>
       <td>${tipoBadge(l.tipo)}</td>
-      <td>${l.ciudad||'—'}<br><span class="text-muted text-sm">${l.zona||''}</span></td>
+      <td>${l.ciudad||'â€”'}<br><span class="text-muted text-sm">${l.zona||''}</span></td>
       <td>
         <div style="display:flex;align-items:center;gap:6px">
-          ${l.email_status==='verificado'?'<span style="color:#4ade80">V</span>':l.email_status==='invalido'?'<span style="color:#f87171">X</span>':l.email?'<span style="color:#fcd34d">?</span>':'<span style="color:var(--muted)">—</span>'}
+          ${l.email_status==='verificado'?'<span style="color:#4ade80">V</span>':l.email_status==='invalido'?'<span style="color:#f87171">X</span>':l.email?'<span style="color:#fcd34d">?</span>':'<span style="color:var(--muted)">â€”</span>'}
           <span style="font-size:12px">${l.email||'sin email'}</span>
         </div>
         ${l.telefono?`<div class="text-muted text-sm">${l.telefono}</div>`:''}
@@ -628,7 +628,7 @@ function filterLeads() {
         </div>
       </td>
     </tr>`).join('') || '<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:20px">Sin resultados</td></tr>';
-  document.getElementById('leads-pagination').textContent = `${filtered.length} leads · ${allLeads.filter(l=>l.contactado).length} contactados`;
+  document.getElementById('leads-pagination').textContent = `${filtered.length} leads Â· ${allLeads.filter(l=>l.contactado).length} contactados`;
 }
 
 function switchMapsTab(sub) {
@@ -697,7 +697,7 @@ async function searchApify(mode) {
       <div class="lead-result">
         <div class="lead-result-info">
           <strong>${l.empresa}</strong>
-          <span>${tipoBadge(l.tipo)} · ${l.ciudad||'—'}</span>
+          <span>${tipoBadge(l.tipo)} Â· ${l.ciudad||'â€”'}</span>
           ${l.telefono ? `<div style="font-size:12px;color:#93c5fd;margin-top:3px">${l.telefono}</div>` : ''}
           ${l.email ? `<div style="font-size:12px;color:#fcd34d">${l.email}</div>` : ''}
           ${l.web ? `<div style="font-size:11px;color:var(--muted)">${l.web}</div>` : ''}
@@ -739,7 +739,7 @@ async function addAllFromApify() {
     } catch(e) { skipped++; }
   }
   document.getElementById('badge-leads').textContent = allLeads.length;
-  showToast(added + ' leads agregados' + (skipped?' · '+skipped+' omitidos':''), 'ok');
+  showToast(added + ' leads agregados' + (skipped?' Â· '+skipped+' omitidos':''), 'ok');
 }
 
 async function verifyEmailLead(id, email) {
@@ -751,7 +751,7 @@ async function verifyEmailLead(id, email) {
     await sbUpdate('leads', id, { email_status: status });
     const lead = allLeads.find(l => l.id === id);
     if (lead) lead.email_status = status;
-    showToast('Email ' + status + ' — score ' + d.score + '/100', d.valid ? 'ok' : 'err');
+    showToast('Email ' + status + ' â€” score ' + d.score + '/100', d.valid ? 'ok' : 'err');
     filterLeads();
   } catch(e) { showToast(parseApiError(e, 'hunter'), 'err'); }
 }
@@ -928,7 +928,7 @@ function switchBuscarTab(tab) {
       <h3>Google Maps - Scraper automatico via Apify</h3>
       <p class="text-muted text-sm" style="margin-bottom:14px">
         Dos formas de usar:<br>
-        <strong>1. URL directa:</strong> Abri Google Maps, buscá una empresa, copia la URL y pegala aca.<br>
+        <strong>1. URL directa:</strong> Abri Google Maps, buscÃ¡ una empresa, copia la URL y pegala aca.<br>
         <strong>2. Busqueda:</strong> Escribi el rubro y ciudad y Apify busca automaticamente.
       </p>
       <div class="inner-tabs" id="maps-sub-tabs" style="margin-bottom:12px">
@@ -1040,7 +1040,7 @@ async function searchApollo() {
       <div class="lead-result">
         <div class="lead-result-info">
           <strong>${l.nombre||l.empresa}</strong>
-          <span>${tipoBadge(l.tipo)} &middot; ${l.ciudad||'—'} &middot; ${l.zona||''}</span>
+          <span>${tipoBadge(l.tipo)} &middot; ${l.ciudad||'â€”'} &middot; ${l.zona||''}</span>
           ${l.email?`<div style="font-size:12px;color:#fcd34d;margin-top:3px">${l.email} <span id="ev-status-${i}">(sin verificar)</span></div>`:'<div style="font-size:12px;color:var(--muted)">Sin email disponible</div>'}
         </div>
         <div class="lead-result-actions">
@@ -1254,7 +1254,7 @@ async function addAllFromParse() {
       added++;
     } catch(e) { skipped++; }
   }
-  showToast(added + ' leads agregados' + (skipped?' · '+skipped+' omitidos':''), 'ok');
+  showToast(added + ' leads agregados' + (skipped?' Â· '+skipped+' omitidos':''), 'ok');
 }
 
 const ENFOQUES = [
@@ -1368,7 +1368,7 @@ function selectLead(id) {
     <div style="font-size:14px;font-weight:600;margin-bottom:6px">${currentLead.nombre||currentLead.empresa}</div>
     <div class="text-muted text-sm">
       ${tipoBadge(currentLead.tipo)}<br>
-      ${currentLead.ciudad||'—'} &middot; ${currentLead.zona||''}<br>
+      ${currentLead.ciudad||'â€”'} &middot; ${currentLead.zona||''}<br>
       ${currentLead.email||'sin email'}<br>
       ${currentLead.telefono?currentLead.telefono+'<br>':''}
       ${currentLead.web?'<a href="'+currentLead.web+'" target="_blank" style="color:var(--accent)">'+currentLead.web+'</a>':''}
@@ -1411,14 +1411,14 @@ async function generarEmail() {
   document.getElementById('gen-loading').classList.remove('hidden');
   document.getElementById('btn-generar').disabled = true;
   const sistema = `Sos un experto comercial en comercio exterior y logistica aduanera argentina. Redactas emails comerciales convincentes para el Puerto Seco Rojas.
-Datos: Ubicacion: Rojas, Buenos Aires. Habilitacion: Zona Primaria Aduanera. Ventaja: centro de Bs.As. sobre Ruta 31. Tarifas menores que depositos fiscales portuarios.
+Datos: Ubicacion: Rojas, Buenos Aires, a pocos metros de Ruta 188 y Ruta 31. Habilitacion: Zona Primaria Aduanera (unica activa en la region Rojas). Ventaja: acerca la aduana a la zona de produccion, reduce flete interno, sin congestion portuaria. Tarifas menores que depositos fiscales portuarios. Atencion personalizada y despachos agiles.
 Emisor: ${CFG.nombre||'Equipo Puerto Seco Rojas'}, ${CFG.cargo||''}. Firma: ${CFG.firma||CFG.nombre||'Puerto Seco Rojas'}
 Idioma: ${idioma==='en'?'English':idioma==='pt'?'Portugues':'Espanol rioplatense'}. Tono: ${tono}`;
   const prompt = `Redacta un email comercial para:
 Empresa: ${currentLead.empresa||currentLead.nombre}, Tipo: ${currentLead.tipo}, Ciudad: ${currentLead.ciudad}
 ${contexto?'Contexto: '+contexto:''}
 Enfoques: ${selEnfoques.join(', ')}
-Requisitos: asunto especifico, nombrar la empresa, maximo 250 palabras, cerrar con propuesta de reunion por Meet.
+Requisitos: asunto especifico, nombrar la empresa, maximo 300 palabras. Objetivo: DAR A CONOCER el puerto, NO proponer reunion todavia. El email debe presentar el puerto, sus ventajas concretas, y terminar invitando a conocer mas o hacer consultas. La firma debe incluir nombre completo, cargo, telefono y email.
 Devuelve SOLO JSON: {"asunto":"...","cuerpo":"..."}`;
   try {
     const d = await apiFetch('/api/ai', {prompt, system: sistema});
@@ -1428,8 +1428,8 @@ Devuelve SOLO JSON: {"asunto":"...","cuerpo":"..."}`;
       const clean = d.text.replace(/` + '```' + `json?|` + '```' + `/g,'').trim();
       const jsonMatch = clean.match(/\{[\s\S]*\}/);
       parsed = JSON.parse(jsonMatch ? jsonMatch[0] : clean);
-    } catch(e) { parsed = { asunto: 'Propuesta Puerto Seco Rojas — ' + (currentLead.empresa||currentLead.nombre), cuerpo: d.text }; }
-    if (!parsed.asunto || !parsed.cuerpo) parsed = { asunto: 'Propuesta Puerto Seco Rojas — ' + (currentLead.empresa||currentLead.nombre), cuerpo: d.text };
+    } catch(e) { parsed = { asunto: 'Propuesta Puerto Seco Rojas â€” ' + (currentLead.empresa||currentLead.nombre), cuerpo: d.text }; }
+    if (!parsed.asunto || !parsed.cuerpo) parsed = { asunto: 'Propuesta Puerto Seco Rojas â€” ' + (currentLead.empresa||currentLead.nombre), cuerpo: d.text };
     document.getElementById('preview-section').style.display = 'block';
     document.getElementById('red-to').value = currentLead.email||'';
     document.getElementById('red-subject').value = parsed.asunto||'';
@@ -1669,26 +1669,26 @@ function switchCfgTab(tab) {
     <div class="form-section" style="margin-bottom:16px">
       <h3>Todas las API Keys</h3>
       <div style="background:#0a0e1a;border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:14px">
-        <div style="font-size:11px;color:var(--warn);margin-bottom:12px;font-weight:600">SUPABASE — base de datos</div>
+        <div style="font-size:11px;color:var(--warn);margin-bottom:12px;font-weight:600">SUPABASE â€” base de datos</div>
         <div class="form-row">
           <div class="form-group"><label>Project URL</label><input id="k-surl" value="${KEYS.supabaseUrl||DB.url||''}" placeholder="https://xxxxxxxx.supabase.co"></div>
           <div class="form-group"><label>Anon Key</label><input id="k-skey" value="${KEYS.supabaseKey||DB.key||''}" placeholder="eyJ..."></div>
         </div>
       </div>
       <div style="background:#0a0e1a;border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:14px">
-        <div style="font-size:11px;color:#93c5fd;margin-bottom:12px;font-weight:600">GROQ — generacion de emails con IA</div>
+        <div style="font-size:11px;color:#93c5fd;margin-bottom:12px;font-weight:600">GROQ â€” generacion de emails con IA</div>
         <div class="form-row single"><div class="form-group"><label>Groq API Key</label><input id="k-groq" value="${KEYS.groqKey||''}" placeholder="gsk_..."></div></div>
       </div>
       <div style="background:#0a0e1a;border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:14px">
-        <div style="font-size:11px;color:#6ee7b7;margin-bottom:12px;font-weight:600">APOLLO.IO — busqueda de empresas</div>
+        <div style="font-size:11px;color:#6ee7b7;margin-bottom:12px;font-weight:600">APOLLO.IO â€” busqueda de empresas</div>
         <div class="form-row single"><div class="form-group"><label>Apollo.io API Key</label><input id="k-apollo" value="${KEYS.apolloKey||''}" placeholder="apollo_..."></div></div>
       </div>
       <div style="background:#0a0e1a;border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:14px">
-        <div style="font-size:11px;color:#f97316;margin-bottom:12px;font-weight:600">APIFY — scraper de Google Maps</div>
+        <div style="font-size:11px;color:#f97316;margin-bottom:12px;font-weight:600">APIFY â€” scraper de Google Maps</div>
         <div class="form-row single"><div class="form-group"><label>Apify API Key</label><input id="k-apify" value="${KEYS.apifyKey||''}" placeholder="apify_api_..."></div></div>
       </div>
       <div style="background:#0a0e1a;border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:14px">
-        <div style="font-size:11px;color:#c4b5fd;margin-bottom:12px;font-weight:600">HUNTER.IO — verificacion de emails</div>
+        <div style="font-size:11px;color:#c4b5fd;margin-bottom:12px;font-weight:600">HUNTER.IO â€” verificacion de emails</div>
         <div class="form-row single"><div class="form-group"><label>Hunter.io API Key</label><input id="k-hunter" value="${KEYS.hunterKey||''}" placeholder="hunter_..."></div></div>
       </div>
       <div style="display:flex;gap:8px;align-items:center;margin-bottom:16px">
@@ -1696,7 +1696,7 @@ function switchCfgTab(tab) {
         <span id="k-status" class="text-muted text-sm"></span>
       </div>
       <div style="background:#0a0e1a;border:1px solid var(--border);border-radius:8px;padding:14px">
-        <div style="font-size:11px;color:#fcd34d;margin-bottom:10px;font-weight:600">GMAIL — envio de emails (solo se cambia en Vercel)</div>
+        <div style="font-size:11px;color:#fcd34d;margin-bottom:10px;font-weight:600">GMAIL â€” envio de emails (solo se cambia en Vercel)</div>
         <p class="text-muted text-sm">Para cambiar: <a href="https://vercel.com" target="_blank" style="color:var(--accent)">vercel.com</a> &rarr; proyecto &rarr; Settings &rarr; Environment Variables &rarr; GMAIL_USER y GMAIL_PASS &rarr; Redeploy.</p>
       </div>
     </div>`;
@@ -1805,7 +1805,7 @@ async function saveCfg() {
     await sbUpdate('configuracion', 1, data);
     CFG = { ...CFG, ...data };
     document.getElementById('user-name-sidebar').textContent = CFG.nombre||'Sin configurar';
-    document.getElementById('user-email-sidebar').textContent = CFG.email||'—';
+    document.getElementById('user-email-sidebar').textContent = CFG.email||'â€”';
     showToast('Perfil guardado', 'ok');
   } catch(e) { showToast(parseApiError(e,'supabase'), 'err'); }
 }
@@ -1821,7 +1821,7 @@ function estadoBadge(estado) {
 }
 
 function formatFecha(iso) {
-  if (!iso) return '—';
+  if (!iso) return 'â€”';
   return new Date(iso).toLocaleDateString('es-AR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});
 }
 
@@ -1837,3 +1837,4 @@ function showToast(msg, type) {
 </script>
 </body>
 </html>
+
