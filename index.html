@@ -1434,14 +1434,15 @@ CUERPO:
       const cuerpoMatch = txt.match(/CUERPO:\s*\n([\s\S]+)/);
       parsed = {
         asunto: asuntoMatch ? asuntoMatch[1].trim() : ('Propuesta Puerto Seco Rojas - ' + (currentLead.empresa||currentLead.nombre)),
-        cuerpo: cuerpoMatch ? cuerpoMatch[1].trim() : txt
+        cuerpo: (cuerpoMatch ? cuerpoMatch[1].trim() : txt).replace(/firma.*$/si, "").trimEnd()
       };
     } catch(e) { parsed = { asunto: 'Propuesta Puerto Seco Rojas - ' + (currentLead.empresa||currentLead.nombre), cuerpo: d.text }; }
     if (!parsed.asunto || !parsed.cuerpo) parsed = { asunto: 'Propuesta Puerto Seco Rojas - ' + (currentLead.empresa||currentLead.nombre), cuerpo: d.text };
     document.getElementById('preview-section').style.display = 'block';
     document.getElementById('red-to').value = currentLead.email||'';
     document.getElementById('red-subject').value = parsed.asunto||'';
-    document.getElementById('red-body').value = parsed.cuerpo||'';
+    const firmaSaltos = `\n\nAtentamente,\n${CFG.nombre||'Jorge Alejandro Paolini'}\n${CFG.cargo||'Propietario del Puerto Seco Rojas'}\nTel: ${CFG.telefono||'+54 9 2477 505051'}\nEmail: ${CFG.email||'puertosecorojas@gmail.com'}\n${CFG.direccion||'Av. San Martin 249, Rojas, Buenos Aires'}`;
+    document.getElementById('red-body').value = (parsed.cuerpo||'') + firmaSaltos;
     const dup = (currentLead.email||'') && allEnviados.some(e => e.destinatario_email === currentLead.email);
     document.getElementById('dup-warning').classList.toggle('hidden', !dup);
     document.getElementById('preview-section').scrollIntoView({ behavior:'smooth' });
