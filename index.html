@@ -1410,7 +1410,7 @@ async function generarEmail() {
   const idioma = document.getElementById('red-idioma')?.value||'es';
   document.getElementById('gen-loading').classList.remove('hidden');
   document.getElementById('btn-generar').disabled = true;
-  const firmaReal = `${CFG.nombre||"Jorge Alejandro Paolini"} | ${CFG.cargo||"Propietario del Puerto Seco Rojas"} | Tel: ${CFG.telefono||"+54 9 2477 505051"} | Email: ${CFG.email||"puertosecorojas@gmail.com"}`;
+  const firmaReal = `${CFG.nombre||"Jorge Alejandro Paolini"}\n${CFG.cargo||"Propietario del Puerto Seco Rojas"}\nTel: ${CFG.telefono||"+54 9 2477 505051"}\nEmail: ${CFG.email||"puertosecorojas@gmail.com"}\n${CFG.direccion||"Av. San Martin 249, Rojas, Buenos Aires"}`;
   const sistema = `Sos el mejor comercial de puertos secos de Argentina y del mundo. Redactas emails comerciales de alto impacto para el Puerto Seco Rojas. Tus emails son persuasivos, concretos, destacan ventajas competitivas reales y generan interes genuino. Nunca usas frases genericas. Cada email es unico y adaptado al tipo de empresa receptora.
 Datos clave del puerto: Ubicacion estrategica en Rojas, Buenos Aires, sobre Ruta 188 y Ruta 31, paso obligado entre puertos maritimos y pasos fronterizos del pais. Habilitacion: Zona Primaria Aduanera operativa. Ventajas: acerca la aduana a la zona de produccion agroindustrial pampeana, reduce fletes internos, elimina congestion portuaria, despachos agiles y personalizados, tarifas mas competitivas que depositos fiscales portuarios. El puerto es un punto de conexion clave para operaciones hacia puertos maritimos (Buenos Aires, Rosario, Zarate, Campana) y pasos fronterizos, ahorrando tiempo y costos en toda la cadena logistica.
 Firma obligatoria al final del email (copia exacto): ${firmaReal}
