@@ -1420,17 +1420,24 @@ Empresa: ${currentLead.empresa||currentLead.nombre}, Tipo: ${currentLead.tipo}, 
 ${contexto?'Contexto: '+contexto:''}
 Enfoques: ${selEnfoques.join(', ')}
 Requisitos: asunto especifico, nombrar la empresa, maximo 300 palabras. Objetivo: DAR A CONOCER el puerto, NO proponer reunion todavia. El email debe presentar el puerto, sus ventajas concretas, y terminar invitando a conocer mas o hacer consultas. La firma debe incluir nombre completo, cargo, telefono y email.
-Devuelve SOLO JSON: {"asunto":"...","cuerpo":"..."}`;
+Devuelve el resultado en este formato exacto (sin JSON, sin comillas, sin markdown):
+ASUNTO: [el asunto aqui]
+CUERPO:
+[el cuerpo completo aqui]`;
   try {
     const d = await apiFetch('/api/ai', {prompt, system: sistema});
     if (d.error) throw new Error(d.error);
     let parsed;
     try {
-      const clean = d.text.replace(/` + '```' + `json?|` + '```' + `/g,'').trim();
-      const jsonMatch = clean.match(/\{[\s\S]*\}/);
-      parsed = JSON.parse(jsonMatch ? jsonMatch[0] : clean);
-    } catch(e) { parsed = { asunto: 'Propuesta Puerto Seco Rojas â€” ' + (currentLead.empresa||currentLead.nombre), cuerpo: d.text }; }
-    if (!parsed.asunto || !parsed.cuerpo) parsed = { asunto: 'Propuesta Puerto Seco Rojas â€” ' + (currentLead.empresa||currentLead.nombre), cuerpo: d.text };
+      const txt = d.text.trim();
+      const asuntoMatch = txt.match(/ASUNTO:\s*(.+)/);
+      const cuerpoMatch = txt.match(/CUERPO:\s*\n([\s\S]+)/);
+      parsed = {
+        asunto: asuntoMatch ? asuntoMatch[1].trim() : ('Propuesta Puerto Seco Rojas - ' + (currentLead.empresa||currentLead.nombre)),
+        cuerpo: cuerpoMatch ? cuerpoMatch[1].trim() : txt
+      };
+    } catch(e) { parsed = { asunto: 'Propuesta Puerto Seco Rojas - ' + (currentLead.empresa||currentLead.nombre), cuerpo: d.text }; }
+    if (!parsed.asunto || !parsed.cuerpo) parsed = { asunto: 'Propuesta Puerto Seco Rojas - ' + (currentLead.empresa||currentLead.nombre), cuerpo: d.text };
     document.getElementById('preview-section').style.display = 'block';
     document.getElementById('red-to').value = currentLead.email||'';
     document.getElementById('red-subject').value = parsed.asunto||'';
@@ -1838,6 +1845,7 @@ function showToast(msg, type) {
 </script>
 </body>
 </html>
+
 
 
 
