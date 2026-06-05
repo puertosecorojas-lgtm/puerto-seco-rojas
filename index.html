@@ -1433,7 +1433,6 @@ CUERPO:
       const cuerpoMatch = txt.match(/CUERPO:\s*\n([\s\S]+)/);
       parsed = {
         asunto: asuntoMatch ? asuntoMatch[1].trim() : ('Propuesta Puerto Seco Rojas - ' + (currentLead.empresa||currentLead.nombre)),
-        cuerpo: (cuerpoMatch ? cuerpoMatch[1].trim() : txt).replace(/firma.*$/si, "").trimEnd()
         cuerpo: (cuerpoMatch ? cuerpoMatch[1].trim() : txt).replace(/\n?\s*(Atentamente|Cordialmente|Saludos|Regards)[\s\S]*/i, "").trimEnd()
     } catch(e) { parsed = { asunto: 'Propuesta Puerto Seco Rojas - ' + (currentLead.empresa||currentLead.nombre), cuerpo: d.text }; }
     if (!parsed.asunto || !parsed.cuerpo) parsed = { asunto: 'Propuesta Puerto Seco Rojas - ' + (currentLead.empresa||currentLead.nombre), cuerpo: d.text };
