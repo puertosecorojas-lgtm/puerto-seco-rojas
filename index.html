@@ -116,9 +116,29 @@ select option{background:#1e2436}
 .text-muted{color:var(--muted)}
 .text-sm{font-size:12px}
 .w-full{width:100%}
+
+/* LOGIN */
+#login-screen{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;align-items:center;justify-content:center}
+.login-box{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:40px;width:340px;text-align:center}
+.login-box h2{font-size:20px;font-weight:700;color:var(--accent);margin-bottom:6px}
+.login-box p{font-size:12px;color:var(--muted);margin-bottom:24px}
+.login-box input{margin-bottom:12px;text-align:left}
+.login-error{color:var(--danger);font-size:12px;margin-top:8px;min-height:18px}
 </style>
 </head>
 <body>
+
+
+<div id="login-screen">
+  <div class="login-box">
+    <h2>&#9875; Puerto Seco Rojas</h2>
+    <p>CRM Comercial v2.0</p>
+    <input id="login-user" type="text" placeholder="Usuario" style="width:100%">
+    <input id="login-pass" type="password" placeholder="Contrasena" style="width:100%" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="btn btn-primary" style="width:100%;margin-top:4px" onclick="doLogin()">Ingresar</button>
+    <div class="login-error" id="login-error"></div>
+  </div>
+</div>
 
 <aside id="sidebar">
   <div class="logo">
@@ -296,7 +316,48 @@ function checkGmailCallback() {
   }
 }
 
+
+// =====================================================================
+// LOGIN
+// =====================================================================
+function checkAuth() {
+  return sessionStorage.getItem('crm_auth') === '1';
+}
+
+function showApp() {
+  document.getElementById('login-screen').style.display = 'none';
+}
+
+async function doLogin() {
+  const user = document.getElementById('login-user').value.trim();
+  const pass = document.getElementById('login-pass').value;
+  const errEl = document.getElementById('login-error');
+  errEl.textContent = '';
+  if (!user || !pass) { errEl.textContent = 'Ingresa usuario y contrasena'; return; }
+  const btn = document.querySelector('#login-screen .btn');
+  btn.disabled = true; btn.textContent = 'Verificando...';
+  try {
+    const r = await fetch('/api/auth', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ user, pass })
+    });
+    const d = await r.json();
+    if (d.ok) {
+      sessionStorage.setItem('crm_auth', '1');
+      showApp();
+    } else {
+      errEl.textContent = 'Usuario o contrasena incorrectos';
+      btn.disabled = false; btn.textContent = 'Ingresar';
+    }
+  } catch(e) {
+    errEl.textContent = 'Error de conexion';
+    btn.disabled = false; btn.textContent = 'Ingresar';
+  }
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
+  if (!checkAuth()) return;
   document.getElementById('today-date').textContent = new Date().toLocaleDateString('es-AR',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
   loadKeysFromStorage();
   if (!DB.url || !DB.key) {
