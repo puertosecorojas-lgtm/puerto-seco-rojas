@@ -2,5 +2,6 @@
   "name": "puerto-seco-rojas",
   "version": "2.0.0",
   "description": "CRM Puerto Seco Rojas",
+  "type": "module",
   "engines": { "node": "24.x" }
 }
