@@ -261,6 +261,7 @@ function withKeys(body) {
   if (KEYS.groqKey)    k._groqKey   = KEYS.groqKey;
   if (KEYS.apolloKey)  k._apolloKey = KEYS.apolloKey;
   if (KEYS.hunterKey)  k._hunterKey = KEYS.hunterKey;
+  if (KEYS.apifyKey)   k._apifyKey  = KEYS.apifyKey;
   return { ...body, ...k };
 }
 
@@ -630,6 +631,117 @@ function filterLeads() {
   document.getElementById('leads-pagination').textContent = `${filtered.length} leads · ${allLeads.filter(l=>l.contactado).length} contactados`;
 }
 
+function switchMapsTab(sub) {
+  document.querySelectorAll('#maps-sub-tabs .inner-tab').forEach((el,i) => {
+    el.classList.toggle('active', ['url','search'][i]===sub);
+  });
+  const mc = document.getElementById('maps-sub-content');
+  if (sub === 'url') {
+    mc.innerHTML = `
+      <div class="form-row single">
+        <div class="form-group">
+          <label>URL de Google Maps</label>
+          <input id="maps-url" placeholder="https://maps.google.com/?cid=... o https://maps.app.goo.gl/...">
+        </div>
+      </div>
+      <button class="btn btn-primary" onclick="searchApify('url')">Extraer datos</button>
+      <span id="maps-loading" class="hidden" style="margin-left:10px"><span class="spinner"></span> Extrayendo (puede tardar 30-60 seg)...</span>`;
+  } else {
+    mc.innerHTML = `
+      <div class="form-row">
+        <div class="form-group">
+          <label>Rubro / Tipo de empresa</label>
+          <input id="maps-query" placeholder="ej: despachante aduana, exportadora granos, metalurgica">
+        </div>
+        <div class="form-group">
+          <label>Ciudad</label>
+          <input id="maps-city" placeholder="ej: Junin, Pergamino, Rosario">
+        </div>
+      </div>
+      <button class="btn btn-primary" onclick="searchApify('search')">Buscar en Google Maps</button>
+      <span id="maps-loading" class="hidden" style="margin-left:10px"><span class="spinner"></span> Buscando (puede tardar 30-60 seg)...</span>`;
+  }
+}
+
+async function searchApify(mode) {
+  const loadingEl = document.getElementById('maps-loading');
+  const resultsEl = document.getElementById('maps-results');
+  loadingEl.classList.remove('hidden');
+  resultsEl.innerHTML = '';
+
+  let body = {};
+  if (mode === 'url') {
+    const url = document.getElementById('maps-url')?.value.trim();
+    if (!url) { showToast('Ingresa una URL de Google Maps', 'err'); loadingEl.classList.add('hidden'); return; }
+    body = { url };
+  } else {
+    const query = document.getElementById('maps-query')?.value.trim();
+    const city = document.getElementById('maps-city')?.value.trim();
+    if (!query) { showToast('Ingresa un rubro o tipo de empresa', 'err'); loadingEl.classList.add('hidden'); return; }
+    body = { searchQuery: query + (city ? ' ' + city + ' Argentina' : ' Argentina') };
+  }
+
+  if (KEYS.apifyKey) body._apifyKey = KEYS.apifyKey;
+
+  try {
+    const d = await apiFetch('/api/apify', body);
+    if (d.error) throw new Error(d.error);
+    const leads = d.leads || [];
+    window.__apifyResults = leads;
+
+    resultsEl.innerHTML = `
+    <div class="form-section">
+      <h3>${leads.length} empresa(s) encontrada(s) en Google Maps</h3>
+      ${leads.length === 0 ? '<p class="text-muted text-sm">Sin resultados. Proba con otra busqueda.</p>' : ''}
+      ${leads.map((l,i) => `
+      <div class="lead-result">
+        <div class="lead-result-info">
+          <strong>${l.empresa}</strong>
+          <span>${tipoBadge(l.tipo)} · ${l.ciudad||'—'}</span>
+          ${l.telefono ? `<div style="font-size:12px;color:#93c5fd;margin-top:3px">${l.telefono}</div>` : ''}
+          ${l.email ? `<div style="font-size:12px;color:#fcd34d">${l.email}</div>` : ''}
+          ${l.web ? `<div style="font-size:11px;color:var(--muted)">${l.web}</div>` : ''}
+          ${l.direccion ? `<div style="font-size:11px;color:var(--muted)">${l.direccion}</div>` : ''}
+        </div>
+        <div class="lead-result-actions">
+          <button class="btn btn-primary btn-sm" onclick="addLeadFromApify(${i})">+ Agregar</button>
+        </div>
+      </div>`).join('')}
+      ${leads.length > 1 ? `<button class="btn btn-primary" style="margin-top:8px" onclick="addAllFromApify()">+ Agregar todos (${leads.length})</button>` : ''}
+    </div>`;
+  } catch(e) {
+    resultsEl.innerHTML = `<div class="form-section" style="border-color:var(--danger)"><p style="color:var(--danger)">${parseApiError(e, 'apify')}</p></div>`;
+  }
+  loadingEl.classList.add('hidden');
+}
+
+async function addLeadFromApify(idx) {
+  const l = (window.__apifyResults||[])[idx];
+  if (!l) return;
+  if (l.email && allLeads.some(x => x.email === l.email)) return showToast('Ya existe un lead con ese email', 'warn');
+  try {
+    const res = await sbInsert('leads', l);
+    allLeads.unshift(res[0]||l);
+    document.getElementById('badge-leads').textContent = allLeads.length;
+    showToast('Lead agregado: ' + l.empresa, 'ok');
+  } catch(e) { showToast('Error: '+e.message, 'err'); }
+}
+
+async function addAllFromApify() {
+  const results = window.__apifyResults || [];
+  let added = 0, skipped = 0;
+  for (const l of results) {
+    if (l.email && allLeads.some(x => x.email === l.email)) { skipped++; continue; }
+    try {
+      const res = await sbInsert('leads', l);
+      allLeads.unshift(res[0]||l);
+      added++;
+    } catch(e) { skipped++; }
+  }
+  document.getElementById('badge-leads').textContent = allLeads.length;
+  showToast(added + ' leads agregados' + (skipped?' · '+skipped+' omitidos':''), 'ok');
+}
+
 async function verifyEmailLead(id, email) {
   showToast('Verificando email...', 'warn');
   try {
@@ -740,7 +852,8 @@ function pageBuscar() {
   document.getElementById('content').innerHTML = `
   <div class="inner-tabs" id="buscar-tabs">
     <div class="inner-tab active" onclick="switchBuscarTab('apollo')">Apollo.io</div>
-    <div class="inner-tab" onclick="switchBuscarTab('pegar')">Pegar de Maps/LinkedIn</div>
+    <div class="inner-tab" onclick="switchBuscarTab('maps')">Google Maps URL</div>
+    <div class="inner-tab" onclick="switchBuscarTab('pegar')">Pegar texto</div>
     <div class="inner-tab" onclick="switchBuscarTab('hunter')">Hunter.io</div>
     <div class="inner-tab" onclick="switchBuscarTab('web')">Buscadores externos</div>
   </div>
@@ -750,7 +863,7 @@ function pageBuscar() {
 
 function switchBuscarTab(tab) {
   document.querySelectorAll('#buscar-tabs .inner-tab').forEach((el,i) => {
-    el.classList.toggle('active', ['apollo','pegar','hunter','web'][i]===tab);
+    el.classList.toggle('active', ['apollo','maps','pegar','hunter','web'][i]===tab);
   });
   const bc = document.getElementById('buscar-content');
   if (tab === 'apollo') {
@@ -809,6 +922,24 @@ function switchBuscarTab(tab) {
       <span id="ap-loading" class="hidden" style="margin-left:10px"><span class="spinner"></span> Buscando...</span>
     </div>
     <div id="ap-results"></div>`;
+  } else if (tab === 'maps') {
+    bc.innerHTML = `
+    <div class="form-section">
+      <h3>Google Maps - Scraper automatico via Apify</h3>
+      <p class="text-muted text-sm" style="margin-bottom:14px">
+        Dos formas de usar:<br>
+        <strong>1. URL directa:</strong> Abri Google Maps, buscá una empresa, copia la URL y pegala aca.<br>
+        <strong>2. Busqueda:</strong> Escribi el rubro y ciudad y Apify busca automaticamente.
+      </p>
+      <div class="inner-tabs" id="maps-sub-tabs" style="margin-bottom:12px">
+        <div class="inner-tab active" onclick="switchMapsTab('url')">Por URL</div>
+        <div class="inner-tab" onclick="switchMapsTab('search')">Por busqueda</div>
+      </div>
+      <div id="maps-sub-content"></div>
+    </div>
+    <div id="maps-results"></div>`;
+    switchMapsTab('url');
+
   } else if (tab === 'hunter') {
     bc.innerHTML = `
     <div class="form-section">
@@ -1553,6 +1684,10 @@ function switchCfgTab(tab) {
         <div class="form-row single"><div class="form-group"><label>Apollo.io API Key</label><input id="k-apollo" value="${KEYS.apolloKey||''}" placeholder="apollo_..."></div></div>
       </div>
       <div style="background:#0a0e1a;border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:14px">
+        <div style="font-size:11px;color:#f97316;margin-bottom:12px;font-weight:600">APIFY — scraper de Google Maps</div>
+        <div class="form-row single"><div class="form-group"><label>Apify API Key</label><input id="k-apify" value="${KEYS.apifyKey||''}" placeholder="apify_api_..."></div></div>
+      </div>
+      <div style="background:#0a0e1a;border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:14px">
         <div style="font-size:11px;color:#c4b5fd;margin-bottom:12px;font-weight:600">HUNTER.IO — verificacion de emails</div>
         <div class="form-row single"><div class="form-group"><label>Hunter.io API Key</label><input id="k-hunter" value="${KEYS.hunterKey||''}" placeholder="hunter_..."></div></div>
       </div>
@@ -1594,6 +1729,7 @@ async function saveAllKeys() {
   const groq   = document.getElementById('k-groq')?.value.trim();
   const apollo = document.getElementById('k-apollo')?.value.trim();
   const hunter = document.getElementById('k-hunter')?.value.trim();
+  const apify  = document.getElementById('k-apify')?.value.trim();
   const st = document.getElementById('k-status');
   const toSave = {};
   if (url)    toSave.supabaseUrl = url;
@@ -1601,6 +1737,7 @@ async function saveAllKeys() {
   if (groq)   toSave.groqKey    = groq;
   if (apollo) toSave.apolloKey  = apollo;
   if (hunter) toSave.hunterKey  = hunter;
+  if (apify)  toSave.apifyKey   = apify;
   saveKeysToStorage(toSave);
   if (url)  DB.url = url;
   if (skey) DB.key = skey;
