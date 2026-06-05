@@ -12,14 +12,14 @@
   --text:#e2e8f0;--muted:#8892aa;--white:#fff;
 }
 body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);display:flex;height:100vh;overflow:hidden}
-
-/* SIDEBAR */
 #sidebar{width:220px;min-width:220px;background:var(--sidebar);border-right:1px solid var(--border);display:flex;flex-direction:column;padding:0}
 .logo{padding:20px 16px 12px;border-bottom:1px solid var(--border)}
 .logo h1{font-size:14px;font-weight:700;color:var(--accent);letter-spacing:.5px;line-height:1.3}
 .logo p{font-size:11px;color:var(--muted);margin-top:2px}
 #connection-badge{margin:8px 16px;padding:4px 10px;border-radius:20px;font-size:10px;font-weight:600;text-align:center;background:#1a2a1a;color:#4ade80;border:1px solid #2d5a2d}
 #connection-badge.off{background:#2a1a1a;color:#f87171;border-color:#5a2d2d}
+#gmail-badge{margin:4px 16px 0;padding:4px 10px;border-radius:20px;font-size:10px;font-weight:600;text-align:center;background:#1a1a2a;color:#8892aa;border:1px solid #2a3050;cursor:pointer}
+#notif-badge{margin:4px 16px 0;padding:4px 10px;border-radius:20px;font-size:10px;font-weight:600;text-align:center;background:#1a2a1a;color:#4ade80;border:1px solid #2d5a2d;cursor:pointer}
 nav{flex:1;padding:8px 0}
 .nav-item{display:flex;align-items:center;gap:10px;padding:10px 16px;cursor:pointer;font-size:13px;color:var(--muted);transition:.15s;border-left:3px solid transparent}
 .nav-item:hover{background:rgba(59,130,246,.08);color:var(--text)}
@@ -27,22 +27,16 @@ nav{flex:1;padding:8px 0}
 .nav-item .icon{font-size:16px;width:20px;text-align:center}
 .nav-badge{margin-left:auto;background:var(--accent);color:#fff;font-size:10px;padding:1px 6px;border-radius:10px}
 .sidebar-footer{padding:12px 16px;border-top:1px solid var(--border);font-size:11px;color:var(--muted)}
-
-/* MAIN */
 #main{flex:1;display:flex;flex-direction:column;overflow:hidden}
 .topbar{padding:12px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:var(--sidebar)}
 .topbar-title{font-size:16px;font-weight:600}
 .topbar-actions{display:flex;gap:8px;align-items:center}
 #content{flex:1;overflow-y:auto;padding:20px}
-
-/* CARDS & STATS */
 .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
 .stat-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px}
 .stat-card .val{font-size:28px;font-weight:700;color:var(--white)}
 .stat-card .lbl{font-size:11px;color:var(--muted);margin-top:4px}
 .stat-card .sub{font-size:12px;color:var(--accent2);margin-top:6px}
-
-/* TABLE */
 .table-wrap{background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden}
 .table-toolbar{padding:12px 16px;display:flex;gap:10px;align-items:center;border-bottom:1px solid var(--border);flex-wrap:wrap}
 table{width:100%;border-collapse:collapse}
@@ -57,8 +51,6 @@ tr:hover td{background:rgba(59,130,246,.04)}
 .badge-red{background:rgba(239,68,68,.2);color:#fca5a5}
 .badge-gray{background:rgba(100,116,139,.2);color:#94a3b8}
 .badge-purple{background:rgba(139,92,246,.2);color:#c4b5fd}
-
-/* FORMS */
 .form-section{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:16px}
 .form-section h3{font-size:14px;font-weight:600;margin-bottom:16px;color:var(--accent)}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
@@ -69,8 +61,6 @@ input,select,textarea{background:#0d1117;border:1px solid var(--border);border-r
 input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent);background:#111827}
 textarea{resize:vertical;min-height:80px}
 select option{background:#1e2436}
-
-/* BUTTONS */
 .btn{padding:7px 14px;border-radius:6px;border:none;cursor:pointer;font-size:13px;font-weight:600;transition:.15s;display:inline-flex;align-items:center;gap:6px}
 .btn-primary{background:var(--accent);color:#fff}
 .btn-primary:hover{background:#2563eb}
@@ -82,61 +72,42 @@ select option{background:#1e2436}
 .btn-ghost:hover{color:var(--text);border-color:var(--text)}
 .btn-sm{padding:4px 10px;font-size:12px}
 .btn:disabled{opacity:.5;cursor:not-allowed}
-
-/* ENFOQUE GRID */
 .enfoque-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
 .enfoque-item{background:#0d1117;border:1px solid var(--border);border-radius:8px;padding:10px;cursor:pointer;transition:.15s;display:flex;gap:8px;align-items:flex-start}
 .enfoque-item:hover{border-color:var(--accent)}
 .enfoque-item.selected{border-color:var(--accent);background:rgba(59,130,246,.1)}
 .enfoque-item input[type=checkbox]{width:14px;height:14px;margin-top:1px;flex-shrink:0;accent-color:var(--accent)}
 .enfoque-item span{font-size:12px;line-height:1.4;color:var(--text)}
-
-/* PREVIEW */
 #email-preview-box{background:#0d1117;border:1px solid var(--border);border-radius:8px;padding:16px;margin-top:12px;font-size:13px;line-height:1.7;white-space:pre-wrap;max-height:300px;overflow-y:auto}
 #email-preview-box.empty{color:var(--muted);font-style:italic}
-
-/* MODAL */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:100;display:flex;align-items:center;justify-content:center}
 .modal{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px;min-width:420px;max-width:600px;width:90%}
 .modal h3{font-size:16px;font-weight:600;margin-bottom:16px}
-
-/* LEAD RESULT ITEMS */
 .lead-result{background:#0d1117;border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
 .lead-result-info{flex:1}
 .lead-result-info strong{font-size:13px;display:block;margin-bottom:2px}
 .lead-result-info span{font-size:12px;color:var(--muted)}
 .lead-result-actions{display:flex;gap:6px;flex-shrink:0}
-
-/* EMAIL HISTORY */
 .email-item{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:10px}
 .email-item-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
 .email-item-body{font-size:12px;color:var(--muted);line-height:1.5;max-height:60px;overflow:hidden}
-
-/* STATUS COLORS */
 .status-sin_contactar{color:var(--muted)}
 .status-contactado{color:#93c5fd}
 .status-interesado{color:#6ee7b7}
 .status-reunion_agendada{color:#c4b5fd}
 .status-no_interesado{color:#fca5a5}
 .status-sin_respuesta{color:#fcd34d}
-
-/* TABS dentro de secciones */
 .inner-tabs{display:flex;gap:4px;margin-bottom:16px;border-bottom:1px solid var(--border);padding-bottom:0}
 .inner-tab{padding:8px 14px;cursor:pointer;font-size:13px;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px}
 .inner-tab.active{color:var(--accent);border-bottom-color:var(--accent)}
-
-/* SPINNER */
 .spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-radius:50%;border-top-color:#fff;animation:spin .6s linear infinite;vertical-align:middle}
 @keyframes spin{to{transform:rotate(360deg)}}
-
-/* TOAST */
 #toast{position:fixed;bottom:20px;right:20px;z-index:999;display:flex;flex-direction:column;gap:8px;pointer-events:none}
 .toast-item{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 16px;font-size:13px;pointer-events:auto;animation:fadeIn .2s ease}
 .toast-item.ok{border-left:3px solid var(--accent2)}
 .toast-item.err{border-left:3px solid var(--danger)}
 .toast-item.warn{border-left:3px solid var(--warn)}
 @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-
 .hidden{display:none!important}
 .flex{display:flex}
 .gap-2{gap:8px}
@@ -149,51 +120,51 @@ select option{background:#1e2436}
 </head>
 <body>
 
-<!-- SIDEBAR -->
 <aside id="sidebar">
   <div class="logo">
-    <h1>⚓ Puerto Seco Rojas</h1>
+    <h1>&#9875; Puerto Seco Rojas</h1>
     <p>CRM Comercial v2.0</p>
   </div>
-  <div id="connection-badge">● Conectando…</div>
+  <div id="connection-badge">&#9679; Conectando&hellip;</div>
+  <div id="gmail-badge" onclick="connectGmail()">&#9993; Gmail: no conectado</div>
+  <div id="notif-badge" class="hidden" onclick="renderPage('enviados')">&#128139; <span id="notif-count">0</span> respuesta(s) nueva(s)</div>
   <nav>
     <div class="nav-item active" data-page="dashboard">
-      <span class="icon">📊</span> Dashboard
+      <span class="icon">&#128202;</span> Dashboard
     </div>
     <div class="nav-item" data-page="leads">
-      <span class="icon">👥</span> Leads
+      <span class="icon">&#128101;</span> Leads
       <span class="nav-badge" id="badge-leads">0</span>
     </div>
     <div class="nav-item" data-page="buscar">
-      <span class="icon">🔍</span> Buscar Leads
+      <span class="icon">&#128269;</span> Buscar Leads
     </div>
     <div class="nav-item" data-page="redactar">
-      <span class="icon">✉️</span> Redactar Email
+      <span class="icon">&#9993;&#65039;</span> Redactar Email
     </div>
     <div class="nav-item" data-page="enviados">
-      <span class="icon">📤</span> Enviados
+      <span class="icon">&#128228;</span> Enviados
       <span class="nav-badge" id="badge-enviados">0</span>
     </div>
     <div class="nav-item" data-page="aliados">
-      <span class="icon">🤝</span> Despachantes Aliados
+      <span class="icon">&#129309;</span> Despachantes Aliados
     </div>
     <div class="nav-item" data-page="config">
-      <span class="icon">⚙️</span> Configuración
+      <span class="icon">&#9881;&#65039;</span> Configuracion
     </div>
   </nav>
   <div class="sidebar-footer">
     <div id="user-name-sidebar">Sin configurar</div>
-    <div class="text-sm" style="margin-top:2px" id="user-email-sidebar">—</div>
+    <div class="text-sm" style="margin-top:2px" id="user-email-sidebar">&mdash;</div>
   </div>
 </aside>
 
-<!-- MAIN -->
 <div id="main">
   <div class="topbar">
     <div class="topbar-title" id="page-title">Dashboard</div>
     <div class="topbar-actions">
       <span class="text-muted text-sm" id="today-date"></span>
-      <button class="btn btn-ghost btn-sm" onclick="refreshAll()">↻ Actualizar</button>
+      <button class="btn btn-ghost btn-sm" onclick="refreshAll()">&#8635; Actualizar</button>
     </div>
   </div>
   <div id="content"></div>
@@ -202,9 +173,6 @@ select option{background:#1e2436}
 <div id="toast"></div>
 
 <script>
-// =====================================================================
-// ESTADO GLOBAL
-// =====================================================================
 let DB = { url: '', key: '' };
 let CFG = {};
 let allLeads = [];
@@ -212,64 +180,50 @@ let allEnviados = [];
 let currentLead = null;
 let emailBody = '';
 
-// =====================================================================
-// MANEJO DE ERRORES — mensajes descriptivos por tipo
-// =====================================================================
 function parseApiError(err, service) {
   const msg = (err?.message || err?.error?.message || String(err)).toLowerCase();
-  // Groq
   if (service === 'groq' || msg.includes('groq')) {
     if (msg.includes('rate_limit') || msg.includes('rate limit') || msg.includes('tokens per minute'))
-      return '⏱ Groq: límite de velocidad alcanzado. Esperá 60 segundos e intentá de nuevo.';
+      return 'Groq: limite de velocidad alcanzado. Espera 60 segundos e intenta de nuevo.';
     if (msg.includes('insufficient_quota') || msg.includes('quota') || msg.includes('billing'))
-      return '💳 Groq: se agotaron los tokens del plan gratuito. Revisá console.groq.com';
+      return 'Groq: se agotaron los tokens del plan gratuito. Revisa console.groq.com';
     if (msg.includes('invalid') && msg.includes('key'))
-      return '🔑 Groq: API key inválida. Verificá la clave en Configuración → Keys.';
-    if (msg.includes('model_not_found') || msg.includes('model'))
-      return '🤖 Groq: modelo no disponible. Contactá soporte.';
+      return 'Groq: API key invalida. Verifica la clave en Configuracion > Keys.';
   }
-  // Hunter
   if (service === 'hunter' || msg.includes('hunter')) {
     if (msg.includes('429') || msg.includes('too many') || msg.includes('limit'))
-      return '📧 Hunter.io: límite de búsquedas alcanzado (plan gratuito: 25/mes). Esperá al próximo mes.';
+      return 'Hunter.io: limite de busquedas alcanzado (plan gratuito: 25/mes).';
     if (msg.includes('401') || msg.includes('unauthorized') || msg.includes('invalid key'))
-      return '🔑 Hunter.io: API key inválida. Verificá la clave en Vercel → Environment Variables.';
+      return 'Hunter.io: API key invalida.';
   }
-  // Apollo
   if (service === 'apollo' || msg.includes('apollo')) {
     if (msg.includes('429') || msg.includes('rate') || msg.includes('limit'))
-      return '🔭 Apollo.io: límite de búsquedas alcanzado. Esperá y volvé a intentar.';
+      return 'Apollo.io: limite de busquedas alcanzado.';
     if (msg.includes('401') || msg.includes('unauthorized') || msg.includes('invalid'))
-      return '🔑 Apollo.io: API key inválida. Verificá la clave en Vercel → Environment Variables.';
+      return 'Apollo.io: API key invalida.';
     if (msg.includes('no configurada') || msg.includes('not configured'))
-      return '🔑 Apollo.io: key no configurada. Agregá APOLLO_API_KEY en Vercel → Environment Variables.';
+      return 'Apollo.io: key no configurada. Agrega APOLLO_API_KEY en Vercel.';
   }
-  // Gmail / Nodemailer
   if (service === 'gmail' || msg.includes('gmail') || msg.includes('smtp')) {
     if (msg.includes('invalid login') || msg.includes('username and password') || msg.includes('535'))
-      return '📬 Gmail: contraseña de app incorrecta. Generá una nueva en myaccount.google.com/apppasswords y actualizá GMAIL_PASS en Vercel.';
+      return 'Gmail: contrasena de app incorrecta.';
     if (msg.includes('getaddrinfo') || msg.includes('network') || msg.includes('enotfound'))
-      return '🌐 Gmail: sin conexión de red desde el servidor. Esperá y reintentá.';
+      return 'Gmail: sin conexion de red desde el servidor.';
     if (msg.includes('550') || msg.includes('rejected'))
-      return '🚫 Gmail: el email fue rechazado por el servidor destino (puede ser inválido).';
+      return 'Gmail: el email fue rechazado por el servidor destino.';
   }
-  // Supabase
   if (service === 'supabase' || msg.includes('supabase') || msg.includes('jwt') || msg.includes('pgrst')) {
     if (msg.includes('jwt') || msg.includes('invalid key') || msg.includes('apikey'))
-      return '🔑 Supabase: clave inválida. Verificá SUPABASE_ANON_KEY en Configuración → Keys.';
+      return 'Supabase: clave invalida.';
     if (msg.includes('does not exist') || msg.includes('relation') || msg.includes('table'))
-      return '🗄 Supabase: tabla no encontrada. Ejecutá el schema SQL en Supabase → SQL Editor.';
+      return 'Supabase: tabla no encontrada. Ejecuta el schema SQL.';
     if (msg.includes('fetch') || msg.includes('network') || msg.includes('failed'))
-      return '🌐 Supabase: sin conexión. Verificá SUPABASE_URL en Configuración → Keys.';
+      return 'Supabase: sin conexion.';
   }
-  // Genérico
-  return `❌ Error: ${err?.message || String(err)}`;
+  return 'Error: ' + (err?.message || String(err));
 }
 
-// =====================================================================
-// KEYS — guardar y cargar desde localStorage (TODAS las keys)
-// =====================================================================
-let KEYS = {};  // cache en memoria de todas las keys del panel
+let KEYS = {};
 
 function loadKeysFromStorage() {
   KEYS = JSON.parse(localStorage.getItem('crm_keys') || '{}');
@@ -282,7 +236,6 @@ function saveKeysToStorage(newKeys) {
   localStorage.setItem('crm_keys', JSON.stringify(KEYS));
 }
 
-// Helper: inyecta las keys del panel en el body de cada llamada a la API
 function withKeys(body) {
   const k = {};
   if (KEYS.groqKey)    k._groqKey   = KEYS.groqKey;
@@ -291,7 +244,6 @@ function withKeys(body) {
   return { ...body, ...k };
 }
 
-// Wrapper para fetch a APIs del servidor — inyecta keys automáticamente
 async function apiFetch(endpoint, body) {
   const r = await fetch(endpoint, {
     method: 'POST',
@@ -301,16 +253,52 @@ async function apiFetch(endpoint, body) {
   return r.json();
 }
 
-// =====================================================================
-// INIT
-// =====================================================================
+// GMAIL SYNC
+function connectGmail() {
+  window.location.href = '/api/gmail-auth';
+}
+
+async function syncGmail() {
+  try {
+    const r = await fetch('/api/gmail-sync', { method: 'POST' });
+    const d = await r.json();
+    const gmailBadge = document.getElementById('gmail-badge');
+    if (!d.ok) {
+      if (d.error === 'Gmail no conectado') {
+        if (gmailBadge) { gmailBadge.textContent = 'Gmail: no conectado - click para conectar'; gmailBadge.style.color = '#f87171'; }
+      }
+      return;
+    }
+    if (gmailBadge) { gmailBadge.textContent = 'Gmail: conectado'; gmailBadge.style.color = '#4ade80'; gmailBadge.style.borderColor = '#2d5a2d'; gmailBadge.style.background = '#1a2a1a'; }
+    if (d.nuevas > 0) {
+      await Promise.all([loadLeads(), loadEnviados()]);
+      const nc = document.getElementById('notif-count');
+      const nb = document.getElementById('notif-badge');
+      if (nc) nc.textContent = d.nuevas;
+      if (nb) nb.classList.remove('hidden');
+      showToast(d.nuevas + ' respuesta(s) nueva(s) de leads', 'ok');
+    }
+  } catch(e) { console.log('Gmail sync error:', e.message); }
+}
+
+function checkGmailCallback() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('gmail_connected') === '1') {
+    showToast('Gmail conectado correctamente', 'ok');
+    const b = document.getElementById('gmail-badge');
+    if (b) { b.textContent = 'Gmail: conectado'; b.style.color = '#4ade80'; b.style.borderColor = '#2d5a2d'; b.style.background = '#1a2a1a'; }
+    window.history.replaceState({}, '', '/');
+    syncGmail();
+  }
+  if (params.get('gmail_error')) {
+    showToast('Error conectando Gmail: ' + params.get('gmail_error'), 'err');
+    window.history.replaceState({}, '', '/');
+  }
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
   document.getElementById('today-date').textContent = new Date().toLocaleDateString('es-AR',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
-
-  // 1. Cargar keys guardadas localmente (prioridad máxima)
   loadKeysFromStorage();
-
-  // 2. Si faltan, intentar obtener de /api/config (Vercel env vars)
   if (!DB.url || !DB.key) {
     try {
       const r = await fetch('/api/config');
@@ -321,17 +309,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
     } catch(e){}
   }
-
-  // Verificar conexión a Supabase
   await checkConnection();
-
-  // Cargar datos
   await Promise.all([loadLeads(), loadEnviados(), loadCfg()]);
-
-  // Mostrar dashboard
   renderPage('dashboard');
-
-  // Navegación
+  checkGmailCallback();
+  syncGmail();
+  setInterval(syncGmail, 5 * 60 * 1000);
   document.querySelectorAll('.nav-item').forEach(el => {
     el.addEventListener('click', () => renderPage(el.dataset.page));
   });
@@ -340,9 +323,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 async function checkConnection() {
   const badge = document.getElementById('connection-badge');
   if (!DB.url || !DB.key) {
-    badge.textContent = '● Sin Supabase — configurar Keys';
+    badge.textContent = 'Sin Supabase - configurar Keys';
     badge.classList.add('off');
-    badge.title = 'Andá a Configuración → Keys e ingresá la URL y clave de Supabase';
     badge.style.cursor = 'pointer';
     badge.onclick = () => renderPage('config');
     return false;
@@ -350,27 +332,21 @@ async function checkConnection() {
   try {
     const r = await sbFetch('configuracion?select=id&limit=1');
     if (r.ok) {
-      badge.textContent = '● Conectado a Supabase';
+      badge.textContent = 'Conectado a Supabase';
       badge.classList.remove('off');
       badge.onclick = null;
       return true;
     }
-    const txt = await r.text();
-    badge.textContent = '● Error Supabase';
+    badge.textContent = 'Error Supabase';
     badge.classList.add('off');
-    badge.title = parseApiError({ message: txt }, 'supabase');
     return false;
   } catch(e) {
-    badge.textContent = '● Sin conexión';
+    badge.textContent = 'Sin conexion';
     badge.classList.add('off');
-    badge.title = parseApiError(e, 'supabase');
     return false;
   }
 }
 
-// =====================================================================
-// SUPABASE REST
-// =====================================================================
 async function sbFetch(path, options = {}) {
   if (!DB.url || !DB.key) throw new Error('Supabase no configurado');
   const url = `${DB.url}/rest/v1/${path}`;
@@ -410,17 +386,12 @@ async function sbDelete(table, id) {
   if (!r.ok) throw new Error('Error eliminando');
 }
 
-// =====================================================================
-// CARGA DE DATOS
-// =====================================================================
 async function loadLeads() {
   try {
     const data = await sbGet('leads', 'order=created_at.desc&limit=500');
     allLeads = data;
     document.getElementById('badge-leads').textContent = allLeads.length;
-  } catch(e) {
-    allLeads = [];
-  }
+  } catch(e) { allLeads = []; }
 }
 
 async function loadEnviados() {
@@ -428,9 +399,7 @@ async function loadEnviados() {
     const data = await sbGet('emails_enviados', 'order=fecha_envio.desc&limit=500');
     allEnviados = data;
     document.getElementById('badge-enviados').textContent = allEnviados.length;
-  } catch(e) {
-    allEnviados = [];
-  }
+  } catch(e) { allEnviados = []; }
 }
 
 async function loadCfg() {
@@ -439,13 +408,11 @@ async function loadCfg() {
     CFG = data[0] || {};
     document.getElementById('user-name-sidebar').textContent = CFG.nombre || 'Sin configurar';
     document.getElementById('user-email-sidebar').textContent = CFG.email || '—';
-  } catch(e) {
-    CFG = {};
-  }
+  } catch(e) { CFG = {}; }
 }
 
 async function refreshAll() {
-  showToast('Actualizando datos…', 'warn');
+  showToast('Actualizando datos...', 'warn');
   await Promise.all([loadLeads(), loadEnviados(), loadCfg()]);
   renderPage(currentPage());
   showToast('Datos actualizados', 'ok');
@@ -455,15 +422,12 @@ function currentPage() {
   return document.querySelector('.nav-item.active')?.dataset?.page || 'dashboard';
 }
 
-// =====================================================================
-// NAVEGACIÓN
-// =====================================================================
 function renderPage(page) {
   document.querySelectorAll('.nav-item').forEach(el => el.classList.toggle('active', el.dataset.page === page));
   const titles = {
     dashboard:'Dashboard',leads:'Leads',buscar:'Buscar Leads',
     redactar:'Redactar Email',enviados:'Emails Enviados',
-    aliados:'Despachantes Aliados',config:'Configuración'
+    aliados:'Despachantes Aliados',config:'Configuracion'
   };
   document.getElementById('page-title').textContent = titles[page] || page;
   const fn = { dashboard:pageDashboard, leads:pageLeads, buscar:pageBuscar,
@@ -471,9 +435,6 @@ function renderPage(page) {
   (fn[page] || (() => {}))();
 }
 
-// =====================================================================
-// DASHBOARD
-// =====================================================================
 function pageDashboard() {
   const total = allLeads.length;
   const contactados = allLeads.filter(l => l.contactado).length;
@@ -488,12 +449,11 @@ function pageDashboard() {
   <div class="stats-row">
     <div class="stat-card"><div class="val">${total}</div><div class="lbl">Leads totales</div><div class="sub">en base de datos</div></div>
     <div class="stat-card"><div class="val">${contactados}</div><div class="lbl">Contactados</div><div class="sub">${total?Math.round(contactados/total*100):0}% del total</div></div>
-    <div class="stat-card"><div class="val">${interesados}</div><div class="lbl">Interesados</div><div class="sub">o reunión agendada</div></div>
-    <div class="stat-card"><div class="val">${hoy}</div><div class="lbl">Enviados hoy</div><div class="sub">de ~20 objetivo/día</div></div>
+    <div class="stat-card"><div class="val">${interesados}</div><div class="lbl">Interesados</div><div class="sub">o reunion agendada</div></div>
+    <div class="stat-card"><div class="val">${hoy}</div><div class="lbl">Enviados hoy</div><div class="sub">de ~20 objetivo/dia</div></div>
   </div>
-
   <div class="form-section">
-    <h3>📍 Últimos leads sin contactar</h3>
+    <h3>Ultimos leads sin contactar</h3>
     <table><thead><tr>
       <th>Empresa</th><th>Tipo</th><th>Ciudad</th><th>Email</th><th>Estado</th><th></th>
     </tr></thead><tbody>
@@ -504,19 +464,18 @@ function pageDashboard() {
         <td>${l.ciudad||'—'}</td>
         <td><span style="font-size:12px;color:${l.email_status==='verificado'?'#6ee7b7':l.email?'#fcd34d':'#f87171'}">${l.email||'sin email'}</span></td>
         <td>${estadoBadge(l.estado)}</td>
-        <td><button class="btn btn-primary btn-sm" onclick="redactarPara(${l.id})">✉ Redactar</button></td>
+        <td><button class="btn btn-primary btn-sm" onclick="redactarPara(${l.id})">Redactar</button></td>
       </tr>`).join('')}
     </tbody></table>
   </div>
-
   <div class="form-section">
-    <h3>📤 Últimos emails enviados</h3>
+    <h3>Ultimos emails enviados</h3>
     ${allEnviados.slice(0,5).map(e=>`
     <div class="email-item">
       <div class="email-item-header">
         <div>
           <strong style="font-size:13px">${e.destinatario_nombre||e.destinatario_email}</strong>
-          <span class="text-muted text-sm"> · ${e.empresa||''} · ${e.ciudad||''}</span>
+          <span class="text-muted text-sm"> &middot; ${e.empresa||''} &middot; ${e.ciudad||''}</span>
         </div>
         <div style="display:flex;gap:8px;align-items:center">
           ${estadoBadge(e.estado)}
@@ -524,18 +483,15 @@ function pageDashboard() {
         </div>
       </div>
       <div class="email-item-body">${(e.cuerpo||'').replace(/</g,'&lt;')}</div>
-    </div>`).join('')||'<p class="text-muted text-sm">Sin emails enviados aún.</p>'}
+    </div>`).join('')||'<p class="text-muted text-sm">Sin emails enviados aun.</p>'}
   </div>`;
 }
 
-// =====================================================================
-// LEADS
-// =====================================================================
 function pageLeads(filter = {}) {
   document.getElementById('content').innerHTML = `
   <div class="table-wrap">
     <div class="table-toolbar">
-      <input id="search-leads" type="text" placeholder="Buscar por nombre, empresa, ciudad…" style="width:260px" oninput="filterLeads()">
+      <input id="search-leads" type="text" placeholder="Buscar por nombre, empresa, ciudad..." style="width:260px" oninput="filterLeads()">
       <select id="filter-tipo" onchange="filterLeads()">
         <option value="">Todos los tipos</option>
         <option>despachante</option><option>estudio_aduanero</option>
@@ -547,13 +503,13 @@ function pageLeads(filter = {}) {
         <option value="sin_contactar">Sin contactar</option>
         <option value="contactado">Contactado</option>
         <option value="interesado">Interesado</option>
-        <option value="reunion_agendada">Reunión agendada</option>
+        <option value="reunion_agendada">Reunion agendada</option>
         <option value="no_interesado">No interesado</option>
       </select>
       <select id="filter-zona" onchange="filterLeads()">
         <option value="">Todas las zonas</option>
         <option>Bs.As. Centro</option><option>Bs.As. Norte</option>
-        <option>Bs.As.</option><option>Santa Fe</option><option>Córdoba</option><option>Entre Ríos</option>
+        <option>Bs.As.</option><option>Santa Fe</option><option>Cordoba</option><option>Entre Rios</option>
       </select>
       <button class="btn btn-primary btn-sm" onclick="showModalAddLead()">+ Agregar lead</button>
     </div>
@@ -574,7 +530,6 @@ function filterLeads() {
   const tipo = document.getElementById('filter-tipo')?.value||'';
   const estado = document.getElementById('filter-estado')?.value||'';
   const zona = document.getElementById('filter-zona')?.value||'';
-
   const filtered = allLeads.filter(l => {
     const text = `${l.nombre||''} ${l.empresa||''} ${l.ciudad||''} ${l.email||''}`.toLowerCase();
     if (q && !text.includes(q)) return false;
@@ -583,7 +538,6 @@ function filterLeads() {
     if (zona && !(l.zona||'').includes(zona)) return false;
     return true;
   });
-
   const tbody = document.getElementById('leads-tbody');
   if (!tbody) return;
   tbody.innerHTML = filtered.map(l => `
@@ -596,10 +550,7 @@ function filterLeads() {
       <td>${l.ciudad||'—'}<br><span class="text-muted text-sm">${l.zona||''}</span></td>
       <td>
         <div style="display:flex;align-items:center;gap:6px">
-          ${l.email_status==='verificado'?'<span title="Verificado" style="color:#4ade80">✓</span>':
-            l.email_status==='invalido'?'<span title="Inválido" style="color:#f87171">✗</span>':
-            l.email?'<span title="Sin verificar" style="color:#fcd34d">?</span>':
-            '<span style="color:var(--muted)">—</span>'}
+          ${l.email_status==='verificado'?'<span style="color:#4ade80">V</span>':l.email_status==='invalido'?'<span style="color:#f87171">X</span>':l.email?'<span style="color:#fcd34d">?</span>':'<span style="color:var(--muted)">—</span>'}
           <span style="font-size:12px">${l.email||'sin email'}</span>
         </div>
         ${l.telefono?`<div class="text-muted text-sm">${l.telefono}</div>`:''}
@@ -608,19 +559,18 @@ function filterLeads() {
       <td><span class="badge badge-gray" style="font-size:10px">${l.fuente||'manual'}</span></td>
       <td style="text-align:right">
         <div style="display:flex;gap:4px;justify-content:flex-end">
-          ${l.email ? `<button class="btn btn-ghost btn-sm" onclick="verifyEmailLead(${l.id},'${l.email}')" title="Verificar email">✓</button>` : ''}
-          <button class="btn btn-primary btn-sm" onclick="redactarPara(${l.id})">✉</button>
-          <button class="btn btn-ghost btn-sm" onclick="editLead(${l.id})">✎</button>
-          <button class="btn btn-danger btn-sm" onclick="deleteLead(${l.id})">✕</button>
+          ${l.email ? `<button class="btn btn-ghost btn-sm" onclick="verifyEmailLead(${l.id},'${l.email}')">V</button>` : ''}
+          <button class="btn btn-primary btn-sm" onclick="redactarPara(${l.id})">E</button>
+          <button class="btn btn-ghost btn-sm" onclick="editLead(${l.id})">Ed</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteLead(${l.id})">X</button>
         </div>
       </td>
     </tr>`).join('') || '<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:20px">Sin resultados</td></tr>';
-
   document.getElementById('leads-pagination').textContent = `${filtered.length} leads · ${allLeads.filter(l=>l.contactado).length} contactados`;
 }
 
 async function verifyEmailLead(id, email) {
-  showToast('Verificando email…', 'warn');
+  showToast('Verificando email...', 'warn');
   try {
     const d = await apiFetch('/api/hunter', { action:'verify', email });
     if (d.error) throw new Error(d.error);
@@ -628,25 +578,20 @@ async function verifyEmailLead(id, email) {
     await sbUpdate('leads', id, { email_status: status });
     const lead = allLeads.find(l => l.id === id);
     if (lead) lead.email_status = status;
-    const icon = d.valid ? '✅' : d.status === 'invalid' ? '❌' : '⚠';
-    showToast(`${icon} Email ${status} — score ${d.score}/100`, d.valid ? 'ok' : 'err');
+    showToast('Email ' + status + ' — score ' + d.score + '/100', d.valid ? 'ok' : 'err');
     filterLeads();
-  } catch(e) {
-    showToast(parseApiError(e, 'hunter'), 'err');
-  }
+  } catch(e) { showToast(parseApiError(e, 'hunter'), 'err'); }
 }
 
 async function deleteLead(id) {
-  if (!confirm('¿Eliminar este lead?')) return;
+  if (!confirm('Eliminar este lead?')) return;
   try {
     await sbDelete('leads', id);
     allLeads = allLeads.filter(l => l.id !== id);
     document.getElementById('badge-leads').textContent = allLeads.length;
     filterLeads();
     showToast('Lead eliminado', 'ok');
-  } catch(e) {
-    showToast('Error: ' + e.message, 'err');
-  }
+  } catch(e) { showToast('Error: ' + e.message, 'err'); }
 }
 
 function editLead(id) {
@@ -679,13 +624,13 @@ function showModalLead(lead) {
     <div class="form-row">
       <div class="form-group"><label>Zona</label>
         <select id="ml-zona">
-          ${['Bs.As. Centro','Bs.As. Norte','Bs.As.','Santa Fe','Córdoba','Entre Ríos','Otro'].map(z=>`<option ${lead?.zona===z?'selected':''}>${z}</option>`).join('')}
+          ${['Bs.As. Centro','Bs.As. Norte','Bs.As.','Santa Fe','Cordoba','Entre Rios','Otro'].map(z=>`<option ${lead?.zona===z?'selected':''}>${z}</option>`).join('')}
         </select>
       </div>
       <div class="form-group"><label>Email</label><input id="ml-email" type="email" value="${lead?.email||''}"></div>
     </div>
     <div class="form-row">
-      <div class="form-group"><label>Teléfono</label><input id="ml-tel" value="${lead?.telefono||''}"></div>
+      <div class="form-group"><label>Telefono</label><input id="ml-tel" value="${lead?.telefono||''}"></div>
       <div class="form-group"><label>Web</label><input id="ml-web" value="${lead?.web||''}"></div>
     </div>
     <div class="form-row single">
@@ -712,7 +657,7 @@ async function saveLead(id) {
     notas:    document.getElementById('ml-notas').value.trim(),
     fuente:   'manual',
   };
-  if (!data.nombre && !data.empresa) return showToast('Ingresá nombre o empresa', 'err');
+  if (!data.nombre && !data.empresa) return showToast('Ingresa nombre o empresa', 'err');
   try {
     if (id) {
       await sbUpdate('leads', id, data);
@@ -727,21 +672,16 @@ async function saveLead(id) {
     }
     document.querySelector('.modal-overlay')?.remove();
     filterLeads();
-  } catch(e) {
-    showToast('Error: ' + e.message, 'err');
-  }
+  } catch(e) { showToast('Error: ' + e.message, 'err'); }
 }
 
-// =====================================================================
-// BUSCAR LEADS (Apollo + Hunter + buscadores embebidos)
-// =====================================================================
 function pageBuscar() {
   document.getElementById('content').innerHTML = `
   <div class="inner-tabs" id="buscar-tabs">
-    <div class="inner-tab active" onclick="switchBuscarTab('apollo')">🔭 Apollo.io</div>
-    <div class="inner-tab" onclick="switchBuscarTab('pegar')">📋 Pegar de Maps/LinkedIn</div>
-    <div class="inner-tab" onclick="switchBuscarTab('hunter')">✉ Hunter.io</div>
-    <div class="inner-tab" onclick="switchBuscarTab('web')">🌐 Buscadores externos</div>
+    <div class="inner-tab active" onclick="switchBuscarTab('apollo')">Apollo.io</div>
+    <div class="inner-tab" onclick="switchBuscarTab('pegar')">Pegar de Maps/LinkedIn</div>
+    <div class="inner-tab" onclick="switchBuscarTab('hunter')">Hunter.io</div>
+    <div class="inner-tab" onclick="switchBuscarTab('web')">Buscadores externos</div>
   </div>
   <div id="buscar-content"></div>`;
   switchBuscarTab('apollo');
@@ -752,57 +692,54 @@ function switchBuscarTab(tab) {
     el.classList.toggle('active', ['apollo','pegar','hunter','web'][i]===tab);
   });
   const bc = document.getElementById('buscar-content');
-
   if (tab === 'apollo') {
     bc.innerHTML = `
     <div class="form-section">
-      <h3>🔭 Buscar empresas reales via Apollo.io</h3>
-      <p class="text-muted text-sm" style="margin-bottom:14px">Busca empresas reales con datos verificados. Los resultados se pueden agregar directamente a tu base de leads.</p>
+      <h3>Buscar empresas reales via Apollo.io</h3>
       <div class="form-row">
         <div class="form-group"><label>Ciudad / Zona</label>
           <select id="ap-city">
             <option value="">Todas las zonas</option>
-            <option value="Junín">Junín</option>
+            <option value="Junin">Junin</option>
             <option value="Pergamino">Pergamino</option>
             <option value="Rosario">Rosario</option>
             <option value="Venado Tuerto">Venado Tuerto</option>
-            <option value="Río Cuarto">Río Cuarto</option>
-            <option value="Villa María">Villa María</option>
+            <option value="Rio Cuarto">Rio Cuarto</option>
+            <option value="Villa Maria">Villa Maria</option>
             <option value="Rafaela">Rafaela</option>
             <option value="Chacabuco">Chacabuco</option>
-            <option value="San Nicolás">San Nicolás</option>
+            <option value="San Nicolas">San Nicolas</option>
             <option value="Azul">Azul</option>
           </select>
         </div>
         <div class="form-group"><label>Industria / Rubro</label>
           <select id="ap-industry">
-            <option value="">Seleccionar…</option>
+            <option value="">Seleccionar...</option>
             <option value="despachante de aduana">Despachantes de aduana</option>
             <option value="comercio exterior">Comercio exterior</option>
-            <option value="logistica internacional">Logística internacional</option>
+            <option value="logistica internacional">Logistica internacional</option>
             <option value="transporte de carga">Transporte de carga</option>
-            <option value="agro exportacion">Agroexportación</option>
+            <option value="agro exportacion">Agroexportacion</option>
             <option value="importadora">Importadoras</option>
             <option value="exportadora">Exportadoras</option>
-            <option value="deposito fiscal">Depósitos fiscales</option>
-            <option value="maquinaria agricola">Maquinaria agrícola</option>
+            <option value="deposito fiscal">Depositos fiscales</option>
+            <option value="maquinaria agricola">Maquinaria agricola</option>
           </select>
         </div>
       </div>
       <div class="form-row single">
         <div class="form-group"><label>Palabras clave adicionales (opcional)</label>
-          <input id="ap-keywords" placeholder="ej: soja, trigo, contenedores, aduana…">
+          <input id="ap-keywords" placeholder="ej: soja, trigo, contenedores, aduana...">
         </div>
       </div>
-      <button class="btn btn-primary" onclick="searchApollo()">🔭 Buscar empresas</button>
-      <span id="ap-loading" class="hidden" style="margin-left:10px"><span class="spinner"></span> Buscando…</span>
+      <button class="btn btn-primary" onclick="searchApollo()">Buscar empresas</button>
+      <span id="ap-loading" class="hidden" style="margin-left:10px"><span class="spinner"></span> Buscando...</span>
     </div>
     <div id="ap-results"></div>`;
-
   } else if (tab === 'hunter') {
     bc.innerHTML = `
     <div class="form-section">
-      <h3>✉ Buscar y verificar emails via Hunter.io</h3>
+      <h3>Buscar y verificar emails via Hunter.io</h3>
       <div class="inner-tabs" id="hunter-sub-tabs" style="margin-bottom:12px">
         <div class="inner-tab active" onclick="switchHunterTab('verify')">Verificar email</div>
         <div class="inner-tab" onclick="switchHunterTab('domain')">Buscar por dominio</div>
@@ -811,88 +748,55 @@ function switchBuscarTab(tab) {
       <div id="hunter-sub-content"></div>
     </div>`;
     switchHunterTab('verify');
-
   } else if (tab === 'pegar') {
     bc.innerHTML = `
     <div class="form-section">
-      <h3>📋 Pegar texto de Google Maps o LinkedIn → IA extrae el lead</h3>
+      <h3>Pegar texto de Google Maps o LinkedIn</h3>
       <p class="text-muted text-sm" style="margin-bottom:14px">
-        <strong>Cómo usarlo:</strong><br>
-        1. Abrí <a href="https://maps.google.com" target="_blank" style="color:var(--accent)">Google Maps</a> o <a href="https://linkedin.com/search/results/companies/" target="_blank" style="color:var(--accent)">LinkedIn Empresas</a><br>
-        2. Buscá "despachante aduana Junín" o "comercio exterior Venado Tuerto", etc.<br>
-        3. Abrí el perfil de la empresa → seleccioná todo el texto de la ficha (Ctrl+A) → copiá (Ctrl+C)<br>
-        4. Pegalo acá abajo → la IA extrae nombre, email, teléfono, ciudad automáticamente<br>
-        5. Revisá los datos y hacé click en "+ Agregar" — listo.
+        1. Abri Google Maps o LinkedIn<br>
+        2. Busca "despachante aduana Junin" etc.<br>
+        3. Copia el texto de la ficha de la empresa<br>
+        4. Pegalo aca abajo y la IA extrae los datos<br>
+        5. Revisa y hace click en Agregar.
       </p>
-
       <div style="display:flex;gap:8px;margin-bottom:12px">
-        <a href="https://www.google.com/maps/search/despachante+aduana+argentina" target="_blank" class="btn btn-ghost btn-sm">📍 Google Maps — Despachantes</a>
-        <a href="https://www.google.com/maps/search/comercio+exterior+Buenos+Aires" target="_blank" class="btn btn-ghost btn-sm">📍 Google Maps — Comex</a>
-        <a href="https://www.linkedin.com/search/results/companies/?keywords=despachante%20aduana%20argentina" target="_blank" class="btn btn-ghost btn-sm">💼 LinkedIn Empresas</a>
-        <a href="https://www.linkedin.com/search/results/companies/?keywords=logistica%20internacional%20argentina" target="_blank" class="btn btn-ghost btn-sm">💼 LinkedIn Logística</a>
+        <a href="https://www.google.com/maps/search/despachante+aduana+argentina" target="_blank" class="btn btn-ghost btn-sm">Google Maps Despachantes</a>
+        <a href="https://www.linkedin.com/search/results/companies/?keywords=despachante%20aduana%20argentina" target="_blank" class="btn btn-ghost btn-sm">LinkedIn Empresas</a>
       </div>
-
       <div class="form-group" style="margin-bottom:12px">
-        <label>Pegá acá el texto copiado de la ficha de la empresa (Google Maps, LinkedIn, web, etc.)</label>
-        <textarea id="paste-text" style="min-height:140px;font-family:inherit" placeholder="Ejemplo de lo que copiás de Google Maps:
-
-Pereyra Despachos Aduaneros
-4.8 ★★★★★ (23 reseñas)
-Agencia de aduanas · Junín, Provincia de Buenos Aires
-+54 236 442-1234
-jpereyra@pereyra-aduana.com.ar
-pereyra-aduana.com.ar
-Lunes a viernes: 8:00–18:00
-
-O de LinkedIn:
-Juan Pereyra · Despachante de Aduana en Pereyra Despachos Aduaneros
-Junín, Buenos Aires, Argentina · 127 seguidores
-..."></textarea>
+        <label>Pega aca el texto copiado</label>
+        <textarea id="paste-text" style="min-height:140px;font-family:inherit" placeholder="Pereyra Despachos Aduaneros&#10;4.8 estrellas (23 resenas)&#10;Agencia de aduanas - Junin, Buenos Aires&#10;+54 236 442-1234&#10;jpereyra@pereyra-aduana.com.ar"></textarea>
       </div>
-
       <div style="display:flex;gap:8px;align-items:center;margin-bottom:16px">
-        <button class="btn btn-primary" onclick="parsearTextoConIA()">🤖 Parsear con IA</button>
+        <button class="btn btn-primary" onclick="parsearTextoConIA()">Parsear con IA</button>
         <button class="btn btn-ghost btn-sm" onclick="document.getElementById('paste-text').value=''">Limpiar</button>
-        <span id="parse-loading" class="hidden"><span class="spinner"></span> Extrayendo datos…</span>
+        <span id="parse-loading" class="hidden"><span class="spinner"></span> Extrayendo datos...</span>
       </div>
-
       <div id="parse-results"></div>
-
-      <div style="margin-top:20px;background:#0a0e1a;border:1px solid var(--border);border-radius:8px;padding:14px">
-        <div style="font-size:12px;font-weight:600;margin-bottom:8px;color:var(--accent)">💡 Tip: agregar muchos de una vez</div>
-        <p class="text-muted text-sm">
-          Podés pegar el texto de varias empresas juntas separadas por una línea en blanco, y la IA las procesa todas a la vez.
-          También podés pegar directamente una URL y la IA intentará identificar la empresa (si la descripción incluye el texto de la página).
-        </p>
-      </div>
     </div>`;
-
   } else if (tab === 'web') {
     bc.innerHTML = `
     <div class="form-section">
-      <h3>🌐 Buscadores externos (abre en ventana nueva)</h3>
-      <p class="text-muted text-sm" style="margin-bottom:14px">Usá estos buscadores para encontrar leads manualmente. Copiá los datos y agregálos con el botón "Agregar lead" en la sección Leads.</p>
+      <h3>Buscadores externos</h3>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
         ${[
-          ['LinkedIn','https://www.linkedin.com/search/results/companies/?keywords=despachante+aduana+argentina','Busca despachantes y operadores en LinkedIn por zona y rubro'],
-          ['Páginas Amarillas','https://www.paginasamarillas.com.ar/buscar/despachantes-de-aduana/','Directorio nacional de despachantes con datos de contacto'],
-          ['CADICAA','https://www.cadicaa.org.ar/','Cámara de Despachantes de Aduana — directorio oficial'],
-          ['Google Empresas','https://www.google.com/search?q=despachante+aduana+junin+buenos+aires','Google con filtros de zona y rubro'],
-          ['Guía Comercial','https://www.guiacomercial.com.ar/s/despachante-de-aduana','Guía comercial argentina con contactos'],
-          ['AFIP Padrón','https://www.afip.gob.ar/genericos/servicios-externos/','Padrón oficial AFIP de despachantes habilitados'],
+          ['LinkedIn','https://www.linkedin.com/search/results/companies/?keywords=despachante+aduana+argentina','Busca despachantes en LinkedIn'],
+          ['Paginas Amarillas','https://www.paginasamarillas.com.ar/buscar/despachantes-de-aduana/','Directorio nacional de despachantes'],
+          ['CADICAA','https://www.cadicaa.org.ar/','Camara de Despachantes de Aduana'],
+          ['Google','https://www.google.com/search?q=despachante+aduana+junin+buenos+aires','Google con filtros'],
+          ['Guia Comercial','https://www.guiacomercial.com.ar/s/despachante-de-aduana','Guia comercial argentina'],
+          ['AFIP','https://www.afip.gob.ar/genericos/servicios-externos/','Padron oficial AFIP'],
         ].map(([name,url,desc])=>`
           <a href="${url}" target="_blank" style="text-decoration:none">
-            <div class="lead-result" style="cursor:pointer;transition:.15s" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
+            <div class="lead-result" style="cursor:pointer">
               <div class="lead-result-info">
-                <strong style="color:var(--accent)">${name} ↗</strong>
+                <strong style="color:var(--accent)">${name}</strong>
                 <span>${desc}</span>
               </div>
             </div>
           </a>`).join('')}
       </div>
       <div class="form-section" style="margin-top:16px;margin-bottom:0">
-        <h3>Agregar lead manualmente desde búsqueda externa</h3>
-        <p class="text-muted text-sm" style="margin-bottom:12px">Encontraste un contacto en la web? Agregalo acá directamente:</p>
         <button class="btn btn-primary" onclick="showModalAddLead();renderPage('leads')">+ Agregar lead manual</button>
       </div>
     </div>`;
@@ -905,30 +809,11 @@ function switchHunterTab(sub) {
   });
   const hc = document.getElementById('hunter-sub-content');
   if (sub === 'verify') {
-    hc.innerHTML = `
-      <div class="form-row">
-        <div class="form-group"><label>Email a verificar</label><input id="h-email" type="email" placeholder="contacto@empresa.com.ar"></div>
-      </div>
-      <button class="btn btn-primary" onclick="hunterVerify()">✓ Verificar</button>
-      <div id="h-result" class="mt-2"></div>`;
+    hc.innerHTML = `<div class="form-row"><div class="form-group"><label>Email a verificar</label><input id="h-email" type="email" placeholder="contacto@empresa.com.ar"></div></div><button class="btn btn-primary" onclick="hunterVerify()">Verificar</button><div id="h-result" class="mt-2"></div>`;
   } else if (sub === 'domain') {
-    hc.innerHTML = `
-      <div class="form-row">
-        <div class="form-group"><label>Dominio de la empresa</label><input id="h-domain" placeholder="empresa.com.ar"></div>
-      </div>
-      <button class="btn btn-primary" onclick="hunterDomain()">🔍 Buscar emails</button>
-      <div id="h-result" class="mt-2"></div>`;
+    hc.innerHTML = `<div class="form-row"><div class="form-group"><label>Dominio de la empresa</label><input id="h-domain" placeholder="empresa.com.ar"></div></div><button class="btn btn-primary" onclick="hunterDomain()">Buscar emails</button><div id="h-result" class="mt-2"></div>`;
   } else {
-    hc.innerHTML = `
-      <div class="form-row">
-        <div class="form-group"><label>Dominio</label><input id="h-domain" placeholder="empresa.com.ar"></div>
-        <div class="form-group"><label>Nombre</label><input id="h-fname" placeholder="Juan"></div>
-      </div>
-      <div class="form-row">
-        <div class="form-group"><label>Apellido</label><input id="h-lname" placeholder="García"></div>
-      </div>
-      <button class="btn btn-primary" onclick="hunterFind()">🔍 Encontrar email</button>
-      <div id="h-result" class="mt-2"></div>`;
+    hc.innerHTML = `<div class="form-row"><div class="form-group"><label>Dominio</label><input id="h-domain" placeholder="empresa.com.ar"></div><div class="form-group"><label>Nombre</label><input id="h-fname" placeholder="Juan"></div></div><div class="form-row"><div class="form-group"><label>Apellido</label><input id="h-lname" placeholder="Garcia"></div></div><button class="btn btn-primary" onclick="hunterFind()">Encontrar email</button><div id="h-result" class="mt-2"></div>`;
   }
 }
 
@@ -938,82 +823,64 @@ async function searchApollo() {
   const keywords = document.getElementById('ap-keywords').value;
   document.getElementById('ap-loading').classList.remove('hidden');
   document.getElementById('ap-results').innerHTML = '';
-
   try {
     const d = await apiFetch('/api/apollo', { city, industry, keywords });
     if (d.error) throw new Error(d.error);
-
     const leads = d.leads || [];
     window.__apolloResults = leads;
-
     document.getElementById('ap-results').innerHTML = `
     <div class="form-section">
-      <h3>Resultados: ${leads.length} empresas encontradas ${d.total?`(de ${d.total} totales)`:''}</h3>
-      ${leads.length === 0 ? '<p class="text-muted text-sm">Sin resultados. Probá con otra ciudad o rubro.</p>' : ''}
+      <h3>Resultados: ${leads.length} empresas encontradas</h3>
+      ${leads.length === 0 ? '<p class="text-muted text-sm">Sin resultados. Proba con otra ciudad o rubro.</p>' : ''}
       ${leads.map((l,i) => `
       <div class="lead-result">
         <div class="lead-result-info">
           <strong>${l.nombre||l.empresa}</strong>
-          <span>${tipoBadge(l.tipo)} · ${l.ciudad||'—'} · ${l.zona||''}</span>
-          ${l.email?`<div style="font-size:12px;color:#fcd34d;margin-top:3px">✉ ${l.email} <span id="ev-status-${i}">(sin verificar)</span></div>`:'<div style="font-size:12px;color:var(--muted)">Sin email disponible</div>'}
-          ${l.web?`<div style="font-size:11px;color:var(--muted)">${l.web}</div>`:''}
+          <span>${tipoBadge(l.tipo)} &middot; ${l.ciudad||'—'} &middot; ${l.zona||''}</span>
+          ${l.email?`<div style="font-size:12px;color:#fcd34d;margin-top:3px">${l.email} <span id="ev-status-${i}">(sin verificar)</span></div>`:'<div style="font-size:12px;color:var(--muted)">Sin email disponible</div>'}
         </div>
         <div class="lead-result-actions">
-          ${l.email?`<button class="btn btn-ghost btn-sm" id="ev-btn-${i}" onclick="hunterVerifyAndUpdate(${i})">✓ Verificar</button>`:''}
+          ${l.email?`<button class="btn btn-ghost btn-sm" id="ev-btn-${i}" onclick="hunterVerifyAndUpdate(${i})">Verificar</button>`:''}
           <button class="btn btn-primary btn-sm" id="add-btn-${i}" onclick="addLeadFromApollo(${i})">+ Agregar</button>
         </div>
       </div>`).join('')}
     </div>`;
   } catch(e) {
-    const errMsg = parseApiError(e, 'apollo');
-    document.getElementById('ap-results').innerHTML = `
-    <div class="form-section" style="border-color:var(--danger)">
-      <p style="color:var(--danger);font-weight:600">${errMsg}</p>
-      <p class="text-muted text-sm mt-2">Si no tenés la key de Apollo, usá la pestaña "Buscadores externos" para encontrar leads manualmente.</p>
-    </div>`;
+    document.getElementById('ap-results').innerHTML = `<div class="form-section" style="border-color:var(--danger)"><p style="color:var(--danger);font-weight:600">${parseApiError(e, 'apollo')}</p></div>`;
   }
   document.getElementById('ap-loading').classList.add('hidden');
 }
 
-// BUG FIX: función que faltaba — verifica email de resultado Apollo sin salir de la pantalla
 async function hunterVerifyAndUpdate(idx) {
   const l = (window.__apolloResults||[])[idx];
   if (!l?.email) return;
   const btn = document.getElementById(`ev-btn-${idx}`);
   const statusEl = document.getElementById(`ev-status-${idx}`);
-  if (btn) { btn.disabled = true; btn.textContent = '…'; }
+  if (btn) { btn.disabled = true; btn.textContent = '...'; }
   try {
     const d = await apiFetch('/api/hunter', {action:'verify',email:l.email});
     if (d.error) throw new Error(d.error);
     const ok = d.valid;
-    if (statusEl) statusEl.innerHTML = ok
-      ? `<span style="color:#4ade80">✓ válido (score ${d.score})</span>`
-      : `<span style="color:#f87171">✗ ${d.status} (score ${d.score})</span>`;
-    // Actualizar el resultado en memoria para que cuando se agregue, ya tenga el status
+    if (statusEl) statusEl.innerHTML = ok ? `<span style="color:#4ade80">valido (score ${d.score})</span>` : `<span style="color:#f87171">invalido (score ${d.score})</span>`;
     window.__apolloResults[idx].email_status = ok ? 'verificado' : d.status === 'invalid' ? 'invalido' : 'sin_verificar';
-    if (btn) { btn.textContent = ok ? '✓ Válido' : '✗ Inválido'; }
+    if (btn) { btn.textContent = ok ? 'Valido' : 'Invalido'; }
   } catch(e) {
     if (statusEl) statusEl.textContent = '(error verificando)';
     showToast(parseApiError(e, 'hunter'), 'err');
-    if (btn) { btn.disabled = false; btn.textContent = '✓ Verificar'; }
+    if (btn) { btn.disabled = false; btn.textContent = 'Verificar'; }
   }
 }
 
 async function addLeadFromApollo(idx) {
   const l = (window.__apolloResults||[])[idx];
   if (!l) return;
-  // Anti-duplicado
-  if (l.email && allLeads.some(x => x.email === l.email)) {
-    return showToast('⚠ Ya existe un lead con ese email', 'warn');
-  }
+  if (l.email && allLeads.some(x => x.email === l.email)) return showToast('Ya existe un lead con ese email', 'warn');
   try {
     const res = await sbInsert('leads', l);
     allLeads.unshift(res[0]||l);
     document.getElementById('badge-leads').textContent = allLeads.length;
     showToast('Lead agregado: ' + (l.nombre||l.empresa), 'ok');
-  } catch(e) {
-    showToast('Error: '+e.message, 'err');
-  }
+  } catch(e) { showToast('Error: '+e.message, 'err'); }
 }
 
 function showHunterError(msg) {
@@ -1023,171 +890,108 @@ function showHunterError(msg) {
 
 async function hunterVerify() {
   const email = document.getElementById('h-email').value.trim();
-  if (!email) return showToast('Ingresá un email', 'err');
+  if (!email) return showToast('Ingresa un email', 'err');
   document.getElementById('h-result').innerHTML = '<span class="spinner"></span>';
   try {
     const d = await apiFetch('/api/hunter', {action:'verify',email});
     if (d.error) throw new Error(d.error);
     const color = d.valid ? '#4ade80' : d.status==='invalid' ? '#f87171' : '#fcd34d';
-    const icon  = d.valid ? '✅' : d.status==='invalid' ? '❌' : '⚠';
-    document.getElementById('h-result').innerHTML = `
-    <div class="lead-result" style="margin-top:8px">
-      <div>
-        <strong>${email}</strong><br>
-        <span style="color:${color};font-size:13px">${icon} ${d.valid?'Email válido y existente':d.status} · Score: ${d.score}/100</span><br>
-        <span class="text-muted text-sm">${d.valid?'Se puede usar para enviar correos sin riesgo de rebote.':'Enviar a este email podría generar rebote o dañar tu reputación como remitente.'}</span>
-      </div>
-    </div>`;
-  } catch(e) {
-    showHunterError(parseApiError(e, 'hunter'));
-  }
+    document.getElementById('h-result').innerHTML = `<div class="lead-result" style="margin-top:8px"><div><strong>${email}</strong><br><span style="color:${color};font-size:13px">${d.valid?'Email valido y existente':d.status} &middot; Score: ${d.score}/100</span></div></div>`;
+  } catch(e) { showHunterError(parseApiError(e, 'hunter')); }
 }
 
 async function hunterDomain() {
   const domain = document.getElementById('h-domain').value.trim();
-  if (!domain) return showToast('Ingresá un dominio', 'err');
+  if (!domain) return showToast('Ingresa un dominio', 'err');
   document.getElementById('h-result').innerHTML = '<span class="spinner"></span>';
   try {
     const d = await apiFetch('/api/hunter', {action:'domain',domain});
     if (d.error) throw new Error(d.error);
     const emails = d.emails || [];
-    document.getElementById('h-result').innerHTML = `
-    <div style="margin-top:8px">
-      <p class="text-muted text-sm" style="margin-bottom:8px">Empresa: <strong>${d.organization||domain}</strong> · ${emails.length} emails encontrados</p>
-      ${emails.length===0?'<p class="text-muted text-sm">Sin emails encontrados para ese dominio. Probá con el dominio exacto (ej: empresa.com.ar)</p>':''}
-      ${emails.map(e=>`
-      <div class="lead-result">
-        <div class="lead-result-info">
-          <strong>${e.email}</strong>
-          <span>${e.firstName||''} ${e.lastName||''} ${e.position?'· '+e.position:''} · Confianza: ${e.score}%</span>
-        </div>
-        <button class="btn btn-primary btn-sm" onclick="document.getElementById('h-email').value='${e.email}';switchHunterTab('verify')">Verificar</button>
-      </div>`).join('')}
-    </div>`;
-  } catch(e) {
-    showHunterError(parseApiError(e, 'hunter'));
-  }
+    document.getElementById('h-result').innerHTML = `<div style="margin-top:8px"><p class="text-muted text-sm" style="margin-bottom:8px">Empresa: <strong>${d.organization||domain}</strong> &middot; ${emails.length} emails encontrados</p>${emails.map(e=>`<div class="lead-result"><div class="lead-result-info"><strong>${e.email}</strong><span>${e.firstName||''} ${e.lastName||''} &middot; Confianza: ${e.score}%</span></div><button class="btn btn-primary btn-sm" onclick="document.getElementById('h-email').value='${e.email}';switchHunterTab('verify')">Verificar</button></div>`).join('')}</div>`;
+  } catch(e) { showHunterError(parseApiError(e, 'hunter')); }
 }
 
 async function hunterFind() {
   const domain = document.getElementById('h-domain').value.trim();
   const firstName = document.getElementById('h-fname').value.trim();
   const lastName = document.getElementById('h-lname').value.trim();
-  if (!domain) return showToast('Ingresá un dominio', 'err');
+  if (!domain) return showToast('Ingresa un dominio', 'err');
   document.getElementById('h-result').innerHTML = '<span class="spinner"></span>';
   try {
     const d = await apiFetch('/api/hunter', {action:'find',domain,firstName,lastName});
     if (d.error) throw new Error(d.error);
     document.getElementById('h-result').innerHTML = d.email
-      ? `<div class="lead-result" style="margin-top:8px"><div><strong>${d.email}</strong><br><span style="color:#4ade80">Encontrado · Confianza: ${d.score}%</span></div></div>`
-      : `<p class="text-muted text-sm" style="margin-top:8px">No se encontró email. Probá con el dominio exacto y el nombre completo.</p>`;
-  } catch(e) {
-    showHunterError(parseApiError(e, 'hunter'));
-  }
+      ? `<div class="lead-result" style="margin-top:8px"><div><strong>${d.email}</strong><br><span style="color:#4ade80">Encontrado &middot; Confianza: ${d.score}%</span></div></div>`
+      : `<p class="text-muted text-sm" style="margin-top:8px">No se encontro email.</p>`;
+  } catch(e) { showHunterError(parseApiError(e, 'hunter')); }
 }
 
-// =====================================================================
-// PARSEAR TEXTO DE GOOGLE MAPS / LINKEDIN CON IA
-// =====================================================================
 async function parsearTextoConIA() {
   const texto = document.getElementById('paste-text')?.value.trim();
-  if (!texto) return showToast('Pegá texto primero', 'err');
-
+  if (!texto) return showToast('Pega texto primero', 'err');
   document.getElementById('parse-loading').classList.remove('hidden');
   document.getElementById('parse-results').innerHTML = '';
+  const prompt = `Analiza el siguiente texto copiado de Google Maps, LinkedIn u otras fuentes y extrae los datos de TODAS las empresas o contactos que encuentres.
 
-  const prompt = `Analizá el siguiente texto copiado de Google Maps, LinkedIn u otras fuentes y extraé los datos de TODAS las empresas o contactos que encuentres.
-
-Para cada empresa o contacto, extraé estos campos (dejá vacío '' si no está):
-- nombre: nombre de la persona de contacto (si hay)
+Para cada empresa o contacto, extrae estos campos (deja vacio si no esta):
+- nombre: nombre de la persona de contacto
 - empresa: nombre de la empresa/estudio/agencia
-- tipo: clasificá como uno de: despachante | estudio_aduanero | operador_logistico | importador_exportador | agro_industrial | empresa
+- tipo: clasificar como: despachante | estudio_aduanero | operador_logistico | importador_exportador | agro_industrial | empresa
 - ciudad: ciudad donde opera
-- zona: provincia o zona (ej: Bs.As. Centro, Santa Fe, Córdoba)
-- email: dirección de email (si figura)
-- telefono: teléfono (si figura, incluido el prefijo)
-- web: sitio web (si figura)
-- linkedin: URL de LinkedIn (si figura)
-- notas: cualquier info útil adicional (horarios, especialidad, etc.)
+- zona: provincia o zona
+- email: direccion de email
+- telefono: telefono
+- web: sitio web
+- notas: info adicional util
 
 Texto a analizar:
 ---
 ${texto}
 ---
 
-Respondé SOLO con JSON válido, sin explicaciones: {"leads": [...]}
-Si no encontrás nada útil: {"leads": [], "mensaje": "No se encontraron datos de empresas en el texto"}`;
+Responde SOLO con JSON valido: {"leads": [...]}
+Si no encuentras nada: {"leads": [], "mensaje": "No se encontraron datos"}`;
 
   try {
     const d = await apiFetch('/api/ai', { prompt });
     if (d.error) throw new Error(d.error);
-
     let parsed;
     try {
-      const clean = d.text.replace(/```json?|```/g,'').trim();
+      const clean = d.text.replace(/` + '```' + `json?|` + '```' + `/g,'').trim();
       const match = clean.match(/\{[\s\S]*\}/);
       parsed = JSON.parse(match ? match[0] : clean);
-    } catch(e) {
-      throw new Error('La IA no pudo parsear el texto. Intentá con texto más claro o de una sola empresa.');
-    }
-
+    } catch(e) { throw new Error('La IA no pudo parsear el texto.'); }
     const leads = parsed.leads || [];
     if (leads.length === 0) {
-      document.getElementById('parse-results').innerHTML = `
-      <div style="padding:14px;background:rgba(245,158,11,.1);border:1px solid var(--warn);border-radius:8px;font-size:13px;color:#fcd34d">
-        ${parsed.mensaje || 'No se encontraron datos de empresas. Intentá seleccionar solo la ficha de la empresa en Google Maps o LinkedIn.'}
-      </div>`;
+      document.getElementById('parse-results').innerHTML = `<div style="padding:14px;background:rgba(245,158,11,.1);border:1px solid var(--warn);border-radius:8px;font-size:13px;color:#fcd34d">${parsed.mensaje || 'No se encontraron datos de empresas.'}</div>`;
     } else {
       window.__parseResults = leads;
       document.getElementById('parse-results').innerHTML = `
       <div class="form-section">
-        <h3>✅ ${leads.length} empresa${leads.length>1?'s':''} extraída${leads.length>1?'s':''} — revisá los datos y agregá las que quieras</h3>
+        <h3>${leads.length} empresa(s) extraida(s)</h3>
         ${leads.map((l,i) => `
         <div class="lead-result" id="pr-item-${i}">
           <div class="lead-result-info" style="flex:1">
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-              <div class="form-group" style="margin:0">
-                <label style="font-size:10px">Empresa</label>
-                <input id="pr-empresa-${i}" value="${(l.empresa||'').replace(/"/g,'')}" style="font-size:12px;padding:4px 8px">
-              </div>
-              <div class="form-group" style="margin:0">
-                <label style="font-size:10px">Nombre contacto</label>
-                <input id="pr-nombre-${i}" value="${(l.nombre||'').replace(/"/g,'')}" style="font-size:12px;padding:4px 8px">
-              </div>
-              <div class="form-group" style="margin:0">
-                <label style="font-size:10px">Tipo</label>
-                <select id="pr-tipo-${i}" style="font-size:12px;padding:4px 8px">
-                  ${['despachante','estudio_aduanero','operador_logistico','importador_exportador','agro_industrial','empresa'].map(t=>`<option ${l.tipo===t?'selected':''}>${t}</option>`).join('')}
-                </select>
-              </div>
-              <div class="form-group" style="margin:0">
-                <label style="font-size:10px">Ciudad</label>
-                <input id="pr-ciudad-${i}" value="${(l.ciudad||'').replace(/"/g,'')}" style="font-size:12px;padding:4px 8px">
-              </div>
-              <div class="form-group" style="margin:0">
-                <label style="font-size:10px">Email</label>
-                <input id="pr-email-${i}" value="${(l.email||'').replace(/"/g,'')}" style="font-size:12px;padding:4px 8px">
-              </div>
-              <div class="form-group" style="margin:0">
-                <label style="font-size:10px">Teléfono</label>
-                <input id="pr-tel-${i}" value="${(l.telefono||'').replace(/"/g,'')}" style="font-size:12px;padding:4px 8px">
-              </div>
+              <div class="form-group" style="margin:0"><label style="font-size:10px">Empresa</label><input id="pr-empresa-${i}" value="${(l.empresa||'').replace(/"/g,'')}" style="font-size:12px;padding:4px 8px"></div>
+              <div class="form-group" style="margin:0"><label style="font-size:10px">Nombre contacto</label><input id="pr-nombre-${i}" value="${(l.nombre||'').replace(/"/g,'')}" style="font-size:12px;padding:4px 8px"></div>
+              <div class="form-group" style="margin:0"><label style="font-size:10px">Tipo</label><select id="pr-tipo-${i}" style="font-size:12px;padding:4px 8px">${['despachante','estudio_aduanero','operador_logistico','importador_exportador','agro_industrial','empresa'].map(t=>`<option ${l.tipo===t?'selected':''}>${t}</option>`).join('')}</select></div>
+              <div class="form-group" style="margin:0"><label style="font-size:10px">Ciudad</label><input id="pr-ciudad-${i}" value="${(l.ciudad||'').replace(/"/g,'')}" style="font-size:12px;padding:4px 8px"></div>
+              <div class="form-group" style="margin:0"><label style="font-size:10px">Email</label><input id="pr-email-${i}" value="${(l.email||'').replace(/"/g,'')}" style="font-size:12px;padding:4px 8px"></div>
+              <div class="form-group" style="margin:0"><label style="font-size:10px">Telefono</label><input id="pr-tel-${i}" value="${(l.telefono||'').replace(/"/g,'')}" style="font-size:12px;padding:4px 8px"></div>
             </div>
-            ${l.notas?`<div class="text-muted text-sm" style="margin-top:4px">📝 ${l.notas}</div>`:''}
           </div>
           <div style="display:flex;flex-direction:column;gap:6px;margin-left:10px">
             <button class="btn btn-success btn-sm" id="pr-add-btn-${i}" onclick="addLeadFromParse(${i})">+ Agregar</button>
-            <button class="btn btn-ghost btn-sm" onclick="document.getElementById('pr-item-${i}').remove()">✕</button>
+            <button class="btn btn-ghost btn-sm" onclick="document.getElementById('pr-item-${i}').remove()">X</button>
           </div>
         </div>`).join('')}
         ${leads.length > 1 ? `<button class="btn btn-primary" style="margin-top:8px" onclick="addAllFromParse()">+ Agregar todos (${leads.length})</button>` : ''}
       </div>`;
     }
   } catch(e) {
-    document.getElementById('parse-results').innerHTML = `
-    <div style="padding:14px;background:rgba(239,68,68,.1);border:1px solid var(--danger);border-radius:8px;font-size:13px;color:#fca5a5">
-      ${parseApiError(e, 'groq')}
-    </div>`;
+    document.getElementById('parse-results').innerHTML = `<div style="padding:14px;background:rgba(239,68,68,.1);border:1px solid var(--danger);border-radius:8px;font-size:13px;color:#fca5a5">${parseApiError(e, 'groq')}</div>`;
   }
   document.getElementById('parse-loading').classList.add('hidden');
 }
@@ -1201,27 +1005,19 @@ async function addLeadFromParse(idx) {
     email:    document.getElementById(`pr-email-${idx}`)?.value.trim().toLowerCase(),
     telefono: document.getElementById(`pr-tel-${idx}`)?.value.trim(),
     web:      (window.__parseResults?.[idx]?.web||'').trim(),
-    linkedin: (window.__parseResults?.[idx]?.linkedin||'').trim(),
-    notas:    (window.__parseResults?.[idx]?.notas||'').trim(),
     zona:     (window.__parseResults?.[idx]?.zona||'').trim(),
     fuente:   'manual',
     email_status: 'sin_verificar',
   };
   if (!data.empresa && !data.nombre) return showToast('Falta empresa o nombre', 'err');
-
-  // Anti-duplicado
-  if (data.email && allLeads.some(l => l.email === data.email)) {
-    return showToast(`⚠ Ya existe un lead con el email ${data.email}`, 'warn');
-  }
-
+  if (data.email && allLeads.some(l => l.email === data.email)) return showToast('Ya existe un lead con ese email', 'warn');
   const btn = document.getElementById(`pr-add-btn-${idx}`);
-  if (btn) { btn.disabled = true; btn.textContent = '…'; }
-
+  if (btn) { btn.disabled = true; btn.textContent = '...'; }
   try {
     const res = await sbInsert('leads', data);
     allLeads.unshift(res[0]||data);
     document.getElementById('badge-leads').textContent = allLeads.length;
-    showToast(`✅ Agregado: ${data.empresa||data.nombre}`, 'ok');
+    showToast('Agregado: ' + (data.empresa||data.nombre), 'ok');
     document.getElementById(`pr-item-${idx}`)?.remove();
   } catch(e) {
     showToast(parseApiError(e, 'supabase'), 'err');
@@ -1231,13 +1027,10 @@ async function addLeadFromParse(idx) {
 
 async function addAllFromParse() {
   const results = window.__parseResults || [];
-  let added = 0;
-  let skipped = 0;
+  let added = 0, skipped = 0;
   for (let i = 0; i < results.length; i++) {
-    const btn = document.getElementById(`pr-add-btn-${i}`);
     const item = document.getElementById(`pr-item-${i}`);
-    if (!item) { skipped++; continue; } // ya fue eliminado/agregado
-
+    if (!item) { skipped++; continue; }
     const data = {
       empresa:  document.getElementById(`pr-empresa-${i}`)?.value.trim() || results[i].empresa,
       nombre:   document.getElementById(`pr-nombre-${i}`)?.value.trim()  || results[i].nombre,
@@ -1245,16 +1038,10 @@ async function addAllFromParse() {
       ciudad:   document.getElementById(`pr-ciudad-${i}`)?.value.trim()  || results[i].ciudad,
       email:    (document.getElementById(`pr-email-${i}`)?.value.trim()  || results[i].email||'').toLowerCase(),
       telefono: document.getElementById(`pr-tel-${i}`)?.value.trim()     || results[i].telefono,
-      web:      results[i].web||'',
-      linkedin: results[i].linkedin||'',
-      zona:     results[i].zona||'',
-      fuente:   'manual',
-      email_status: 'sin_verificar',
+      web: results[i].web||'', zona: results[i].zona||'', fuente: 'manual', email_status: 'sin_verificar',
     };
-
     if (!data.empresa && !data.nombre) { skipped++; continue; }
     if (data.email && allLeads.some(l => l.email === data.email)) { skipped++; continue; }
-
     try {
       const res = await sbInsert('leads', data);
       allLeads.unshift(res[0]||data);
@@ -1263,24 +1050,21 @@ async function addAllFromParse() {
       added++;
     } catch(e) { skipped++; }
   }
-  showToast(`✅ ${added} leads agregados${skipped?' · '+skipped+' omitidos (duplicados)':''}`, 'ok');
+  showToast(added + ' leads agregados' + (skipped?' · '+skipped+' omitidos':''), 'ok');
 }
 
-// =====================================================================
-// REDACTAR EMAIL
-// =====================================================================
 const ENFOQUES = [
-  { id:'costos',   label:'💰 Reducción de costos y tiempos operativos' },
-  { id:'puertos',  label:'⚓ Ventaja vs puertos con salida al agua' },
-  { id:'depositos',label:'🏭 Mejor precio que depósitos fiscales' },
-  { id:'geo',      label:'📍 Ventaja geográfica estratégica (Ruta 31)' },
-  { id:'agro',     label:'🌾 Zona agroindustrial pampeana' },
-  { id:'ruta31',   label:'🚛 "Sus camiones ya pasan por Rojas"' },
-  { id:'meet',     label:'📅 Invitación a reunión por Meet' },
-  { id:'visita',   label:'🏗 Invitación a visitar el puerto' },
-  { id:'seguridad',label:'🔒 Seguridad y control aduanero' },
-  { id:'temporada',label:'📈 Temporada alta de exportaciones' },
-  { id:'completo', label:'⭐ Propuesta comercial completa' },
+  { id:'costos',   label:'Reduccion de costos y tiempos operativos' },
+  { id:'puertos',  label:'Ventaja vs puertos con salida al agua' },
+  { id:'depositos',label:'Mejor precio que depositos fiscales' },
+  { id:'geo',      label:'Ventaja geografica estrategica (Ruta 31)' },
+  { id:'agro',     label:'Zona agroindustrial pampeana' },
+  { id:'ruta31',   label:'Sus camiones ya pasan por Rojas' },
+  { id:'meet',     label:'Invitacion a reunion por Meet' },
+  { id:'visita',   label:'Invitacion a visitar el puerto' },
+  { id:'seguridad',label:'Seguridad y control aduanero' },
+  { id:'temporada',label:'Temporada alta de exportaciones' },
+  { id:'completo', label:'Propuesta comercial completa' },
 ];
 
 function pageRedactar() {
@@ -1289,7 +1073,7 @@ function pageRedactar() {
     <div>
       <div class="form-section" style="margin-bottom:16px">
         <h3>1. Seleccionar lead</h3>
-        <input id="red-search" type="text" placeholder="Buscar empresa o ciudad…" oninput="renderLeadPicker()" style="margin-bottom:8px">
+        <input id="red-search" type="text" placeholder="Buscar empresa o ciudad..." oninput="renderLeadPicker()" style="margin-bottom:8px">
         <div id="lead-picker" style="max-height:250px;overflow-y:auto"></div>
       </div>
       <div class="form-section" id="lead-selected-card" style="display:none;margin-bottom:0">
@@ -1300,49 +1084,41 @@ function pageRedactar() {
     <div>
       <div class="form-section" style="margin-bottom:16px">
         <h3>2. Enfoques comerciales</h3>
-        <p class="text-muted text-sm" style="margin-bottom:10px">Seleccioná uno o varios. La IA los combinará en un solo email.</p>
         <div class="enfoque-grid" id="enfoque-grid">
-          ${ENFOQUES.map(e=>`
-          <label class="enfoque-item">
-            <input type="checkbox" value="${e.id}" onchange="updateEnfoques()">
-            <span>${e.label}</span>
-          </label>`).join('')}
+          ${ENFOQUES.map(e=>`<label class="enfoque-item"><input type="checkbox" value="${e.id}" onchange="updateEnfoques()"><span>${e.label}</span></label>`).join('')}
         </div>
         <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px">
-          <button class="btn btn-ghost btn-sm" onclick="iaRecomendaEnfoques()">🤖 IA recomienda</button>
+          <button class="btn btn-ghost btn-sm" onclick="iaRecomendaEnfoques()">IA recomienda</button>
           <span id="enfoque-loading" class="hidden"><span class="spinner"></span></span>
           <button class="btn btn-ghost btn-sm" onclick="document.querySelectorAll('#enfoque-grid input').forEach(i=>i.checked=false)">Limpiar</button>
         </div>
         <div id="ia-recomendacion" class="text-muted text-sm" style="display:none;background:#0d1117;padding:10px;border-radius:6px;margin-bottom:10px"></div>
         <div class="form-group">
-          <label>Contexto adicional sobre este cliente (opcional)</label>
-          <textarea id="red-contexto" placeholder="Ej: Es una empresa de soja de Venado Tuerto con 3 contenedores por mes. Ya fueron al puerto de Rosario pero tuvieron demoras..."></textarea>
+          <label>Contexto adicional (opcional)</label>
+          <textarea id="red-contexto" placeholder="Ej: empresa de soja de Venado Tuerto con 3 contenedores por mes..."></textarea>
         </div>
         <div class="form-row">
-          <div class="form-group">
-            <label>Tono del email</label>
+          <div class="form-group"><label>Tono</label>
             <select id="red-tono">
               <option value="profesional">Profesional</option>
-              <option value="ejecutivo">CEO / Ejecutivo de alto nivel</option>
+              <option value="ejecutivo">CEO / Ejecutivo</option>
               <option value="cercano">Cercano y directo</option>
-              <option value="tecnico">Técnico y detallado</option>
+              <option value="tecnico">Tecnico y detallado</option>
             </select>
           </div>
-          <div class="form-group">
-            <label>Idioma</label>
+          <div class="form-group"><label>Idioma</label>
             <select id="red-idioma">
-              <option value="es">Español rioplatense</option>
+              <option value="es">Espanol rioplatense</option>
               <option value="en">English</option>
-              <option value="pt">Português</option>
+              <option value="pt">Portugues</option>
             </select>
           </div>
         </div>
-        <button class="btn btn-primary" id="btn-generar" onclick="generarEmail()">✨ Generar email con IA</button>
-        <span id="gen-loading" class="hidden" style="margin-left:10px"><span class="spinner"></span> Generando…</span>
+        <button class="btn btn-primary" id="btn-generar" onclick="generarEmail()">Generar email con IA</button>
+        <span id="gen-loading" class="hidden" style="margin-left:10px"><span class="spinner"></span> Generando...</span>
       </div>
-
       <div class="form-section" id="preview-section" style="display:none">
-        <h3>3. Vista previa y envío</h3>
+        <h3>3. Vista previa y envio</h3>
         <div class="form-row">
           <div class="form-group"><label>Para (email)</label><input id="red-to" type="email"></div>
           <div class="form-group"><label>Asunto</label><input id="red-subject"></div>
@@ -1352,15 +1128,14 @@ function pageRedactar() {
           <textarea id="red-body" style="min-height:200px;font-family:inherit"></textarea>
         </div>
         <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-          <button class="btn btn-success" onclick="enviarEmail()">📤 Enviar email real</button>
-          <button class="btn btn-ghost" onclick="generarEmail()">↻ Regenerar</button>
-          <span id="send-loading" class="hidden"><span class="spinner"></span> Enviando…</span>
-          <span id="dup-warning" class="hidden" style="color:var(--warn);font-size:12px">⚠ Ya contactaste a este destinatario antes</span>
+          <button class="btn btn-success" onclick="enviarEmail()">Enviar email real</button>
+          <button class="btn btn-ghost" onclick="generarEmail()">Regenerar</button>
+          <span id="send-loading" class="hidden"><span class="spinner"></span> Enviando...</span>
+          <span id="dup-warning" class="hidden" style="color:var(--warn);font-size:12px">Ya contactaste a este destinatario antes</span>
         </div>
       </div>
     </div>
   </div>`;
-
   renderLeadPicker();
 }
 
@@ -1370,13 +1145,12 @@ function renderLeadPicker() {
     const t = `${l.nombre||''} ${l.empresa||''} ${l.ciudad||''}`.toLowerCase();
     return !q || t.includes(q);
   }).slice(0, 40);
-
   const picker = document.getElementById('lead-picker');
   if (!picker) return;
   picker.innerHTML = filtered.map(l=>`
     <div onclick="selectLead(${l.id})" style="padding:8px;border-radius:6px;cursor:pointer;margin-bottom:4px;background:${currentLead?.id===l.id?'rgba(59,130,246,.15)':'#0d1117'};border:1px solid ${currentLead?.id===l.id?'var(--accent)':'var(--border)'}">
       <div style="font-size:13px;font-weight:600">${l.nombre||l.empresa}</div>
-      <div style="font-size:11px;color:var(--muted)">${l.tipo||''} · ${l.ciudad||''} · ${l.email||'sin email'}</div>
+      <div style="font-size:11px;color:var(--muted)">${l.tipo||''} &middot; ${l.ciudad||''} &middot; ${l.email||'sin email'}</div>
     </div>`).join('');
 }
 
@@ -1390,140 +1164,76 @@ function selectLead(id) {
     <div style="font-size:14px;font-weight:600;margin-bottom:6px">${currentLead.nombre||currentLead.empresa}</div>
     <div class="text-muted text-sm">
       ${tipoBadge(currentLead.tipo)}<br>
-      📍 ${currentLead.ciudad||'—'} · ${currentLead.zona||''}<br>
-      ✉ ${currentLead.email||'sin email'}<br>
-      ${currentLead.telefono?'📞 '+currentLead.telefono+'<br>':''}
-      ${currentLead.web?'🌐 <a href="'+currentLead.web+'" target="_blank" style="color:var(--accent)">'+currentLead.web+'</a>':''}
+      ${currentLead.ciudad||'—'} &middot; ${currentLead.zona||''}<br>
+      ${currentLead.email||'sin email'}<br>
+      ${currentLead.telefono?currentLead.telefono+'<br>':''}
+      ${currentLead.web?'<a href="'+currentLead.web+'" target="_blank" style="color:var(--accent)">'+currentLead.web+'</a>':''}
     </div>`;
-  if (document.getElementById('red-to')) {
-    document.getElementById('red-to').value = currentLead.email||'';
-  }
+  if (document.getElementById('red-to')) document.getElementById('red-to').value = currentLead.email||'';
 }
 
-function updateEnfoques() {} // placeholder para future logic
+function updateEnfoques() {}
 
 async function iaRecomendaEnfoques() {
-  if (!currentLead) return showToast('Seleccioná un lead primero', 'warn');
+  if (!currentLead) return showToast('Selecciona un lead primero', 'warn');
   document.getElementById('enfoque-loading').classList.remove('hidden');
   document.getElementById('ia-recomendacion').style.display = 'none';
-
-  const prompt = `Analizá este lead y recomendá cuáles de los siguientes enfoques serían más efectivos para una oferta comercial de Puerto Seco Rojas (Zona Primaria Aduanera, Rojas, Buenos Aires).
-
-Lead:
-- Empresa: ${currentLead.empresa||currentLead.nombre}
-- Tipo: ${currentLead.tipo}
-- Ciudad: ${currentLead.ciudad}
-- Zona: ${currentLead.zona}
-- Notas: ${currentLead.notas||'sin notas'}
-
-Enfoques disponibles:
-${ENFOQUES.map(e=>e.id+': '+e.label).join('\n')}
-
-Responde SOLO con JSON: {"ids":["id1","id2"],"razon":"explicación breve en español"}`;
-
+  const prompt = `Analiza este lead y recomienda cuales enfoques usar para Puerto Seco Rojas.
+Lead: Empresa: ${currentLead.empresa||currentLead.nombre}, Tipo: ${currentLead.tipo}, Ciudad: ${currentLead.ciudad}
+Enfoques: ${ENFOQUES.map(e=>e.id+': '+e.label).join('\n')}
+Responde SOLO con JSON: {"ids":["id1","id2"],"razon":"explicacion breve"}`;
   try {
     const d = await apiFetch('/api/ai', {prompt});
     if (d.error) throw new Error(d.error);
     let rec;
-    try { rec = JSON.parse(d.text.replace(/```json?|```/g,'')); } catch(e) { rec = null; }
+    try { rec = JSON.parse(d.text.replace(/` + '```' + `json?|` + '```' + `/g,'')); } catch(e) { rec = null; }
     if (rec?.ids) {
-      document.querySelectorAll('#enfoque-grid input').forEach(inp => {
-        inp.checked = rec.ids.includes(inp.value);
-      });
+      document.querySelectorAll('#enfoque-grid input').forEach(inp => { inp.checked = rec.ids.includes(inp.value); });
       const razonEl = document.getElementById('ia-recomendacion');
       razonEl.style.display = 'block';
-      razonEl.textContent = '🤖 IA recomienda: ' + (rec.razon||'');
+      razonEl.textContent = 'IA recomienda: ' + (rec.razon||'');
     }
-  } catch(e) {
-    showToast(parseApiError(e, 'groq'), 'err');
-  }
+  } catch(e) { showToast(parseApiError(e, 'groq'), 'err'); }
   document.getElementById('enfoque-loading').classList.add('hidden');
 }
 
 async function generarEmail() {
-  if (!currentLead) return showToast('Seleccioná un lead primero', 'warn');
-
-  const selEnfoques = [...document.querySelectorAll('#enfoque-grid input:checked')]
-    .map(i => ENFOQUES.find(e=>e.id===i.value)?.label||i.value);
-  if (selEnfoques.length === 0) return showToast('Seleccioná al menos un enfoque', 'warn');
-
+  if (!currentLead) return showToast('Selecciona un lead primero', 'warn');
+  const selEnfoques = [...document.querySelectorAll('#enfoque-grid input:checked')].map(i => ENFOQUES.find(e=>e.id===i.value)?.label||i.value);
+  if (selEnfoques.length === 0) return showToast('Selecciona al menos un enfoque', 'warn');
   const contexto = document.getElementById('red-contexto')?.value||'';
   const tono = document.getElementById('red-tono')?.value||'profesional';
   const idioma = document.getElementById('red-idioma')?.value||'es';
-
   document.getElementById('gen-loading').classList.remove('hidden');
   document.getElementById('btn-generar').disabled = true;
-
-  const sistema = `Sos un experto comercial en comercio exterior y logística aduanera argentina. Redactás emails comerciales convincentes, concretos y personalizados para el Puerto Seco Rojas.
-
-Datos del Puerto Seco Rojas:
-- Ubicación: Rojas, Provincia de Buenos Aires, Argentina
-- Habilitación: Zona Primaria Aduanera (igual que los puertos)
-- Ventaja logística: En el centro de la Pcia. de Buenos Aires, sobre Ruta 31 — cualquier carga del interior pasa por Rojas antes de llegar a Buenos Aires (400+ km) o Rosario (250+ km)
-- Los camiones pueden hacer el despacho en Rojas y llegar al puerto marítimo solo a embarcar — sin colas ni almacenaje caro
-- Tarifas menores que depósitos fiscales portuarios
-- Despachos más ágiles por menor volumen y atención personalizada
-- Para importaciones: la mercadería se despacha en Rojas y llega directa a la empresa sin esperar en el puerto
-
-Emisor: ${CFG.nombre||'Equipo Puerto Seco Rojas'}, ${CFG.cargo||''}.
-Firma: ${CFG.firma||CFG.nombre||'Puerto Seco Rojas — Zona Primaria Aduanera'}
-
-Idioma: ${idioma==='en'?'English (formal business)':idioma==='pt'?'Português brasileiro (formal comercial)':'Español rioplatense argentino'}
-Tono: ${tono}`;
-
-  const prompt = `Redactá un email comercial personalizado para este lead:
-
-Empresa: ${currentLead.empresa||currentLead.nombre}
-Tipo: ${currentLead.tipo}
-Ciudad: ${currentLead.ciudad}
-Zona: ${currentLead.zona}
-${contexto?'Contexto adicional: '+contexto:''}
-
-Enfoques a usar (combinalos en el email, NO los listés — integralos naturalmente):
-${selEnfoques.map(e=>'- '+e).join('\n')}
-
-Requisitos:
-1. El asunto debe ser específico y generar curiosidad (no genérico)
-2. El email debe nombrar la empresa/ciudad del destinatario
-3. Debe ser conciso (máximo 250 palabras en el cuerpo)
-4. Cerrar con propuesta concreta: si hay interés pueden sugerir fecha y horario para una reunión por Google Meet — nos adaptamos a su calendario
-5. No seas genérico — demostrá que sabés de su rubro y zona
-
-Devolvé SOLO JSON: {"asunto":"...","cuerpo":"..."}`;
-
+  const sistema = `Sos un experto comercial en comercio exterior y logistica aduanera argentina. Redactas emails comerciales convincentes para el Puerto Seco Rojas.
+Datos: Ubicacion: Rojas, Buenos Aires. Habilitacion: Zona Primaria Aduanera. Ventaja: centro de Bs.As. sobre Ruta 31. Tarifas menores que depositos fiscales portuarios.
+Emisor: ${CFG.nombre||'Equipo Puerto Seco Rojas'}, ${CFG.cargo||''}. Firma: ${CFG.firma||CFG.nombre||'Puerto Seco Rojas'}
+Idioma: ${idioma==='en'?'English':idioma==='pt'?'Portugues':'Espanol rioplatense'}. Tono: ${tono}`;
+  const prompt = `Redacta un email comercial para:
+Empresa: ${currentLead.empresa||currentLead.nombre}, Tipo: ${currentLead.tipo}, Ciudad: ${currentLead.ciudad}
+${contexto?'Contexto: '+contexto:''}
+Enfoques: ${selEnfoques.join(', ')}
+Requisitos: asunto especifico, nombrar la empresa, maximo 250 palabras, cerrar con propuesta de reunion por Meet.
+Devuelve SOLO JSON: {"asunto":"...","cuerpo":"..."}`;
   try {
     const d = await apiFetch('/api/ai', {prompt, system: sistema});
     if (d.error) throw new Error(d.error);
-
     let parsed;
     try {
-      const clean = d.text.replace(/```json?|```/g,'').trim();
-      // Buscar el primer { ... } en caso de que haya texto antes del JSON
+      const clean = d.text.replace(/` + '```' + `json?|` + '```' + `/g,'').trim();
       const jsonMatch = clean.match(/\{[\s\S]*\}/);
       parsed = JSON.parse(jsonMatch ? jsonMatch[0] : clean);
-    } catch(e) {
-      // Si no es JSON válido, usar el texto directamente
-      parsed = { asunto: `Propuesta Puerto Seco Rojas — ${currentLead.empresa||currentLead.nombre}`, cuerpo: d.text };
-    }
-
-    if (!parsed.asunto || !parsed.cuerpo) {
-      parsed = { asunto: `Propuesta Puerto Seco Rojas — ${currentLead.empresa||currentLead.nombre}`, cuerpo: d.text };
-    }
-
+    } catch(e) { parsed = { asunto: 'Propuesta Puerto Seco Rojas — ' + (currentLead.empresa||currentLead.nombre), cuerpo: d.text }; }
+    if (!parsed.asunto || !parsed.cuerpo) parsed = { asunto: 'Propuesta Puerto Seco Rojas — ' + (currentLead.empresa||currentLead.nombre), cuerpo: d.text };
     document.getElementById('preview-section').style.display = 'block';
     document.getElementById('red-to').value = currentLead.email||'';
     document.getElementById('red-subject').value = parsed.asunto||'';
     document.getElementById('red-body').value = parsed.cuerpo||'';
-
-    // Verificar duplicado (comparar por email del lead actual)
-    const emailDest = currentLead.email||'';
-    const dup = emailDest && allEnviados.some(e => e.destinatario_email === emailDest);
+    const dup = (currentLead.email||'') && allEnviados.some(e => e.destinatario_email === currentLead.email);
     document.getElementById('dup-warning').classList.toggle('hidden', !dup);
-
     document.getElementById('preview-section').scrollIntoView({ behavior:'smooth' });
-  } catch(e) {
-    showToast(parseApiError(e, 'groq'), 'err');
-  }
+  } catch(e) { showToast(parseApiError(e, 'groq'), 'err'); }
   document.getElementById('gen-loading').classList.add('hidden');
   document.getElementById('btn-generar').disabled = false;
 }
@@ -1532,22 +1242,15 @@ async function enviarEmail() {
   const to = document.getElementById('red-to').value.trim();
   const subject = document.getElementById('red-subject').value.trim();
   const body = document.getElementById('red-body').value.trim();
-  if (!to || !subject || !body) return showToast('Completá todos los campos', 'err');
-
-  // Anti-duplicado
+  if (!to || !subject || !body) return showToast('Completa todos los campos', 'err');
   const dup = allEnviados.some(e => e.destinatario_email === to);
-  if (dup && !confirm(`Ya enviaste un email a ${to} antes. ¿Querés enviarlo de todas formas?`)) return;
-
+  if (dup && !confirm('Ya enviaste un email a ' + to + ' antes. Enviarlo igual?')) return;
   document.getElementById('send-loading').classList.remove('hidden');
-
   const htmlBody = body.split('\n').map(l => l ? `<p>${l}</p>` : '<br>').join('');
-
   try {
     const r = await fetch('/api/send',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({to, subject, html: htmlBody, text: body})});
     const d = await r.json();
-    if (!d.ok) throw new Error(d.error||'Error de envío');
-
-    // Guardar en Supabase
+    if (!d.ok) throw new Error(d.error||'Error de envio');
     const selEnfoques = [...document.querySelectorAll('#enfoque-grid input:checked')].map(i=>i.value);
     const emailData = {
       lead_id: currentLead?.id||null,
@@ -1560,14 +1263,11 @@ async function enviarEmail() {
       enfoques_usados: selEnfoques,
       estado: 'enviado',
     };
-
     try {
       const saved = await sbInsert('emails_enviados', emailData);
       allEnviados.unshift(saved[0]||emailData);
       document.getElementById('badge-enviados').textContent = allEnviados.length;
     } catch(e2) {}
-
-    // Marcar lead como contactado
     if (currentLead) {
       try {
         await sbUpdate('leads', currentLead.id, { contactado: true, estado: 'contactado', fecha_contacto: new Date().toISOString() });
@@ -1575,32 +1275,24 @@ async function enviarEmail() {
         if (l) { l.contactado = true; l.estado = 'contactado'; }
       } catch(e2) {}
     }
-
-    showToast('✅ Email enviado correctamente a ' + to, 'ok');
+    showToast('Email enviado correctamente a ' + to, 'ok');
     document.getElementById('preview-section').style.display = 'none';
-  } catch(e) {
-    showToast(parseApiError(e, 'gmail'), 'err');
-  }
+  } catch(e) { showToast(parseApiError(e, 'gmail'), 'err'); }
   document.getElementById('send-loading').classList.add('hidden');
 }
 
 function redactarPara(id) {
-  // BUG FIX: guardamos el id a preseleccionar, renderPage lo usará
   window.__preSelectLeadId = id;
   currentLead = allLeads.find(l => l.id === id);
   renderPage('redactar');
-  // El lead ya está seleccionado en currentLead, selectLead actualiza la UI
   selectLead(id);
 }
 
-// =====================================================================
-// ENVIADOS
-// =====================================================================
 function pageEnviados() {
   document.getElementById('content').innerHTML = `
   <div class="table-wrap">
     <div class="table-toolbar">
-      <input id="search-env" type="text" placeholder="Buscar por empresa, email…" style="width:240px" oninput="filterEnviados()">
+      <input id="search-env" type="text" placeholder="Buscar por empresa, email..." style="width:240px" oninput="filterEnviados()">
       <select id="filter-env-estado" onchange="filterEnviados()">
         <option value="">Todos los estados</option>
         <option value="enviado">Enviado</option>
@@ -1619,32 +1311,29 @@ function filterEnviados() {
   const q = (document.getElementById('search-env')?.value||'').toLowerCase();
   const estado = document.getElementById('filter-env-estado')?.value||'';
   const filtered = allEnviados.filter(e => {
-    const t = `${e.destinatario_email||''} ${e.destinatario_nombre||''} ${e.empresa||''} ${e.ciudad||''} ${e.asunto||''}`.toLowerCase();
+    const t = `${e.destinatario_email||''} ${e.destinatario_nombre||''} ${e.empresa||''} ${e.asunto||''}`.toLowerCase();
     if (q && !t.includes(q)) return false;
     if (estado && e.estado !== estado) return false;
     return true;
   });
-
   document.getElementById('env-list').innerHTML = filtered.map(e=>`
   <div class="email-item">
     <div class="email-item-header">
       <div>
         <strong>${e.destinatario_nombre||e.destinatario_email}</strong>
-        <span class="text-muted text-sm"> · ${e.empresa||''} · ${e.ciudad||''}</span>
-        <div style="font-size:12px;color:var(--muted);margin-top:2px">✉ ${e.destinatario_email}</div>
+        <span class="text-muted text-sm"> &middot; ${e.empresa||''} &middot; ${e.ciudad||''}</span>
+        <div style="font-size:12px;color:var(--muted);margin-top:2px">${e.destinatario_email}</div>
         ${e.asunto?`<div style="font-size:12px;margin-top:2px"><strong>Asunto:</strong> ${e.asunto}</div>`:''}
       </div>
       <div style="text-align:right">
         ${estadoBadge(e.estado)}
         <div class="text-muted text-sm" style="margin-top:4px">${formatFecha(e.fecha_envio)}</div>
-        ${e.enfoques_usados?.length?`<div style="font-size:10px;color:var(--muted);margin-top:2px">${e.enfoques_usados.join(', ')}</div>`:''}
       </div>
     </div>
-    ${e.clasificacion_ia?`<div style="margin:6px 0;font-size:12px;color:var(--accent2)">🤖 ${e.clasificacion_ia}</div>`:''}
-    <div class="email-item-body">${(e.cuerpo||'').substring(0,200).replace(/</g,'&lt;')}${e.cuerpo?.length>200?'…':''}</div>
+    <div class="email-item-body">${(e.cuerpo||'').substring(0,200).replace(/</g,'&lt;')}${e.cuerpo?.length>200?'...':''}</div>
     <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap">
       ${['enviado','respondido','interesado','no_interesado','rebotado'].map(s=>`
-        <button class="btn btn-ghost btn-sm ${e.estado===s?'active':''}" style="${e.estado===s?'border-color:var(--accent);color:var(--accent)':''}" onclick="updateEstadoEnviado(${e.id},'${s}','${e.lead_id||''}')">
+        <button class="btn btn-ghost btn-sm" style="${e.estado===s?'border-color:var(--accent);color:var(--accent)':''}" onclick="updateEstadoEnviado(${e.id},'${s}','${e.lead_id||''}')">
           ${s.replace('_',' ')}
         </button>`).join('')}
     </div>
@@ -1657,7 +1346,6 @@ async function updateEstadoEnviado(id, estado, leadId) {
     const e = allEnviados.find(x=>x.id===id);
     if (e) e.estado = estado;
     filterEnviados();
-    // Si hay lead_id, actualizar su estado también
     if (leadId && estado === 'respondido') {
       await sbUpdate('leads', leadId, { estado: 'interesado' });
       const l = allLeads.find(x=>x.id==leadId);
@@ -1666,14 +1354,11 @@ async function updateEstadoEnviado(id, estado, leadId) {
   } catch(ex) { showToast('Error: '+ex.message,'err'); }
 }
 
-// =====================================================================
-// DESPACHANTES ALIADOS
-// =====================================================================
 function pageAliados() {
   document.getElementById('content').innerHTML = `
   <div class="form-section" style="margin-bottom:16px">
-    <h3>🤝 Despachantes Aliados</h3>
-    <p class="text-muted text-sm" style="margin-bottom:14px">Cargá despachantes de confianza. Podés mencionarlos en un segundo email al lead que necesita un despachante para operar desde Rojas.</p>
+    <h3>Despachantes Aliados</h3>
+    <p class="text-muted text-sm" style="margin-bottom:14px">Carga despachantes de confianza para mencionar en emails a leads que necesiten uno.</p>
     <button class="btn btn-primary btn-sm" onclick="showModalAliado()">+ Agregar despachante</button>
   </div>
   <div id="aliados-list"></div>`;
@@ -1687,12 +1372,12 @@ async function loadAndRenderAliados() {
   <div class="lead-result">
     <div class="lead-result-info">
       <strong>${a.nombre}</strong>
-      <span>${a.empresa||''} · ${a.zona||''}</span>
-      <div class="text-sm" style="margin-top:4px">${a.email||''} · ${a.telefono||''}</div>
+      <span>${a.empresa||''} &middot; ${a.zona||''}</span>
+      <div class="text-sm" style="margin-top:4px">${a.email||''} &middot; ${a.telefono||''}</div>
       ${a.notas?`<div class="text-muted text-sm">${a.notas}</div>`:''}
     </div>
-    <button class="btn btn-danger btn-sm" onclick="deleteAliado(${a.id})">✕</button>
-  </div>`).join('') || '<p class="text-muted text-sm">Sin despachantes cargados aún.</p>';
+    <button class="btn btn-danger btn-sm" onclick="deleteAliado(${a.id})">X</button>
+  </div>`).join('') || '<p class="text-muted text-sm">Sin despachantes cargados aun.</p>';
 }
 
 function showModalAliado() {
@@ -1707,14 +1392,10 @@ function showModalAliado() {
     </div>
     <div class="form-row">
       <div class="form-group"><label>Email</label><input id="al-email" type="email"></div>
-      <div class="form-group"><label>Teléfono</label><input id="al-tel"></div>
+      <div class="form-group"><label>Telefono</label><input id="al-tel"></div>
     </div>
-    <div class="form-row single">
-      <div class="form-group"><label>Zona de operación</label><input id="al-zona" placeholder="ej: Zona Centro Bs.As., Santa Fe"></div>
-    </div>
-    <div class="form-row single">
-      <div class="form-group"><label>Notas</label><textarea id="al-notas" style="min-height:60px"></textarea></div>
-    </div>
+    <div class="form-row single"><div class="form-group"><label>Zona de operacion</label><input id="al-zona" placeholder="ej: Zona Centro Bs.As., Santa Fe"></div></div>
+    <div class="form-row single"><div class="form-group"><label>Notas</label><textarea id="al-notas" style="min-height:60px"></textarea></div></div>
     <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px">
       <button class="btn btn-ghost" onclick="this.closest('.modal-overlay').remove()">Cancelar</button>
       <button class="btn btn-primary" onclick="saveAliado()">Guardar</button>
@@ -1732,7 +1413,7 @@ async function saveAliado() {
     zona:     document.getElementById('al-zona').value.trim(),
     notas:    document.getElementById('al-notas').value.trim(),
   };
-  if (!data.nombre) return showToast('Ingresá el nombre', 'err');
+  if (!data.nombre) return showToast('Ingresa el nombre', 'err');
   try {
     await sbInsert('despachantes_aliados', data);
     document.querySelector('.modal-overlay')?.remove();
@@ -1742,20 +1423,16 @@ async function saveAliado() {
 }
 
 async function deleteAliado(id) {
-  if (!confirm('¿Eliminar?')) return;
+  if (!confirm('Eliminar?')) return;
   try { await sbDelete('despachantes_aliados', id); loadAndRenderAliados(); } catch(e) { showToast('Error','err'); }
 }
 
-// =====================================================================
-// CONFIGURACIÓN
-// =====================================================================
 function pageConfig() {
-  const savedKeys = JSON.parse(localStorage.getItem('crm_keys') || '{}');
   document.getElementById('content').innerHTML = `
   <div class="inner-tabs" id="cfg-tabs">
-    <div class="inner-tab active" onclick="switchCfgTab('perfil')">👤 Perfil</div>
-    <div class="inner-tab" onclick="switchCfgTab('keys')">🔑 API Keys</div>
-    <div class="inner-tab" onclick="switchCfgTab('estado')">🔧 Estado del sistema</div>
+    <div class="inner-tab active" onclick="switchCfgTab('perfil')">Perfil</div>
+    <div class="inner-tab" onclick="switchCfgTab('keys')">API Keys</div>
+    <div class="inner-tab" onclick="switchCfgTab('estado')">Estado del sistema</div>
   </div>
   <div id="cfg-content"></div>`;
   switchCfgTab('perfil');
@@ -1765,141 +1442,72 @@ function switchCfgTab(tab) {
   document.querySelectorAll('#cfg-tabs .inner-tab').forEach((el,i) => {
     el.classList.toggle('active', ['perfil','keys','estado'][i]===tab);
   });
-  const savedKeys = JSON.parse(localStorage.getItem('crm_keys') || '{}');
   const el = document.getElementById('cfg-content');
-
   if (tab === 'perfil') {
     el.innerHTML = `
     <div class="form-section">
-      <h3>👤 Tu perfil (firma en emails)</h3>
+      <h3>Tu perfil (firma en emails)</h3>
       <div class="form-row">
         <div class="form-group"><label>Nombre completo</label><input id="cfg-nombre" value="${CFG.nombre||''}"></div>
         <div class="form-group"><label>Cargo</label><input id="cfg-cargo" value="${CFG.cargo||''}"></div>
       </div>
       <div class="form-row">
         <div class="form-group"><label>Email de trabajo</label><input id="cfg-email" type="email" value="${CFG.email||''}"></div>
-        <div class="form-group"><label>Teléfono</label><input id="cfg-tel" value="${CFG.telefono||''}"></div>
+        <div class="form-group"><label>Telefono</label><input id="cfg-tel" value="${CFG.telefono||''}"></div>
       </div>
-      <div class="form-row single">
-        <div class="form-group"><label>Dirección del puerto</label><input id="cfg-dir" value="${CFG.direccion||''}"></div>
-      </div>
-      <div class="form-row single">
-        <div class="form-group"><label>Servicios del puerto (para contextualizar los emails)</label>
-          <textarea id="cfg-servicios">${CFG.servicios||''}</textarea></div>
-      </div>
-      <div class="form-row single">
-        <div class="form-group"><label>Firma personalizada</label>
-          <textarea id="cfg-firma">${CFG.firma||''}</textarea></div>
-      </div>
-      <button class="btn btn-primary" onclick="saveCfg()">💾 Guardar perfil</button>
+      <div class="form-row single"><div class="form-group"><label>Direccion del puerto</label><input id="cfg-dir" value="${CFG.direccion||''}"></div></div>
+      <div class="form-row single"><div class="form-group"><label>Servicios del puerto</label><textarea id="cfg-servicios">${CFG.servicios||''}</textarea></div></div>
+      <div class="form-row single"><div class="form-group"><label>Firma personalizada</label><textarea id="cfg-firma">${CFG.firma||''}</textarea></div></div>
+      <button class="btn btn-primary" onclick="saveCfg()">Guardar perfil</button>
     </div>`;
-
   } else if (tab === 'keys') {
     el.innerHTML = `
     <div class="form-section" style="margin-bottom:16px">
-      <h3>🔑 Todas las API Keys</h3>
-      <p class="text-muted text-sm" style="margin-bottom:16px">
-        Las keys guardadas acá se usan automáticamente. Si una ya está en Vercel, la de acá tiene prioridad.
-        Se guardan solo en tu navegador (localStorage), nunca se envían a ningún servidor externo.
-      </p>
-
+      <h3>Todas las API Keys</h3>
       <div style="background:#0a0e1a;border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:14px">
-        <div style="font-size:11px;color:var(--warn);margin-bottom:12px;font-weight:600">📌 SUPABASE — base de datos (necesaria para funcionar)</div>
+        <div style="font-size:11px;color:var(--warn);margin-bottom:12px;font-weight:600">SUPABASE — base de datos</div>
         <div class="form-row">
-          <div class="form-group">
-            <label>Project URL</label>
-            <input id="k-surl" value="${KEYS.supabaseUrl||DB.url||''}" placeholder="https://xxxxxxxx.supabase.co">
-            <span class="text-muted text-sm">Supabase → Settings → API → Project URL</span>
-          </div>
-          <div class="form-group">
-            <label>Anon/Publishable Key</label>
-            <input id="k-skey" value="${KEYS.supabaseKey||DB.key||''}" placeholder="sb_publishable_...">
-            <span class="text-muted text-sm">Supabase → Settings → API → Project API keys</span>
-          </div>
+          <div class="form-group"><label>Project URL</label><input id="k-surl" value="${KEYS.supabaseUrl||DB.url||''}" placeholder="https://xxxxxxxx.supabase.co"></div>
+          <div class="form-group"><label>Anon Key</label><input id="k-skey" value="${KEYS.supabaseKey||DB.key||''}" placeholder="eyJ..."></div>
         </div>
       </div>
-
       <div style="background:#0a0e1a;border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:14px">
-        <div style="font-size:11px;color:#93c5fd;margin-bottom:12px;font-weight:600">🤖 GROQ — generación de emails con IA</div>
-        <div class="form-row single">
-          <div class="form-group">
-            <label>Groq API Key</label>
-            <input id="k-groq" value="${KEYS.groqKey||''}" placeholder="gsk_...">
-            <span class="text-muted text-sm">console.groq.com → API Keys · Plan gratuito con cuota mensual</span>
-          </div>
-        </div>
+        <div style="font-size:11px;color:#93c5fd;margin-bottom:12px;font-weight:600">GROQ — generacion de emails con IA</div>
+        <div class="form-row single"><div class="form-group"><label>Groq API Key</label><input id="k-groq" value="${KEYS.groqKey||''}" placeholder="gsk_..."></div></div>
       </div>
-
       <div style="background:#0a0e1a;border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:14px">
-        <div style="font-size:11px;color:#6ee7b7;margin-bottom:12px;font-weight:600">🔭 APOLLO.IO — búsqueda de empresas reales</div>
-        <div class="form-row single">
-          <div class="form-group">
-            <label>Apollo.io API Key</label>
-            <input id="k-apollo" value="${KEYS.apolloKey||''}" placeholder="apollo_...">
-            <span class="text-muted text-sm">app.apollo.io → Settings → API · Plan gratuito disponible</span>
-          </div>
-        </div>
+        <div style="font-size:11px;color:#6ee7b7;margin-bottom:12px;font-weight:600">APOLLO.IO — busqueda de empresas</div>
+        <div class="form-row single"><div class="form-group"><label>Apollo.io API Key</label><input id="k-apollo" value="${KEYS.apolloKey||''}" placeholder="apollo_..."></div></div>
       </div>
-
       <div style="background:#0a0e1a;border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:14px">
-        <div style="font-size:11px;color:#c4b5fd;margin-bottom:12px;font-weight:600">✉ HUNTER.IO — verificación de emails (25 gratis/mes)</div>
-        <div class="form-row single">
-          <div class="form-group">
-            <label>Hunter.io API Key</label>
-            <input id="k-hunter" value="${KEYS.hunterKey||''}" placeholder="hunter_...">
-            <span class="text-muted text-sm">hunter.io → Dashboard → API · 25 verificaciones gratis por mes</span>
-          </div>
-        </div>
+        <div style="font-size:11px;color:#c4b5fd;margin-bottom:12px;font-weight:600">HUNTER.IO — verificacion de emails</div>
+        <div class="form-row single"><div class="form-group"><label>Hunter.io API Key</label><input id="k-hunter" value="${KEYS.hunterKey||''}" placeholder="hunter_..."></div></div>
       </div>
-
       <div style="display:flex;gap:8px;align-items:center;margin-bottom:16px">
-        <button class="btn btn-primary" onclick="saveAllKeys()">💾 Guardar todas las keys</button>
+        <button class="btn btn-primary" onclick="saveAllKeys()">Guardar todas las keys</button>
         <span id="k-status" class="text-muted text-sm"></span>
       </div>
-
       <div style="background:#0a0e1a;border:1px solid var(--border);border-radius:8px;padding:14px">
-        <div style="font-size:11px;color:#fcd34d;margin-bottom:10px;font-weight:600">📬 GMAIL — envío de emails (solo se cambia en Vercel)</div>
-        <p class="text-muted text-sm">
-          El usuario y contraseña de Gmail viven en Vercel por seguridad. Para cambiarlos:
-          <a href="https://vercel.com" target="_blank" style="color:var(--accent)">vercel.com</a> → tu proyecto → Settings → Environment Variables → editar GMAIL_USER y GMAIL_PASS → Redeploy.
-        </p>
-        <div style="font-family:monospace;font-size:11px;margin-top:8px;color:var(--muted)">
-          GMAIL_USER = puertosecorojas@gmail.com<br>
-          GMAIL_PASS = xxahusotpluatpbc (contraseña de app Google)
-        </div>
+        <div style="font-size:11px;color:#fcd34d;margin-bottom:10px;font-weight:600">GMAIL — envio de emails (solo se cambia en Vercel)</div>
+        <p class="text-muted text-sm">Para cambiar: <a href="https://vercel.com" target="_blank" style="color:var(--accent)">vercel.com</a> &rarr; proyecto &rarr; Settings &rarr; Environment Variables &rarr; GMAIL_USER y GMAIL_PASS &rarr; Redeploy.</p>
       </div>
     </div>`;
-
   } else if (tab === 'estado') {
     el.innerHTML = `
     <div class="form-section">
-      <h3>🔧 Estado del sistema</h3>
-      <p class="text-muted text-sm" style="margin-bottom:16px">Verificá que todos los servicios estén funcionando antes de usar el CRM.</p>
+      <h3>Estado del sistema</h3>
       <div id="status-checks">
-        <div style="padding:10px;border-radius:8px;background:#0d1117;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center">
-          <span>Supabase (base de datos)</span>
-          <span id="sc-supabase"><span class="spinner"></span></span>
-        </div>
-        <div style="padding:10px;border-radius:8px;background:#0d1117;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center">
-          <span>Groq (generación de emails con IA)</span>
-          <span id="sc-groq"><span class="spinner"></span></span>
-        </div>
-        <div style="padding:10px;border-radius:8px;background:#0d1117;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center">
-          <span>Gmail / Nodemailer (envío de emails)</span>
-          <span id="sc-gmail" class="text-muted text-sm">Solo verificable enviando un email de prueba</span>
-        </div>
-        <div style="padding:10px;border-radius:8px;background:#0d1117;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center">
-          <span>Apollo.io (búsqueda de empresas)</span>
-          <span id="sc-apollo"><span class="spinner"></span></span>
-        </div>
-        <div style="padding:10px;border-radius:8px;background:#0d1117;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center">
-          <span>Hunter.io (verificación de emails)</span>
-          <span id="sc-hunter"><span class="spinner"></span></span>
-        </div>
+        <div style="padding:10px;border-radius:8px;background:#0d1117;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center"><span>Supabase</span><span id="sc-supabase"><span class="spinner"></span></span></div>
+        <div style="padding:10px;border-radius:8px;background:#0d1117;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center"><span>Groq (IA)</span><span id="sc-groq"><span class="spinner"></span></span></div>
+        <div style="padding:10px;border-radius:8px;background:#0d1117;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center"><span>Gmail / Nodemailer</span><span id="sc-gmail" class="text-muted text-sm">Solo verificable enviando email de prueba</span></div>
+        <div style="padding:10px;border-radius:8px;background:#0d1117;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center"><span>Apollo.io</span><span id="sc-apollo"><span class="spinner"></span></span></div>
+        <div style="padding:10px;border-radius:8px;background:#0d1117;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center"><span>Hunter.io</span><span id="sc-hunter"><span class="spinner"></span></span></div>
+        <div style="padding:10px;border-radius:8px;background:#0d1117;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center"><span>Gmail API (sync respuestas)</span><span id="sc-gmail-api"><span class="spinner"></span></span></div>
       </div>
       <div style="margin-top:12px;display:flex;gap:8px">
-        <button class="btn btn-primary btn-sm" onclick="runStatusChecks()">↻ Verificar todo</button>
-        <button class="btn btn-ghost btn-sm" onclick="sendTestEmail()">📧 Enviar email de prueba</button>
+        <button class="btn btn-primary btn-sm" onclick="runStatusChecks()">Verificar todo</button>
+        <button class="btn btn-ghost btn-sm" onclick="sendTestEmail()">Enviar email de prueba</button>
+        <button class="btn btn-ghost btn-sm" onclick="connectGmail()">Conectar Gmail API</button>
       </div>
       <div id="test-result" class="mt-2"></div>
     </div>`;
@@ -1914,73 +1522,62 @@ async function saveAllKeys() {
   const apollo = document.getElementById('k-apollo')?.value.trim();
   const hunter = document.getElementById('k-hunter')?.value.trim();
   const st = document.getElementById('k-status');
-
   const toSave = {};
   if (url)    toSave.supabaseUrl = url;
   if (skey)   toSave.supabaseKey = skey;
   if (groq)   toSave.groqKey    = groq;
   if (apollo) toSave.apolloKey  = apollo;
   if (hunter) toSave.hunterKey  = hunter;
-
   saveKeysToStorage(toSave);
   if (url)  DB.url = url;
   if (skey) DB.key = skey;
-
-  st.textContent = 'Guardado ✓ Verificando Supabase…';
+  st.textContent = 'Guardado. Verificando Supabase...';
   const ok = await checkConnection();
-  st.textContent = ok ? '✅ Keys guardadas y Supabase conectado' : '⚠ Keys guardadas pero Supabase no conecta — verificá la URL y la Key';
+  st.textContent = ok ? 'Keys guardadas y Supabase conectado' : 'Keys guardadas pero Supabase no conecta';
   if (ok) { await Promise.all([loadLeads(), loadEnviados(), loadCfg()]); }
 }
 
-// Mantener compatibilidad con el botón viejo si existe
 async function saveSupabaseKeys() { return saveAllKeys(); }
 
 async function runStatusChecks() {
-  // Supabase
   const setSt = (id, ok, msg) => {
     const el = document.getElementById(id);
-    if (el) el.innerHTML = ok
-      ? `<span style="color:#4ade80">✅ OK</span>`
-      : `<span style="color:#f87171" title="${msg}">❌ ${msg.substring(0,50)}</span>`;
+    if (el) el.innerHTML = ok ? `<span style="color:#4ade80">OK</span>` : `<span style="color:#f87171" title="${msg}">ERROR: ${(msg||'').substring(0,40)}</span>`;
   };
-
   try {
     const r = await sbFetch('configuracion?select=id&limit=1');
     setSt('sc-supabase', r.ok, r.ok ? '' : 'Error HTTP '+r.status);
   } catch(e) { setSt('sc-supabase', false, parseApiError(e,'supabase')); }
-
-  // Groq — test con prompt mínimo
   try {
-    const d = await apiFetch('/api/ai',{prompt:'Respondé solo con la palabra OK'});
+    const d = await apiFetch('/api/ai',{prompt:'Responde solo OK'});
     setSt('sc-groq', !d.error && d.text, d.error ? parseApiError({message:d.error},'groq') : '');
   } catch(e) { setSt('sc-groq', false, parseApiError(e,'groq')); }
-
-  // Apollo — check via /api/config
   try {
     const r = await fetch('/api/config');
     const d = await r.json();
-    setSt('sc-apollo', d.hasApollo, d.hasApollo ? '' : 'APOLLO_API_KEY no configurada en Vercel');
-    setSt('sc-hunter', d.hasHunter, d.hasHunter ? '' : 'HUNTER_API_KEY no configurada en Vercel');
+    setSt('sc-apollo', d.hasApollo, d.hasApollo ? '' : 'APOLLO_API_KEY no configurada');
+    setSt('sc-hunter', d.hasHunter, d.hasHunter ? '' : 'HUNTER_API_KEY no configurada');
   } catch(e) {
     setSt('sc-apollo', false, 'Error verificando');
     setSt('sc-hunter', false, 'Error verificando');
   }
+  try {
+    const r = await fetch('/api/gmail-sync', { method: 'POST' });
+    const d = await r.json();
+    setSt('sc-gmail-api', d.ok || d.error === 'Gmail no conectado', d.error === 'Gmail no conectado' ? 'No conectado - click en Conectar Gmail API' : (d.error||''));
+  } catch(e) { setSt('sc-gmail-api', false, 'Error'); }
 }
 
 async function sendTestEmail() {
   const res = document.getElementById('test-result');
-  if (!CFG.email) { res.innerHTML = '<p style="color:var(--warn)">Configurá tu email en la pestaña Perfil primero</p>'; return; }
-  res.innerHTML = '<span class="spinner"></span> Enviando…';
+  if (!CFG.email) { res.innerHTML = '<p style="color:var(--warn)">Configura tu email en la pestana Perfil primero</p>'; return; }
+  res.innerHTML = '<span class="spinner"></span> Enviando...';
   try {
-    const r = await fetch('/api/send',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
-      to: CFG.email, subject:'✅ Test Puerto Seco Rojas CRM', text:'Este es un email de prueba. Si llegó, el sistema de envío funciona correctamente.'
-    })});
+    const r = await fetch('/api/send',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({to: CFG.email, subject:'Test Puerto Seco Rojas CRM', text:'Este es un email de prueba.'})});
     const d = await r.json();
     if (!d.ok) throw new Error(d.error);
-    res.innerHTML = `<p style="color:#4ade80">✅ Email de prueba enviado a ${CFG.email} — revisá tu bandeja</p>`;
-  } catch(e) {
-    res.innerHTML = `<p style="color:var(--danger)">${parseApiError(e,'gmail')}</p>`;
-  }
+    res.innerHTML = `<p style="color:#4ade80">Email de prueba enviado a ${CFG.email}</p>`;
+  } catch(e) { res.innerHTML = `<p style="color:var(--danger)">${parseApiError(e,'gmail')}</p>`; }
 }
 
 async function saveCfg() {
@@ -2000,29 +1597,16 @@ async function saveCfg() {
     document.getElementById('user-name-sidebar').textContent = CFG.nombre||'Sin configurar';
     document.getElementById('user-email-sidebar').textContent = CFG.email||'—';
     showToast('Perfil guardado', 'ok');
-  } catch(e) {
-    showToast(parseApiError(e,'supabase'), 'err');
-  }
+  } catch(e) { showToast(parseApiError(e,'supabase'), 'err'); }
 }
 
-// =====================================================================
-// HELPERS
-// =====================================================================
 function tipoBadge(tipo) {
-  const map = {
-    despachante:'badge-blue',estudio_aduanero:'badge-purple',
-    operador_logistico:'badge-amber',importador_exportador:'badge-green',
-    agro_industrial:'badge-green',empresa:'badge-gray'
-  };
+  const map = {despachante:'badge-blue',estudio_aduanero:'badge-purple',operador_logistico:'badge-amber',importador_exportador:'badge-green',agro_industrial:'badge-green',empresa:'badge-gray'};
   return '<span class="badge ' + (map[tipo]||'badge-gray') + '">' + (tipo||'').replace(/_/g,' ') + '</span>';
 }
 
 function estadoBadge(estado) {
-  const map = {
-    sin_contactar:'badge-gray',contactado:'badge-blue',interesado:'badge-green',
-    reunion_agendada:'badge-purple',no_interesado:'badge-red',sin_respuesta:'badge-amber',
-    enviado:'badge-blue',respondido:'badge-green',rebotado:'badge-red',abierto:'badge-amber'
-  };
+  const map = {sin_contactar:'badge-gray',contactado:'badge-blue',interesado:'badge-green',reunion_agendada:'badge-purple',no_interesado:'badge-red',sin_respuesta:'badge-amber',enviado:'badge-blue',respondido:'badge-green',rebotado:'badge-red',abierto:'badge-amber'};
   return '<span class="badge ' + (map[estado]||'badge-gray') + '">' + (estado||'').replace(/_/g,' ') + '</span>';
 }
 
