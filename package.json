@@ -3,5 +3,9 @@
   "version": "2.0.0",
   "description": "CRM Puerto Seco Rojas",
   "type": "module",
-  "engines": { "node": "24.x" }
+  "engines": { "node": "24.x" },
+  "dependencies": {
+    "nodemailer": "^6.9.9",
+    "@supabase/supabase-js": "^2.39.0"
+  }
 }
