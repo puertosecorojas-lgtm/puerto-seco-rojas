@@ -1,4 +1,3 @@
-// api/send.js — envío real de emails via Gmail + registro en Supabase
 import nodemailer from 'nodemailer';
 import { createClient } from '@supabase/supabase-js';
 
@@ -22,11 +21,11 @@ export default async function handler(req, res) {
   }
 
   try {
-    // 1. Enviar el email
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: { user: GMAIL_USER, pass: GMAIL_PASS },
     });
+
     await transporter.sendMail({
       from: `"Puerto Seco Rojas" <${GMAIL_USER}>`,
       to,
@@ -35,20 +34,17 @@ export default async function handler(req, res) {
       html: html || text || '',
     });
 
-    // 2. Actualizar Supabase si hay leadId
     if (leadId && SUPABASE_URL && SUPABASE_KEY) {
       const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-      // Marcar el lead como contactado
       await supabase
         .from('leads')
-        .update({ 
-          estado: 'contactado', 
-          ultimo_contacto: new Date().toISOString() 
+        .update({
+          estado: 'contactado',
+          ultimo_contacto: new Date().toISOString()
         })
         .eq('id', leadId);
 
-      // Registrar el envío en la tabla sent_emails
       await supabase
         .from('sent_emails')
         .insert({
