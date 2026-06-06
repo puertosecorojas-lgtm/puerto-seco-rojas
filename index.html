@@ -1460,7 +1460,7 @@ async function enviarEmail() {
   document.getElementById('send-loading').classList.remove('hidden');
   const htmlBody = body.split('\n').map(l => l ? `<p>${l}</p>` : '<br>').join('');
   try {
-    const r = await fetch('/api/send',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({to, subject, html: htmlBody, text: body})});
+    const r = await fetch('/api/send',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({to, subject, html: htmlBody, text: body, leadId: currentLead?.id||null, nombreLead: currentLead?.nombre||currentLead?.empresa||'', ciudadLead: currentLead?.ciudad||'', enfoque: [...document.querySelectorAll('#enfoque-grid input:checked')].map(i=>i.value).join(',')})});
     const d = await r.json();
     if (!d.ok) throw new Error(d.error||'Error de envio');
     const selEnfoques = [...document.querySelectorAll('#enfoque-grid input:checked')].map(i=>i.value);
