@@ -49,12 +49,12 @@ export default async function handler(req, res) {
         .from('emails_enviados')
         .insert({
           lead_id: leadId,
-          nombre_lead: nombreLead || '',
-          ciudad_lead: ciudadLead || '',
-          email_destino: to,
+          destinatario_nombre: nombreLead || '',
+          ciudad: ciudadLead || '',
+          destinatario_email: to,
           asunto: subject,
-          enfoque: enfoque || '',
-          fecha_envio: new Date().toISOString(),
+          cuerpo: text || '',
+          enfoques_usados: enfoque ? [enfoque] : [],
           estado: 'enviado'
         });
     }
