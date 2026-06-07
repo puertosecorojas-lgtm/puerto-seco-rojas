@@ -14,7 +14,7 @@ export default async function handler(req, res) {
   const GMAIL_USER = process.env.GMAIL_USER;
   const GMAIL_PASS = process.env.GMAIL_PASS;
   const SUPABASE_URL = process.env.SUPABASE_URL;
-  const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const SUPABASE_KEY = process.env.SUPABASE_ANON_KEY;
 
   if (!GMAIL_USER || !GMAIL_PASS) {
     return res.status(500).json({ error: 'Variables de Gmail no configuradas en Vercel' });
@@ -46,7 +46,7 @@ export default async function handler(req, res) {
         .eq('id', leadId);
 
       await supabase
-        .from('sent_emails')
+        .from('emails_enviados')
         .insert({
           lead_id: leadId,
           nombre_lead: nombreLead || '',
