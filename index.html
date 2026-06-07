@@ -1482,7 +1482,7 @@ async function enviarEmail() {
     } catch(e2) {}
     if (currentLead) {
       try {
-        await sbUpdate('leads', currentLead.id, { contactado: true, estado: 'contactado', fecha_contacto: new Date().toISOString() });
+        await sbUpdate('leads', currentLead.id, { contactado: true, estado: 'contactado' });
         const l = allLeads.find(x => x.id === currentLead.id);
         if (l) { l.contactado = true; l.estado = 'contactado'; }
       } catch(e2) {}
