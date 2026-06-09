@@ -5,7 +5,7 @@
   "type": "module",
   "engines": { "node": "24.x" },
   "dependencies": {
-    "nodemailer": "^6.9.9",
+    "nodemailer": "^6.9.0",
     "@supabase/supabase-js": "^2.39.0"
   }
 }
