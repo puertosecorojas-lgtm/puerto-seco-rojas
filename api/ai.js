@@ -1,4 +1,4 @@
-﻿export default async function handler(req, res) {
+export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -14,17 +14,11 @@
     messages.push({ role: 'user', content: prompt });
     const r = await fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${GROQ_KEY}` },
+      headers: { 'Content-Type': 'application/json', 'Authorization': Bearer  },
       body: JSON.stringify({ model: 'llama-3.3-70b-versatile', messages, max_tokens: 1200, temperature: 0.7 }),
     });
-    if (!r.ok) {
-      const err = await r.text();
-      return res.status(r.status).json({ error: `Groq error: ${err}` });
-    }
+    if (!r.ok) { const err = await r.text(); return res.status(r.status).json({ error: 'Groq error: ' + err }); }
     const data = await r.json();
-    const text = data.choices?.[0]?.message?.content || '';
-    return res.json({ text });
-  } catch (e) {
-    return res.status(500).json({ error: e.message });
-  }
+    return res.json({ text: data.choices?.[0]?.message?.content || '' });
+  } catch (e) { return res.status(500).json({ error: e.message }); }
 }
