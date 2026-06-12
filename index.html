@@ -1346,8 +1346,9 @@ function pageRedactar() {
 function renderLeadPicker() {
   const q = (document.getElementById('red-search')?.value||'').toLowerCase();
   const filtered = allLeads.filter(l => {
-    const t = `${l.nombre||''} ${l.empresa||''} ${l.ciudad||''}`.toLowerCase();
-    return !q || t.includes(q);
+    if (l.estado === 'contactado' || l.estado === 'no_interesado') return false;
+    const t = (l.nombre||'') + ' ' + (l.empresa||'') + ' ' + (l.ciudad||'');
+    return !q || t.toLowerCase().includes(q);
   }).slice(0, 40);
   const picker = document.getElementById('lead-picker');
   if (!picker) return;
