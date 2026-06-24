@@ -708,12 +708,39 @@ async function searchApify(mode) {
     body = { searchQuery: query + (city ? ' ' + city + ' Argentina' : ' Argentina') };
   }
 
-  if (KEYS.apifyKey) body._apifyKey = KEYS.apifyKey;
+  if (KEYS.apifyKey)  body._apifyKey  = KEYS.apifyKey;
+  if (KEYS.hunterKey) body._hunterKey = KEYS.hunterKey;
 
   try {
-    const d = await apiFetch('/api/apify', body);
-    if (d.error) throw new Error(d.error);
-    const leads = d.leads || [];
+    // 1. Lanzar el run — responde en <1 seg con un runId
+    const start = await apiFetch('/api/apify-start', body);
+    if (start.error) throw new Error(start.error);
+    const runId = start.runId;
+
+    // 2. Mostrar contador mientras el scraper trabaja
+    const timerEl = document.createElement('span');
+    timerEl.style.cssText = 'font-size:12px;color:var(--muted);margin-left:8px';
+    loadingEl.appendChild(timerEl);
+    let elapsed = 0;
+    const timer = setInterval(() => { elapsed += 3; timerEl.textContent = elapsed + 's...'; }, 3000);
+
+    // 3. Polling cada 3 seg desde el browser (sin timeout de Vercel)
+    let leads = [];
+    const MAX_WAIT = 120;
+    while (elapsed <= MAX_WAIT) {
+      await new Promise(r => setTimeout(r, 3000));
+      const pollBody = { runId };
+      if (KEYS.apifyKey)  pollBody._apifyKey  = KEYS.apifyKey;
+      if (KEYS.hunterKey) pollBody._hunterKey = KEYS.hunterKey;
+      const poll = await apiFetch('/api/apify-status', pollBody);
+      if (poll.error)             throw new Error(poll.error);
+      if (poll.status === 'failed') throw new Error(poll.error || 'El scraper fallo');
+      if (poll.status === 'done') { leads = poll.leads || []; break; }
+      // status === 'running' → seguir esperando
+    }
+
+    clearInterval(timer);
+    timerEl.remove();
     window.__apifyResults = leads;
 
     resultsEl.innerHTML = `
