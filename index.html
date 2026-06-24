@@ -505,15 +505,41 @@ async function loadCfg() {
 async function lanzarBusquedaHoy() {
   const btn = document.getElementById('btn-buscar-hoy');
   const st  = document.getElementById('cron-status');
-  btn.disabled = true; btn.textContent = 'Buscando...';
+  btn.disabled = true; btn.textContent = 'Iniciando...';
   st.textContent = ''; st.style.color = 'var(--muted)';
   try {
+    // Paso 1: lanzar cron → devuelve runId inmediatamente
     const d = await apiFetch('/api/apify-v2', { action: 'cron' });
     if (d.error) throw new Error(d.error);
-    const msg = d.msg || `+${d.insertados||0} leads en ${d.zona||'zona del dia'}`;
-    st.textContent = msg; st.style.color = '#4ade80';
-    if ((d.insertados||0) > 0) { await loadLeads(); showToast((d.insertados) + ' leads nuevos de ' + d.zona, 'ok'); }
-    else showToast(d.msg || 'Busqueda completada, sin nuevos', 'ok');
+    if (!d.runId) {
+      // Dia no laborable u otro mensaje
+      st.textContent = d.msg || 'Sin busqueda hoy';
+      btn.disabled = false; btn.textContent = '&#128269; Buscar leads hoy';
+      return;
+    }
+    btn.textContent = `Buscando en ${d.zona}...`;
+    st.textContent = 'Google Maps procesando...'; st.style.color = 'var(--muted)';
+    // Paso 2: polling hasta que Apify termine, luego guarda en Supabase
+    let attempts = 0;
+    while (attempts < 50) {
+      await new Promise(r => setTimeout(r, 4000));
+      const poll = await apiFetch('/api/apify-v2', {
+        action: 'status', runId: d.runId,
+        save: true, ciudad: d.ciudad, provincia: d.provincia,
+      });
+      if (poll.error) throw new Error(poll.error);
+      if (poll.status === 'running') { attempts++; continue; }
+      if (poll.status === 'failed')  throw new Error(poll.error || 'Apify fallo');
+      if (poll.status === 'done') {
+        const ins = poll.insertados || 0;
+        st.textContent = `+${ins} leads nuevos en ${d.zona}`;
+        st.style.color = ins > 0 ? '#4ade80' : 'var(--muted)';
+        if (ins > 0) { await loadLeads(); showToast(ins + ' leads nuevos de ' + d.zona, 'ok'); }
+        else showToast('Busqueda completada en ' + d.zona + ', sin leads nuevos', 'ok');
+        break;
+      }
+    }
+    if (attempts >= 50) throw new Error('Tiempo de espera agotado');
   } catch(e) {
     st.textContent = 'Error: ' + e.message; st.style.color = '#f87171';
   }
