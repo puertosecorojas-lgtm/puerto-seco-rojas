@@ -521,7 +521,7 @@ async function lanzarBusquedaHoy() {
     st.textContent = 'Google Maps procesando...'; st.style.color = 'var(--muted)';
     // Paso 2: polling hasta que Apify termine, luego guarda en Supabase
     let attempts = 0;
-    while (attempts < 50) {
+    while (attempts < 80) {  // 80 × 4s = 320 seg
       await new Promise(r => setTimeout(r, 4000));
       const poll = await apiFetch('/api/apify-v2', {
         action: 'status', runId: d.runId,
@@ -539,7 +539,7 @@ async function lanzarBusquedaHoy() {
         break;
       }
     }
-    if (attempts >= 50) throw new Error('Tiempo de espera agotado');
+    if (attempts >= 80) throw new Error('Apify tardo demasiado, intenta de nuevo');
   } catch(e) {
     st.textContent = 'Error: ' + e.message; st.style.color = '#f87171';
   }
