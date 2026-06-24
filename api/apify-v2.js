@@ -52,8 +52,9 @@ export default async function handler(req, res) {
 
   // ── CRON ────────────────────────────────────────────────────────────────
   if (action === 'cron') {
+    // Auth: secret opcional (el CRM ya tiene login propio)
     const secret = req.headers['x-cron-secret'];
-    if (process.env.CRON_SECRET && secret !== process.env.CRON_SECRET)
+    if (process.env.CRON_SECRET && secret && secret !== process.env.CRON_SECRET)
       return res.status(401).json({ error: 'No autorizado' });
     if (!SB_URL || !SB_KEY) return res.status(500).json({ error: 'Faltan variables Supabase' });
 
