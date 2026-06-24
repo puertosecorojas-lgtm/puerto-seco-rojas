@@ -58,11 +58,12 @@ export default async function handler(req, res) {
           'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}`,
           'Content-Type': 'application/json', 'Prefer': 'return=minimal',
         };
-        const existentes = await (await fetch(
+        const existentesRaw = await (await fetch(
           `${SB_URL}/rest/v1/leads?select=email,empresa&limit=2000`, { headers: sbH }
         )).json();
-        const emailsEx   = new Set((existentes||[]).map(l=>(l.email||'').toLowerCase()).filter(Boolean));
-        const empresasEx = new Set((existentes||[]).map(l=>(l.empresa||'').toLowerCase()).filter(Boolean));
+        const existentes = Array.isArray(existentesRaw) ? existentesRaw : [];
+        const emailsEx   = new Set(existentes.map(l=>(l.email||'').toLowerCase()).filter(Boolean));
+        const empresasEx = new Set(existentes.map(l=>(l.empresa||'').toLowerCase()).filter(Boolean));
 
         const nuevos = []; const vistos = new Set();
         for (const l of leads) {
