@@ -39,10 +39,15 @@ export default async function handler(req, res) {
       'Prefer':        'return=representation',
     };
 
-    await fetch(`${SUPABASE_URL}/rest/v1/configuracion?id=eq.1`, {
-      method: 'PATCH',
-      headers: sbHeaders,
+    // UPSERT: crea la fila si no existe, actualiza si existe (mas robusto que PATCH)
+    await fetch(`${SUPABASE_URL}/rest/v1/configuracion`, {
+      method: 'POST',
+      headers: {
+        ...sbHeaders,
+        'Prefer': 'resolution=merge-duplicates,return=minimal',
+      },
       body: JSON.stringify({
+        id:                  1,
         gmail_access_token:  tokens.access_token,
         gmail_refresh_token: tokens.refresh_token,
         gmail_token_expiry:  new Date(Date.now() + tokens.expires_in * 1000).toISOString(),
