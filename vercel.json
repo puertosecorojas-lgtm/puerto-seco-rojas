@@ -1,8 +1,0 @@
-{
-  "crons": [
-    {
-      "path": "/api/cron-buscar-leads",
-      "schedule": "0 11 * * 1-5"
-    }
-  ]
-}
