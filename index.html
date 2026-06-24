@@ -185,6 +185,8 @@ select option{background:#1e2436}
     <div class="topbar-actions">
       <span class="text-muted text-sm" id="today-date"></span>
       <button class="btn btn-ghost btn-sm" onclick="refreshAll()">&#8635; Actualizar</button>
+      <button class="btn btn-primary btn-sm" id="btn-buscar-hoy" onclick="lanzarBusquedaHoy()" style="margin-left:8px">&#128269; Buscar leads hoy</button>
+      <span id="cron-status" style="font-size:12px;color:var(--muted);margin-left:8px"></span>
     </div>
   </div>
   <div id="content"></div>
@@ -498,6 +500,24 @@ async function loadCfg() {
     document.getElementById('user-name-sidebar').textContent = CFG.nombre || 'Sin configurar';
     document.getElementById('user-email-sidebar').textContent = CFG.email || 'â€”';
   } catch(e) { CFG = {}; }
+}
+
+async function lanzarBusquedaHoy() {
+  const btn = document.getElementById('btn-buscar-hoy');
+  const st  = document.getElementById('cron-status');
+  btn.disabled = true; btn.textContent = 'Buscando...';
+  st.textContent = ''; st.style.color = 'var(--muted)';
+  try {
+    const d = await apiFetch('/api/apify-v2', { action: 'cron' });
+    if (d.error) throw new Error(d.error);
+    const msg = d.msg || `+${d.insertados||0} leads en ${d.zona||'zona del dia'}`;
+    st.textContent = msg; st.style.color = '#4ade80';
+    if ((d.insertados||0) > 0) { await loadLeads(); showToast((d.insertados) + ' leads nuevos de ' + d.zona, 'ok'); }
+    else showToast(d.msg || 'Busqueda completada, sin nuevos', 'ok');
+  } catch(e) {
+    st.textContent = 'Error: ' + e.message; st.style.color = '#f87171';
+  }
+  btn.disabled = false; btn.textContent = '&#128269; Buscar leads hoy';
 }
 
 async function refreshAll() {
