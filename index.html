@@ -713,7 +713,7 @@ async function searchApify(mode) {
 
   try {
     // 1. Lanzar el run — responde en <1 seg con un runId
-    const start = await apiFetch('/api/apify-start', body);
+    const start = await apiFetch('/api/apify-v2', { ...body, action: 'start' });
     if (start.error) throw new Error(start.error);
     const runId = start.runId;
 
@@ -732,7 +732,7 @@ async function searchApify(mode) {
       const pollBody = { runId };
       if (KEYS.apifyKey)  pollBody._apifyKey  = KEYS.apifyKey;
       if (KEYS.hunterKey) pollBody._hunterKey = KEYS.hunterKey;
-      const poll = await apiFetch('/api/apify-status', pollBody);
+      const poll = await apiFetch('/api/apify-v2', { ...pollBody, action: 'status' });
       if (poll.error)             throw new Error(poll.error);
       if (poll.status === 'failed') throw new Error(poll.error || 'El scraper fallo');
       if (poll.status === 'done') { leads = poll.leads || []; break; }
@@ -781,7 +781,7 @@ async function buscarEmailLead(idx) {
   try {
     const body = { empresa: l.empresa, web: l.web || '', ciudad: l.ciudad || '' };
     if (KEYS.hunterKey) body._hunterKey = KEYS.hunterKey;
-    const d = await apiFetch('/api/find-email', body);
+    const d = await apiFetch('/api/scrape-email', { ...body, mode: 'find' });
     if (d.error) throw new Error(d.error);
     if (d.email) {
       // Actualizar el lead en memoria y en la card
