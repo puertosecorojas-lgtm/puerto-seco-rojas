@@ -759,6 +759,8 @@ async function searchApify(mode) {
         </div>
         <div class="lead-result-actions">
           <button class="btn btn-primary btn-sm" onclick="addLeadFromApify(${i})">+ Agregar</button>
+          ${!l.email ? `<button class="btn btn-ghost btn-sm" id="find-email-btn-${i}" onclick="buscarEmailLead(${i})">🔍 Buscar email</button>` : ''}
+          <span id="find-email-result-${i}" style="font-size:11px;color:#fcd34d"></span>
         </div>
       </div>`).join('')}
       ${leads.length > 1 ? `<button class="btn btn-primary" style="margin-top:8px" onclick="addAllFromApify()">+ Agregar todos (${leads.length})</button>` : ''}
@@ -767,6 +769,37 @@ async function searchApify(mode) {
     resultsEl.innerHTML = `<div class="form-section" style="border-color:var(--danger)"><p style="color:var(--danger)">${parseApiError(e, 'apify')}</p></div>`;
   }
   loadingEl.classList.add('hidden');
+}
+
+async function buscarEmailLead(idx) {
+  const l = (window.__apifyResults || [])[idx];
+  if (!l) return;
+  const btn = document.getElementById('find-email-btn-' + idx);
+  const resultEl = document.getElementById('find-email-result-' + idx);
+  if (btn) { btn.disabled = true; btn.textContent = '⏳ Buscando...'; }
+  if (resultEl) resultEl.textContent = '';
+  try {
+    const body = { empresa: l.empresa, web: l.web || '', ciudad: l.ciudad || '' };
+    if (KEYS.hunterKey) body._hunterKey = KEYS.hunterKey;
+    const d = await apiFetch('/api/find-email', body);
+    if (d.error) throw new Error(d.error);
+    if (d.email) {
+      // Actualizar el lead en memoria y en la card
+      l.email = d.email;
+      l.email_status = d.score >= 70 ? 'verificado' : 'sin_verificar';
+      if (d.contacto_nombre) l.contacto_nombre = d.contacto_nombre;
+      if (d.contacto_cargo)  l.contacto_cargo  = d.contacto_cargo;
+      if (resultEl) resultEl.textContent = '✓ ' + d.email + ' (via ' + d.fuente + ')';
+      if (btn) btn.style.display = 'none';
+      showToast('Email encontrado: ' + d.email, 'ok');
+    } else {
+      if (resultEl) resultEl.textContent = 'No se encontró email';
+      if (btn) { btn.disabled = false; btn.textContent = '🔍 Buscar email'; }
+    }
+  } catch(e) {
+    if (resultEl) resultEl.textContent = 'Error: ' + e.message;
+    if (btn) { btn.disabled = false; btn.textContent = '🔍 Buscar email'; }
+  }
 }
 
 async function addLeadFromApify(idx) {
