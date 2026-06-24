@@ -113,7 +113,7 @@ export default async function handler(req, res) {
       const r = await fetch(
         `https://api.apify.com/v2/acts/compass~crawler-google-places/runs?token=${APIFY_KEY}`,
         { method: 'POST', headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ searchStringsArray:[searchQ], maxCrawledPlacesPerSearch:15, language:'es', countryCode:'ar' }) }
+          body: JSON.stringify({ searchStringsArray:[searchQ], maxCrawledPlacesPerSearch:8, language:'es', countryCode:'ar' }) }
       );
       if (!r.ok) return res.status(r.status).json({ error: `Apify error ${r.status}` });
       const rd = await r.json();
