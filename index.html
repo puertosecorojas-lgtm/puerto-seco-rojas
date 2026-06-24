@@ -532,10 +532,15 @@ async function lanzarBusquedaHoy() {
       if (poll.status === 'failed')  throw new Error(poll.error || 'Apify fallo');
       if (poll.status === 'done') {
         const ins = poll.insertados || 0;
-        st.textContent = `+${ins} leads nuevos en ${d.zona}`;
+        const total = poll.total || 0;
+        const dup = poll.duplicados || 0;
+        let msg = ins > 0 ? `+${ins} leads nuevos en ${d.zona}` : `Sin leads nuevos en ${d.zona}`;
+        if (total === 0) msg = `Google Maps no encontro empresas en ${d.zona}`;
+        else if (ins === 0 && dup > 0) msg = `${dup} encontrados en ${d.zona}, todos ya existian`;
+        st.textContent = msg;
         st.style.color = ins > 0 ? '#4ade80' : 'var(--muted)';
         if (ins > 0) { await loadLeads(); showToast(ins + ' leads nuevos de ' + d.zona, 'ok'); }
-        else showToast('Busqueda completada en ' + d.zona + ', sin leads nuevos', 'ok');
+        else showToast(msg, 'ok');
         break;
       }
     }
