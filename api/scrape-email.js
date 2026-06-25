@@ -121,19 +121,7 @@ export default async function handler(req, res) {
       } catch(_){}
     }
 
-    // Paso 5: SMTP pattern + MX check
-    if (!out.email) {
-      const domain = web ? extractDomain(web) : guessDomain(nombre);
-      if (domain) {
-        try {
-          const dns = await (await fetch(`https://dns.google/resolve?name=${domain}&type=MX`,{signal:AbortSignal.timeout(3000)})).json();
-          if ((dns.Answer||[]).length > 0) {
-            out.email=`info@${domain}`; out.fuente='smtp_pattern'; out.score=25;
-            out.log.push(`SMTP: info@${domain} (MX ok)`);
-          } else out.log.push(`SMTP: ${domain} sin MX`);
-        } catch(e){ out.log.push(`SMTP error: ${e.message}`); }
-      }
-    }
+    // Paso 5: SMTP pattern eliminado — generaba bounces. Solo emails verificados.
 
     const seen = new Set([out.email].filter(Boolean));
     out.alternativas = out.alternativas.filter(a=>{ if(seen.has(a.email)) return false; seen.add(a.email); return true; }).slice(0,3);
