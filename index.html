@@ -1025,7 +1025,7 @@ async function saveLead(id) {
 function pageBuscar() {
   document.getElementById('content').innerHTML = `
   <div class="inner-tabs" id="buscar-tabs">
-    <div class="inner-tab active" onclick="switchBuscarTab('apollo')">Apollo.io</div>
+    <div class="inner-tab active" onclick="switchBuscarTab('apollo')">&#128215; Pág. Amarillas</div>
     <div class="inner-tab" onclick="switchBuscarTab('maps')">Google Maps URL</div>
     <div class="inner-tab" onclick="switchBuscarTab('pegar')">Pegar texto</div>
     <div class="inner-tab" onclick="switchBuscarTab('hunter')">Hunter.io</div>
@@ -1043,57 +1043,53 @@ function switchBuscarTab(tab) {
   if (tab === 'apollo') {
     bc.innerHTML = `
     <div class="form-section">
-      <h3>Buscar empresas reales via Apollo.io</h3>
+      <h3>&#128215; Buscar en Páginas Amarillas Argentina</h3>
+      <p class="text-muted text-sm" style="margin-bottom:14px">Solo trae empresas con email real. Ideal para PyMEs de tu zona.</p>
       <div class="form-row">
-        <div class="form-group"><label>Ciudad / Zona</label>
-          <select id="ap-city">
-            <option value="">Todas las zonas</option>
-            <option value="Junin">Junin</option>
-            <option value="Pergamino">Pergamino</option>
-            <option value="Rosario">Rosario</option>
-            <option value="Venado Tuerto">Venado Tuerto</option>
-            <option value="Rio Cuarto">Rio Cuarto</option>
-            <option value="Villa Maria">Villa Maria</option>
-            <option value="Rafaela">Rafaela</option>
-            <option value="Chacabuco">Chacabuco</option>
-            <option value="San Nicolas">San Nicolas</option>
-            <option value="Azul">Azul</option>
-          </select>
+        <div class="form-group"><label>Rubro / Tipo de empresa</label>
+          <input id="ap-rubro" placeholder="ej: distribuidora, acopio, metalmecanica, exportadora..." list="rubros-list">
+          <datalist id="rubros-list">
+            <option value="acopio de granos">
+            <option value="distribuidora">
+            <option value="exportadora">
+            <option value="importadora">
+            <option value="metalmecanica">
+            <option value="frigorifico">
+            <option value="cooperativa agricola">
+            <option value="transporte de carga">
+            <option value="fabrica">
+            <option value="semillero">
+            <option value="maquinaria agricola">
+            <option value="industria alimenticia">
+            <option value="despachante de aduana">
+          </datalist>
         </div>
-        <div class="form-group"><label>Industria / Rubro</label>
-          <select id="ap-industry">
-            <option value="">Seleccionar...</option>
-            <option value="despachante de aduana">Despachantes de aduana</option>
-            <option value="comercio exterior">Comercio exterior</option>
-            <option value="logistica internacional">Logistica internacional</option>
-            <option value="transporte de carga">Transporte de carga</option>
-            <option value="agro exportacion">Agroexportacion</option>
-            <option value="importadora">Importadoras</option>
-            <option value="exportadora">Exportadoras</option>
-            <option value="deposito fiscal">Depositos fiscales</option>
-            <option value="maquinaria agricola">Maquinaria agricola</option>
-            <option value="productor agropecuario">Productores agropecuarios</option>
-            <option value="acopio granos">Acopios de granos</option>
-            <option value="aceitera procesamiento">Aceiteras y procesamiento</option>
-            <option value="semillero venta semillas">Semilleros y venta de semillas</option>
-            <option value="cooperativa agricola">Cooperativas agricolas</option>
-            <option value="fabricante herramientas implementos">Fabricantes de herramientas e implementos</option>
-            <option value="industria metalmecanica">Industria metalmecanica</option>
-            <option value="fabricante equipos agricolas">Fabricantes de equipos agricolas (secadores, silos)</option>
-            <option value="importador insumos agricolas">Importadores de insumos agricolas</option>
-            <option value="importador maquinaria">Importadores de maquinaria</option>
-            <option value="pyme exportadora">PyMEs exportadoras</option>
-            <option value="empresa comercio exterior">Empresas con comercio exterior</option>
+        <div class="form-group"><label>Ciudad</label>
+          <input id="ap-city" placeholder="ej: Junin, Lincoln, Vedia..." list="ciudades-list">
+          <datalist id="ciudades-list">
+            <option value="Junin">
+            <option value="Lincoln">
+            <option value="Vedia">
+            <option value="Colon">
+            <option value="Laboulaye">
+            <option value="Pergamino">
+            <option value="Chacabuco">
+            <option value="San Nicolas">
+            <option value="Rojas">
+          </datalist>
+        </div>
+        <div class="form-group"><label>Provincia</label>
+          <select id="ap-provincia">
+            <option value="Buenos Aires">Buenos Aires</option>
+            <option value="Cordoba">Córdoba</option>
+            <option value="Santa Fe">Santa Fe</option>
+            <option value="Entre Rios">Entre Ríos</option>
+            <option value="La Pampa">La Pampa</option>
           </select>
         </div>
       </div>
-      <div class="form-row single">
-        <div class="form-group"><label>Palabras clave adicionales (opcional)</label>
-          <input id="ap-keywords" placeholder="ej: soja, trigo, contenedores, aduana...">
-        </div>
-      </div>
-      <button class="btn btn-primary" onclick="searchApollo()">Buscar empresas</button>
-      <span id="ap-loading" class="hidden" style="margin-left:10px"><span class="spinner"></span> Buscando...</span>
+      <button class="btn btn-primary" onclick="searchApollo()">&#128269; Buscar con email</button>
+      <span id="ap-loading" class="hidden" style="margin-left:10px"><span class="spinner"></span> Buscando en Páginas Amarillas...</span>
     </div>
     <div id="ap-results"></div>`;
   } else if (tab === 'maps') {
