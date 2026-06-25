@@ -777,7 +777,7 @@ async function searchApify(mode) {
 
     // 3. Polling cada 3 seg desde el browser (sin timeout de Vercel)
     let leads = [];
-    const MAX_WAIT = 120;
+    const MAX_WAIT = 180;  // 180s = 3 minutos de margen
     while (elapsed <= MAX_WAIT) {
       await new Promise(r => setTimeout(r, 3000));
       const pollBody = { runId };
