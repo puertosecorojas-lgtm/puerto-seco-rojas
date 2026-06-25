@@ -51,7 +51,8 @@ export default async function handler(req, res) {
         `https://api.apify.com/v2/actor-runs/${runId}/dataset/items?token=${APIFY_KEY}&limit=50`,
         { signal: AbortSignal.timeout(8000) }
       )).json();
-      const leads = await processItems(items, HUNTER_KEY, zonaObj);
+      // No usar Hunter en status (evita timeout de Vercel) — el usuario busca emails manualmente
+      const leads = await processItems(items, null, zonaObj);
 
       // Si save:true, insertar en Supabase con deduplicacion
       if (save && SB_URL && SB_KEY) {
