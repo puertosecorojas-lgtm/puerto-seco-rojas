@@ -39,7 +39,7 @@ export default async function handler(req, res) {
   if (action === 'status') {
     if (!runId) return res.status(400).json({ error: 'Falta runId' });
     try {
-      const s = await fetch(`https://api.apify.com/v2/actor-runs/${runId}?token=${APIFY_KEY}`);
+      const s = await fetch(`https://api.apify.com/v2/actor-runs/${runId}?token=${APIFY_KEY}`, { signal: AbortSignal.timeout(8000) });
       const sd = await s.json();
       const status = sd.data?.status;
       if (!status) return res.status(500).json({ error: 'No se pudo obtener estado' });
@@ -48,7 +48,8 @@ export default async function handler(req, res) {
 
       const zonaObj = { ciudad: ciudad || '', provincia: provincia || '' };
       const items = await (await fetch(
-        `https://api.apify.com/v2/actor-runs/${runId}/dataset/items?token=${APIFY_KEY}&limit=50`
+        `https://api.apify.com/v2/actor-runs/${runId}/dataset/items?token=${APIFY_KEY}&limit=50`,
+        { signal: AbortSignal.timeout(8000) }
       )).json();
       const leads = await processItems(items, HUNTER_KEY, zonaObj);
 
