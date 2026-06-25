@@ -793,6 +793,8 @@ async function searchApify(mode) {
     clearInterval(timer);
     timerEl.remove();
     window.__apifyResults = leads;
+    // Auto-enriquecer emails en el fondo para empresas con web pero sin email
+    setTimeout(() => autoEnriquecerEmails(leads), 500);
 
     resultsEl.innerHTML = `
     <div class="form-section">
@@ -820,6 +822,36 @@ async function searchApify(mode) {
     resultsEl.innerHTML = `<div class="form-section" style="border-color:var(--danger)"><p style="color:var(--danger)">${parseApiError(e, 'apify')}</p></div>`;
   }
   loadingEl.classList.add('hidden');
+}
+
+async function autoEnriquecerEmails(leads) {
+  // Buscar emails automaticamente para empresas con web pero sin email
+  const conWeb = leads.map((l,i) => ({l,i})).filter(({l}) => l.web && !l.email);
+  if (conWeb.length === 0) return;
+  // Procesar de a 3 en paralelo para no saturar
+  for (let i = 0; i < conWeb.length; i += 3) {
+    const lote = conWeb.slice(i, i + 3);
+    await Promise.allSettled(lote.map(async ({l, i: idx}) => {
+      try {
+        const btn = document.getElementById('find-email-btn-' + idx);
+        const res = document.getElementById('find-email-result-' + idx);
+        if (btn) { btn.disabled = true; btn.textContent = '⏳'; }
+        const body = { web: l.web, mode: 'find' };
+        if (window.KEYS?.hunterKey) body.hunterKey = window.KEYS.hunterKey;
+        const d = await apiFetch('/api/scrape-email', body);
+        if (d.best) {
+          window.__apifyResults[idx].email = d.best;
+          if (res) { res.textContent = d.best; res.style.color = '#fcd34d'; }
+          if (btn) btn.style.display = 'none';
+        } else {
+          if (btn) { btn.disabled = false; btn.textContent = '🔍 Buscar email'; }
+        }
+      } catch(_) {
+        const btn = document.getElementById('find-email-btn-' + idx);
+        if (btn) { btn.disabled = false; btn.textContent = '🔍 Buscar email'; }
+      }
+    }));
+  }
 }
 
 async function buscarEmailLead(idx) {
