@@ -1,117 +1,132 @@
-// api/apollo.js → Páginas Amarillas Argentina
-// Solo devuelve empresas CON email real — descarta las que no tienen
+// api/apollo.js — Páginas Amarillas scraper con flujo: listado → ficha → web → email
+// Máximo 3 fichas por llamada para no exceder el timeout de Vercel (10s)
+
+const SKIP_DOMAINS = [
+  'paginasamarillas', 'amarillas.cl', 'paginas-amarillas', 'paginasblancas',
+  'gurusoluciones', 'gurugo', 'miportal.guru', '_next', '/imagenes/',
+  'wa.me', 'whatsapp.com', 'tiktok.com', 'instagram.com', 'facebook.com',
+  'twitter.com', 'youtube.com', 'youtu.be', 'mt1.google', 'gstatic',
+  'googleapis', 'leafletjs', 'google.com', 'google.es', 'amazonaws',
+  'guru-media', 'maps.google', 'linkedin.com'
+];
+
+const SKIP_EMAILS = [
+  'paginasamarillas', 'gurusoluciones', 'sentry', 'example.com',
+  'noreply', 'guru', '@test', 'usuario@', 'nombre@', 'correo@'
+];
+
+function extractCompanyWeb(text) {
+  const urls = text.match(/https?:\/\/[a-zA-Z0-9.\-]+\.[a-z]{2,}[^\s\)"\'>]*/g) || [];
+  for (const url of urls) {
+    if (!SKIP_DOMAINS.some(d => url.includes(d))) {
+      return url.split('?')[0].split('#')[0].replace(/\/$/, '');
+    }
+  }
+  return null;
+}
+
+function extractEmail(text) {
+  const emails = text.match(/[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-z]{2,}/g) || [];
+  for (const e of emails) {
+    if (!SKIP_EMAILS.some(s => e.includes(s))) return e;
+  }
+  return null;
+}
+
+async function jinaFetch(url, timeout = 7000) {
+  try {
+    const r = await fetch(`https://r.jina.ai/${url}`, {
+      headers: { 'Accept': 'text/plain', 'X-Return-Format': 'text' },
+      signal: AbortSignal.timeout(timeout)
+    });
+    if (!r.ok) return '';
+    return await r.text();
+  } catch {
+    return '';
+  }
+}
+
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   if (req.method === 'OPTIONS') return res.status(200).end();
-  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const { rubro, ciudad, provincia = 'Buenos Aires' } = req.body || {};
-  if (!rubro || !ciudad) return res.status(400).json({ error: 'Falta rubro y ciudad' });
-
-  const HUNTER_KEY = process.env.HUNTER_API_KEY;
-  const slug = s => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/\s+/g,'-').replace(/[^a-z0-9\-]/g,'');
-  const emailRx = /[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}/g;
-  const phoneRx = /(?:\+?54)?(?:11|2[2-9]\d|3[0-9]\d)[\s\-]?\d{3,4}[\s\-]?\d{4}/g;
-  const webRx   = /(?:www\.|https?:\/\/)[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,}/gi;
-  const FAKE    = ['paginasamarillas','google','microsoft','bing','sentry','noreply','no-reply','wordpress','wix','w3.org','.png','.jpg','example.com','cloudflare','schema'];
-
-  const isEmail = e => !FAKE.some(f => e.includes(f)) && e.includes('@') && e.split('@')[1]?.includes('.');
-
-  // Scrape Páginas Amarillas
-  const urls = [
-    `https://www.paginasamarillas.com.ar/buscar/${slug(rubro)}/${slug(ciudad)}`,
-    `https://www.paginasamarillas.com.ar/buscar/${slug(rubro)}/${slug(ciudad)}/${slug(provincia)}`,
-  ];
-
-  let allLeads = [];
-  for (const url of urls) {
-    try {
-      let text = '';
-      // Jina Reader primero
-      try {
-        const rj = await fetch(`https://r.jina.ai/${url}`, {
-          headers: { 'Accept': 'text/plain', 'X-Return-Format': 'text' },
-          signal: AbortSignal.timeout(9000)
-        });
-        if (rj.ok) text = await rj.text();
-      } catch(_) {}
-      // Fallback fetch directo
-      if (text.length < 200) {
-        try {
-          const rd = await fetch(url, {
-            headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36', 'Accept-Language': 'es-AR,es;q=0.9' },
-            signal: AbortSignal.timeout(7000)
-          });
-          if (rd.ok) text = await rd.text();
-        } catch(_) {}
-      }
-      if (text.length < 100) continue;
-      const parsed = parsePA(text, ciudad, provincia, emailRx, phoneRx, webRx, isEmail);
-      for (const l of parsed) {
-        if (!allLeads.find(x => x.empresa.toLowerCase() === l.empresa.toLowerCase())) allLeads.push(l);
-      }
-    } catch(e) { console.error('PA error:', e.message); }
+  const { rubro, ciudad, provincia, page = 0 } = req.body || {};
+  if (!rubro || !ciudad) {
+    return res.status(400).json({ error: 'rubro y ciudad requeridos' });
   }
 
-  // Para cada empresa SIN email, intentar encontrarlo (Jina web + Bing)
-  const sinEmail = allLeads.filter(l => !l.email && (l.web || l.empresa));
-  await Promise.allSettled(sinEmail.map(async (lead) => {
-    try {
-      const body = { mode: 'find', empresa: lead.empresa, ciudad: lead.ciudad };
-      if (lead.web) body.web = lead.web;
-      const r = await fetch(`${process.env.VERCEL_URL ? 'https://'+process.env.VERCEL_URL : 'https://puerto-seco-rojas.vercel.app'}/api/scrape-email`, {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body), signal: AbortSignal.timeout(8000)
-      });
-      if (r.ok) {
-        const d = await r.json();
-        if (d.email || d.best) {
-          lead.email = d.email || d.best;
-          lead.email_status = 'sin_verificar';
-          lead.fuente_email = d.fuente || 'web';
-        }
-      }
-    } catch(_) {}
+  // Si page === -1 es un request de solo listado (para saber cuántas hay)
+  const rubroSlug = encodeURIComponent(rubro.toLowerCase().replace(/\s+/g, '-'));
+  const ciudadSlug = encodeURIComponent(ciudad.toLowerCase().replace(/\s+/g, '-').replace(/[áàä]/g,'a').replace(/[éèë]/g,'e').replace(/[íìï]/g,'i').replace(/[óòö]/g,'o').replace(/[úùü]/g,'u').replace(/ñ/g,'n'));
+
+  // Step 1: Obtener el listado de Páginas Amarillas
+  const listingUrl = `https://www.paginasamarillas.com.ar/buscar/${rubroSlug}/${ciudadSlug}`;
+  const listingText = await jinaFetch(listingUrl, 8000);
+
+  // Extraer URLs de fichas únicas
+  const fichasRaw = listingText.match(/https:\/\/www\.paginasamarillas\.com\.ar\/fichas\/[a-zA-Z0-9\-]+/g) || [];
+  const fichas = [...new Set(fichasRaw)];
+
+  if (fichas.length === 0) {
+    return res.json({
+      ok: true, leads: [], total: 0, totalFichas: 0, page: 0, hasMore: false,
+      fuente: 'paginas_amarillas', ciudad, rubro,
+      mensaje: `No se encontraron empresas de "${rubro}" en "${ciudad}". Intentá con otro rubro o ciudad.`
+    });
+  }
+
+  // Step 2: Procesar batch de 3 fichas por llamada
+  const BATCH_SIZE = 3;
+  const start = page * BATCH_SIZE;
+  const batch = fichas.slice(start, start + BATCH_SIZE);
+  const hasMore = fichas.length > start + BATCH_SIZE;
+
+  // Step 3: Obtener web de cada ficha en paralelo
+  const fichaData = await Promise.all(batch.map(async (fichaUrl) => {
+    const text = await jinaFetch(fichaUrl, 5000);
+    const web = extractCompanyWeb(text);
+    // Nombre desde la URL: /fichas/nombre-empresa_12345 → "Nombre Empresa"
+    const slug = fichaUrl.split('/fichas/')[1] || '';
+    const nombre = slug.replace(/_\d+$/, '').replace(/-/g, ' ')
+      .split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ').substring(0, 60);
+    // También intentar extraer email directo de la ficha
+    const emailDirecto = extractEmail(text);
+    return { nombre, fichaUrl, web, emailDirecto };
   }));
 
-  // SOLO devolver empresas con email
-  const conEmail = allLeads.filter(l => l.email && l.email.includes('@'));
-  return res.json({ ok: true, leads: conEmail, total: conEmail.length, descartadas: allLeads.length - conEmail.length, fuente: 'paginas_amarillas', ciudad, rubro });
-}
-
-function parsePA(text, ciudad, provincia, emailRx, phoneRx, webRx, isEmail) {
-  const leads = [], seen = new Set();
-  const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
-  let cur = null;
-
-  for (const line of lines) {
-    const looksLikeName =
-      line.length >= 4 && line.length <= 80 &&
-      /[A-ZÁÉÍÓÚÑ]/.test(line) &&
-      !/^https?:\/\//.test(line) && !/^\d{3,}/.test(line) &&
-      !line.includes('@') && !line.match(phoneRx) &&
-      !/^(Tel|Fax|Cel|Email|Web|Ver |Más|Llamar|Compartir|Guardar|\+54|www\.)/i.test(line) &&
-      !['Buenos Aires','Argentina','Teléfono','Dirección','Correo Electrónico'].includes(line);
-
-    if (looksLikeName && !seen.has(line.toLowerCase())) {
-      if (cur?.empresa) leads.push(cur);
-      cur = { empresa: line, nombre: line, tipo: 'empresa', ciudad, zona: provincia,
-        email: '', email_status: 'sin_email', telefono: '', web: '', direccion: '',
-        fuente: 'paginas_amarillas', estado: 'pendiente_revision', contactado: false };
-      seen.add(line.toLowerCase());
+  // Step 4: Para empresas con web, buscar email en la web
+  const leads = await Promise.all(fichaData.map(async ({ nombre, fichaUrl, web, emailDirecto }) => {
+    // Si ya tiene email en la ficha, usar ese
+    if (emailDirecto) {
+      return { empresa: nombre, email: emailDirecto, web: web || fichaUrl, fuente: 'paginas_amarillas' };
     }
-    if (!cur) continue;
-    const phones = line.match(phoneRx);
-    if (phones && !cur.telefono) cur.telefono = phones[0].trim();
-    const webs = line.match(webRx);
-    if (webs && !cur.web) cur.web = webs[0].startsWith('http') ? webs[0] : 'https://'+webs[0];
-    const emails = (line.match(emailRx)||[]).map(e=>e.toLowerCase()).filter(isEmail);
-    if (emails.length && !cur.email) { cur.email = emails[0]; cur.email_status = 'sin_verificar'; }
-    if (/\b\d{1,5}\b/.test(line) && line.length < 70 && !phones && !cur.direccion && !/http|www/i.test(line))
-      cur.direccion = line;
-  }
-  if (cur?.empresa) leads.push(cur);
-  return leads.filter(l => l.empresa.length > 2);
+    if (!web) return null;
+
+    // Buscar email en home y /contacto en paralelo
+    const [homeText, contactText] = await Promise.all([
+      jinaFetch(web, 5000),
+      jinaFetch(web + '/contacto', 4000)
+    ]);
+    const email = extractEmail(homeText + '\n' + contactText);
+    if (!email) return null;
+
+    return { empresa: nombre, email, web, fuente: 'paginas_amarillas' };
+  }));
+
+  const validLeads = leads.filter(Boolean);
+
+  return res.json({
+    ok: true,
+    leads: validLeads,
+    total: validLeads.length,
+    totalFichas: fichas.length,
+    procesadas: start + batch.length,
+    page,
+    hasMore,
+    fuente: 'paginas_amarillas',
+    ciudad,
+    rubro
+  });
 }
