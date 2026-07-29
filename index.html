@@ -1196,35 +1196,70 @@ async function searchApollo() {
   const ciudad   = document.getElementById('ap-city')?.value.trim();
   const provincia= document.getElementById('ap-provincia')?.value || 'Buenos Aires';
   if (!rubro || !ciudad) return showToast('Ingresa rubro y ciudad', 'err');
+  // Reset estado
+  window.__apolloResults = [];
+  window.__apolloParams  = { rubro, ciudad, provincia };
+  window.__apolloPage    = 0;
+  window.__apolloTotal   = null;
   document.getElementById('ap-loading').classList.remove('hidden');
-  document.getElementById('ap-results').innerHTML = '';
+  document.getElementById('ap-results').innerHTML = '<div class="form-section"><p class="text-muted text-sm">Buscando en Páginas Amarillas...</p></div>';
+  await searchApolloPage(0);
+}
+
+function renderLeadCard(l, i) {
+  return `<div class="lead-result" id="ap-card-${i}">
+    <div class="lead-result-info">
+      <strong>${l.empresa||l.nombre||''}</strong>
+      ${l.web ? `<div style="font-size:11px;color:var(--muted)">${l.web}</div>` : ''}
+      <div style="font-size:12px;color:#4ade80;margin-top:3px">&#9993; ${l.email}</div>
+    </div>
+    <div class="lead-result-actions">
+      <button class="btn btn-primary btn-sm" id="add-btn-ap-${i}" onclick="addLeadFromApollo(${i})">+ Agregar</button>
+    </div>
+  </div>`;
+}
+
+function renderApolloResults() {
+  const leads = window.__apolloResults || [];
+  const params = window.__apolloParams || {};
+  const total  = window.__apolloTotal;
+  const hasMore= window.__apolloHasMore;
+  const procesadas = window.__apolloProcesadas || 0;
+
+  const header = `<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+    <h3 style="margin:0">${leads.length} empresa(s) con email en ${params.ciudad||''}</h3>
+    ${total ? `<span class="text-muted text-sm">(revisando ${procesadas}/${total} fichas en PA)</span>` : ''}
+  </div>`;
+
+  const cards  = leads.map((l,i) => renderLeadCard(l,i)).join('');
+  const addAll = leads.length > 1 ? `<button class="btn btn-primary" style="margin-top:8px" onclick="addAllFromApollo()">+ Agregar todos (${leads.length})</button>` : '';
+  const more   = hasMore
+    ? `<button class="btn btn-secondary" style="margin-top:8px;margin-left:6px" onclick="searchApolloPage(${window.__apolloPage})">&#8594; Buscar más (${total-procesadas} fichas restantes)</button>`
+    : (total && procesadas >= total ? `<p class="text-muted text-sm" style="margin-top:8px">✓ Revisadas todas las ${total} empresas.</p>` : '');
+  const noResult = leads.length === 0 && !hasMore ? '<p class="text-muted text-sm">Sin resultados con email. Probá otro rubro o ciudad.</p>' : '';
+
+  document.getElementById('ap-results').innerHTML = `<div class="form-section">${header}${noResult}${cards}${addAll}${more}</div>`;
+}
+
+async function searchApolloPage(page) {
+  const { rubro, ciudad, provincia } = window.__apolloParams || {};
+  if (!rubro || !ciudad) return;
+  document.getElementById('ap-loading').classList.remove('hidden');
   try {
-    const d = await apiFetch('/api/apollo', { rubro, ciudad, provincia });
+    const d = await apiFetch('/api/apollo', { rubro, ciudad, provincia, page });
     if (d.error) throw new Error(d.error);
-    const leads = d.leads || [];
-    window.__apolloResults = leads;
-    const descartadas = d.descartadas || 0;
-    document.getElementById('ap-results').innerHTML = `
-    <div class="form-section">
-      <h3>${leads.length} empresa(s) con email en ${ciudad}</h3>
-      ${descartadas > 0 ? `<p class="text-muted text-sm">${descartadas} descartadas sin email.</p>` : ''}
-      ${leads.length === 0 ? '<p class="text-muted text-sm">Sin resultados con email. Proba otro rubro o ciudad.</p>' : ''}
-      ${leads.map((l,i) => `
-      <div class="lead-result">
-        <div class="lead-result-info">
-          <strong>${l.empresa||l.nombre}</strong>
-          <span>${tipoBadge(l.tipo)} &middot; ${l.ciudad||''}</span>
-          <div style="font-size:12px;color:#4ade80;margin-top:3px">&#9993; ${l.email}</div>
-          ${l.telefono ? `<div style="font-size:12px;color:#93c5fd">${l.telefono}</div>` : ''}
-          ${l.web ? `<div style="font-size:11px;color:var(--muted)">${l.web}</div>` : ''}
-          ${l.direccion ? `<div style="font-size:11px;color:var(--muted)">${l.direccion}</div>` : ''}
-        </div>
-        <div class="lead-result-actions">
-          <button class="btn btn-primary btn-sm" id="add-btn-${i}" onclick="addLeadFromApollo(${i})">+ Agregar</button>
-        </div>
-      </div>`).join('')}
-      ${leads.length > 1 ? `<button class="btn btn-primary" style="margin-top:8px" onclick="addAllFromApollo()">+ Agregar todos (${leads.length})</button>` : ''}
-    </div>`;
+    const nuevos = d.leads || [];
+    window.__apolloResults = (window.__apolloResults || []).concat(nuevos);
+    window.__apolloPage    = page + 1;
+    window.__apolloHasMore = d.hasMore;
+    window.__apolloTotal   = d.totalFichas || window.__apolloTotal;
+    window.__apolloProcesadas = d.procesadas || (page+1)*3;
+    if (d.mensaje) showToast(d.mensaje, 'info');
+    renderApolloResults();
+    // Auto-avanzar hasta 5 páginas (15 empresas) si sigue habiendo resultados
+    if (d.hasMore && page < 4) {
+      await searchApolloPage(page + 1);
+    }
   } catch(e) {
     document.getElementById('ap-results').innerHTML = `<div class="form-section" style="border-color:var(--danger)"><p style="color:var(--danger)">${parseApiError(e,'apollo')}</p></div>`;
   }
