@@ -15,10 +15,19 @@ export default async function handler(req, res) {
     const r = await fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + GROQ_KEY },
-      body: JSON.stringify({ model: 'openai/gpt-oss-20b', messages, max_tokens: 1200, temperature: 0.7 }),
+      body: JSON.stringify({ model: 'openai/gpt-oss-120b', messages, max_tokens: 1200, temperature: 0.7 }),
     });
     if (!r.ok) { const err = await r.text(); return res.status(r.status).json({ error: 'Groq error: ' + err }); }
     const data = await r.json();
-    return res.json({ text: data.choices[0].message.content || '' });
+    // Limpiar markdown: asteriscos, almohadillas, guiones de lista
+    let text = data.choices[0].message.content || '';
+    text = text
+      .replace(/\*\*(.*?)\*\*/g, '')   // **negrita** → negrita
+      .replace(/\*(.*?)\*/g, '')         // *italica* → italica
+      .replace(/^#{1,6}\s+/gm, '')         // ## titulo → titulo
+      .replace(/^[\-\*]\s+/gm, '- ')       // mantener guiones de lista simples
+      .replace(/\n{3,}/g, '\n\n')          // máximo 2 saltos de línea
+      .trim();
+    return res.json({ text });
   } catch (e) { return res.status(500).json({ error: e.message }); }
 }
