@@ -15,7 +15,7 @@ export default async function handler(req, res) {
     const r = await fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + GROQ_KEY },
-      body: JSON.stringify({ model: 'llama-3.3-70b-versatile', messages, max_tokens: 1200, temperature: 0.7 }),
+      body: JSON.stringify({ model: 'openai/gpt-oss-120b', messages, max_tokens: 1200, temperature: 0.7 }),
     });
     if (!r.ok) { const err = await r.text(); return res.status(r.status).json({ error: 'Groq error: ' + err }); }
     const data = await r.json();
